@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<nav>
+		<home>
+			<label>Home</label>
+			<controller>index</controller>
+			<action>index</action>
+		</home>
+		<plan>
+			<label>Stundenplan</label>
+			<controller>index</controller>
+			<action>index</action>
+		</plan>
+	</nav>
+</config>

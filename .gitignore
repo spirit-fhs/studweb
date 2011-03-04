@@ -1,0 +1,13 @@
+# use glob syntax.
+syntax: glob
+
+# eclipse conf file
+.settings
+.buildpath
+.project
+.manager
+
+# other scm
+.svn
+.CVS
+.hg*

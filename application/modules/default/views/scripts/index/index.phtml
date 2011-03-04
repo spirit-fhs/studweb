@@ -1,0 +1,30 @@
+Entries:
+<br />
+<!-- Loop through the entries that were provided to us by the controller -->
+<?php
+foreach ($this->entries as $entry) :
+    ?>
+<table width="100%" cellspacing="0" cellpadding="0" border="0"
+	class="news">
+	<thead>
+		<tr>
+			<th width="100%" colspan="4">Betreff: <?=$this->escape($entry->subject)?></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Semester: <a href=";jsessionid=gc3szsq8nj83?F429173791530MTV=_"><span
+				class="semester_space"></span></a></td>
+			<td>Verfasser: <?=$this->escape($entry->cruser)?></td>
+			<td>Vom: <?=$this->escape($entry->crdate)?></td>
+			<td>Nr: <?=$this->escape($entry->id)?></td>
+		</tr>
+		<tr>
+			<td colspan="4">
+			<p><?=$this->escape($entry->text)?></p>
+			</td>
+		</tr>
+	</tbody>
+</table><?php
+endforeach
+?>
