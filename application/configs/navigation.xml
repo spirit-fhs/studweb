@@ -6,10 +6,10 @@
 			<controller>index</controller>
 			<action>index</action>
 		</home>
-		<plan>
-			<label>Stundenplan</label>
-			<controller>index</controller>
-			<action>index</action>
-		</plan>
+		<login>
+			<label>Anmelden</label>
+			<controller>login</controller>
+			<action>login</action>
+		</login>
 	</nav>
 </config>

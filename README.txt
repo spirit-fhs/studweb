@@ -7,21 +7,16 @@ Feature list and more details coming soon!
 Programming hints:
 * PHP with Zend Framework
 * HTML5
-* MySQL (later there will be the chance to change that)
+* SQLite (for development - later it will be REST for productional usage)
 
 
 INSTALLATION:
 
-In the sub-directory data are the actual db-structure and testing data stored.
-Import these files to your MySQL database.
+In the sub-directory "scripts/" are the load scripts for the actual db-structure and testing data stored.
+You have to execute this script from a terminal or the DOS command line with the following command:
+	% php scripts/load.sqlite.php --withdata
 
-Than change the db connection information in the (studweb/application/configs/) application.ini.
-Normally you have to change only the user name and the password.
-
-	resources.db.params.host = "localhost"
-	resources.db.params.username = "spiritUser"
-	resources.db.params.password = "spirit"
-	resources.db.params.dbname = "spirit"
+Now you have a running SQLite database.
 
 You will also need to point your web server to the
 application. Using apache, you could add a vhost as follows:
@@ -30,6 +25,7 @@ application. Using apache, you could add a vhost as follows:
         ServerAdmin spirit@fh-schmalkalden.de
         DocumentRoot <PATH_TO_STUDWEB>/public
         ServerName studweb
+        SetEnv APPLICATION_ENV "development"
 
         <Directory <PATH_TO_STUDWEB>/public>
             DirectoryIndex index.php

@@ -11,3 +11,6 @@ syntax: glob
 .svn
 .CVS
 .hg*
+
+# DB
+.db

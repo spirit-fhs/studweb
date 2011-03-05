@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Default IndexController
  * 
@@ -9,17 +8,14 @@
  */
 class IndexController extends Zend_Controller_Action
 {
-
-    public function init()
+    public function init ()
     {
         /* Initialize action controller here */
     }
-
-    public function indexAction()
+    public function indexAction ()
     {
-		$entry = new Default_Model_Entry();
+        $entry = new Default_Model_Entry();
         $this->view->entries = $entry->fetchAll();
     }
-
 }
 
