@@ -14,3 +14,6 @@ syntax: glob
 
 # DB
 .db
+
+# Docs
+docs
