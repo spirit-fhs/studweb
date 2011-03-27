@@ -74,7 +74,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         new Application_Plugin_Auth_AccessControl($auth, $acl))
             ->setParam('auth', $auth);
     }
-    
     /**
      * Bootstrap the Database and save it to the Registry
      * for later use.
@@ -83,9 +82,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initDatabase ()
     {
-        $resource = $this->getPluginResource('db');
-        $db = $resource->getDbAdapter();
-        Zend_Registry::set("db", $db);
+        if ('development' == APPLICATION_ENV) {
+            $resource = $this->getPluginResource('db');
+            $db = $resource->getDbAdapter();
+            Zend_Registry::set("db", $db);
+        }
     }
 }
 

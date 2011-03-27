@@ -17,3 +17,6 @@ studweb.db
 
 # Docs
 docs
+
+# Logs
+*.log

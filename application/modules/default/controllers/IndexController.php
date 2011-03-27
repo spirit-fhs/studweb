@@ -14,8 +14,7 @@ class IndexController extends Zend_Controller_Action
     }
     public function indexAction ()
     {
-        $entry = new Default_Model_Entry();
-        $this->view->entries = $entry->fetchAll();
+		$this->_forward('index', 'entry');
     }
 }
 

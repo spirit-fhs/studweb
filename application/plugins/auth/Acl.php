@@ -1,19 +1,27 @@
 <?php
 class Application_Plugin_Auth_Acl extends Zend_Acl
 {
-  public function __construct()
-  { 
-   // RESSOURCES
-   // TODO Change this
-   $this->add(new Zend_Acl_Resource('admin'));
-   $this->add(new Zend_Acl_Resource('redaktion'));
-   $this->addRole(new Zend_Acl_Role('guest'));
-   $this->addRole(new Zend_Acl_Role('redakteur'), 'guest');
-   $this->addRole(new Zend_Acl_Role('admin'), 'redakteur');
-   $this->allow(null, null);
-   $this->deny('guest', 'redaktion');
-   $this->deny('guest', 'admin');
-   $this->allow('redakteur','redaktion');
-   $this->allow('admin', 'admin');
-  }
+    public function __construct ()
+    {
+        // RESSOURCES
+        // TODO Change this
+        /**
+         * role = student
+         * resource  = controller
+         * privilege = action 
+         */
+        $this->addRole(new Zend_Acl_Role(Application_Plugin_Auth_Roles::GUEST));
+        $this->addRole(new Zend_Acl_Role(Application_Plugin_Auth_Roles::STUDENT), Application_Plugin_Auth_Roles::GUEST);
+        $this->add(new Zend_Acl_Resource('index'));
+        $this->add(new Zend_Acl_Resource('login'));
+        $this->add(new Zend_Acl_Resource('entry'));
+        $this->add(new Zend_Acl_Resource('error'));
+        // guest 
+        $this->allow(Application_Plugin_Auth_Roles::GUEST, null, 'index');
+        $this->allow(Application_Plugin_Auth_Roles::GUEST, 'entry', 'show');
+        $this->allow(Application_Plugin_Auth_Roles::GUEST, 'error');
+        // students
+        $this->allow(Application_Plugin_Auth_Roles::STUDENT, 'login');
+        $this->allow(Application_Plugin_Auth_Roles::STUDENT, 'entry');
+    }
 }

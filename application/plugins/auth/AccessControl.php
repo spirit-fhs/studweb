@@ -8,27 +8,39 @@ class Application_Plugin_Auth_AccessControl extends Zend_Controller_Plugin_Abstr
     }
     public function preDispatch (Zend_Controller_Request_Abstract $request)
     {
-        if ($this->_auth->hasIdentity() && is_object(
-        $this->_auth->getIdentity())) {
-            $role = $this->_auth->getIdentity()->role;
-        } else {
-            $role = 'guest';
-        }
+
         $module = $request->getModuleName();
-        // Ressourcen = Modul -> kann hier geändert werden!
-        $resource = $module;
+        $controller = $request->getControllerName();
+        $action = $request->getActionName();
+        
+    	if ($this->_auth->hasIdentity() && is_object(
+        $this->_auth->getIdentity())) {
+            // students can only log in
+            $role = Application_Plugin_Auth_Roles::STUDENT;
+        } else {
+            $role = Application_Plugin_Auth_Roles::GUEST;
+        }
+
+        // resources = controller
+        // privilege = action
+        $resource = $controller;
+        $privilege = $action;
         if (! $this->_acl->has($resource)) {
             $resource = null;
         }
-        //TODO change the following redirects
-        if (! $this->_acl->isAllowed($role, $resource)) {
+        //	Debug $role, $resource, $privilege, 
+        //echo var_dump($this->_auth->getIdentity());
+         
+         
+        
+        if (! $this->_acl->isAllowed($role, $resource, $privilege)) {
             if ($this->_auth->hasIdentity()) {
-                // angemeldet, aber keine Rechte -> Fehler!
+                // logged in, but no rights 
                 $request->setModuleName('default');
                 $request->setControllerName('error');
                 $request->setActionName('noAccess');
             } else {
-                //nicht angemeldet -> Login
+                // not logged in
                 $request->setModuleName('default');
                 $request->setControllerName('login');
                 $request->setActionName('login');
