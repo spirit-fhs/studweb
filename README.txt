@@ -46,3 +46,7 @@ You have to write the following line in your hosts file:
 
 Finally, point your browser to http://studweb/ to see the
 application in action.
+
+For the development the following user is available:
+USER: Student
+PW: geheim
