@@ -1,38 +1,5 @@
-Entries:
-<br />
-<!-- Loop through the entries that were provided to us by the controller -->
-<?php
-foreach ($this->entries as $entry) :
-    ?>
-<article>
-	<table width="100%" cellspacing="0" cellpadding="0" border="0" class="news">
-		<thead>
-			<tr>
-				<th width="100%" colspan="4"><a
-					href="<?= $this->url(array('controller' => 'entry', 'action' => 'show', 'id' => $this->escape($entry->id))) ?>">Betreff: <?=$this->escape($entry->subject)?></a></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Semester: </a></td>
-				<td>Verfasser: <?=$this->escape($entry->cruser)?></td>
-				<td>Vom: <?=$this->escape($entry->crdate)?></td>
-				<td>Nr: <?=$this->escape($entry->id)?></td>
-			</tr>
-			<tr>
-				<td colspan="4">
-				<p><?=$this->escape($entry->text)?></p>
-				</td>
-			</tr>
-			<tr>
-				<td>Kommentare:</td>
-				<td colspan="3"><?=count($entry->comments)?></td>
-	
-			</tr>
-		</tbody>
-	</table>
-
-</article>
-<?php
-endforeach
+<?php 
+$this->partialLoop()->setObjectKey('entry');
+echo $this->partialLoop('partails/entry.phtml',$this->entries);
 ?>
+

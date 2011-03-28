@@ -18,7 +18,7 @@ class Default_Model_Entry
     /**
      * @var string
      */
-    protected $_cruser;
+    protected $_user;
     /**
      * @var string
      */
@@ -26,7 +26,7 @@ class Default_Model_Entry
     /**
      * @var string
      */
-    protected $_text;
+    protected $_news;
     /**
      * @var string
      */
@@ -39,6 +39,9 @@ class Default_Model_Entry
      * @var Default_Model_EntryMapper
      */
     protected $_mapper;
+
+    protected $_displayName;
+    protected $_semester;
     /**
      * @return the $_comments
      */
@@ -113,24 +116,24 @@ class Default_Model_Entry
         return $this;
     }
     /**
-     * Set entry text
+     * Set entry news
      * 
-     * @param  string $text 
+     * @param  string $news 
      * @return Default_Model_Entry
      */
-    public function setText ($text)
+    public function setNews ($news)
     {
-        $this->_text = (string) $text;
+        $this->_news = (string) $news;
         return $this;
     }
     /**
-     * Get entry text
+     * Get entry news
      * 
      * @return null|string
      */
-    public function getText ()
+    public function getNews ()
     {
-        return $this->_text;
+        return $this->_news;
     }
     /**
      * Set entry subject
@@ -178,9 +181,9 @@ class Default_Model_Entry
      * @param  string $user 
      * @return Default_Model_Entry
      */
-    public function setCruser ($user)
+    public function setUser ($user)
     {
-        $this->_cruser = $user;
+        $this->_user = $user;
         return $this;
     }
     /**
@@ -188,9 +191,9 @@ class Default_Model_Entry
      * 
      * @return string
      */
-    public function getCruser ()
+    public function getUser ()
     {
-        return $this->_cruser;
+        return $this->_user;
     }
     /**
      * Set entry id
@@ -259,4 +262,40 @@ class Default_Model_Entry
     {
         return $this->getMapper()->fetchAll();
     }
+	/**
+     * @return null|string
+     */
+    public function getDisplayName ()
+    {
+        return $this->_displayName;
+    }
+
+	/**
+     * @param string $_displayName
+     * @return Default_Model_Entry
+     */
+    public function setDisplayName ($_displayName)
+    {
+        $this->_displayName = $_displayName;
+        return $this;
+    }
+	/**
+     * @return null|string
+     */
+    public function getSemester ()
+    {
+        return $this->_semester;
+    }
+
+	/**
+     * @param string $_semester
+     * @return Default_Model_Entry
+     */
+    public function setSemester ($_semester)
+    {
+        $this->_semester = $_semester;
+        return $this;
+    }
+
+
 }

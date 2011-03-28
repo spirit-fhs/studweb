@@ -54,8 +54,8 @@ class Default_Model_CommentMapper
      */
     public function save (Default_Model_Comment $comment)
     {
-        $data = array('text' => $comment->getText(), 'cruser' => $comment->getCruser(), 
-        'crdate' => date('Y-m-d H:i:s'), 'entryId' => $comment->getEntryId());
+        $data = array('comment' => $comment->getComment(), 'user' => $comment->getUser(), 
+        'crdate' => date('d.m.Y'), 'entryId' => $comment->getEntryId());
         if (null === ($id = $comment->getId())) {
             unset($data['id']);
             $this->getDbTable()->insert($data);
@@ -79,9 +79,9 @@ class Default_Model_CommentMapper
         $row = $result->current();
         $comment->setId($row->id)
         	->setEntryId($row->entryId)
-            ->setText($row->text)
+            ->setComment($row->comment)
             ->setCrdate($row->crdate)
-            ->setCruser($row->cruser);
+            ->setUser($row->user);
     }
     /**
      * Fetch all comments
@@ -96,9 +96,9 @@ class Default_Model_CommentMapper
             $comment = new Default_Model_Comment();
             $comment->setId($row->id)
             	->setEntryId($row->entryId)
-                ->setText($row->text)
+                ->setComment($row->comment)
                 ->setCrdate($row->crdate)
-                ->setCruser($row->cruser)
+                ->setUser($row->user)
                 ->setMapper($this);
             $comments[] = $comment;
         }

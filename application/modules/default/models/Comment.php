@@ -22,11 +22,11 @@ class Default_Model_Comment
     /**
      * @var string
      */
-    protected $_cruser;
+    protected $_user;
     /**
      * @var string
      */
-    protected $_text;
+    protected $_comment;
     /**
      * @var string
      */
@@ -73,6 +73,7 @@ class Default_Model_Comment
     {
         $method = 'get' . $name;
         if ('mapper' == $name || ! method_exists($this, $method)) {
+            die($method);
             throw Exception('Invalid property specified');
         }
         return $this->$method();
@@ -95,14 +96,14 @@ class Default_Model_Comment
         return $this;
     }
     /**
-     * Set text
+     * Set comment
      * 
-     * @param  string $text 
+     * @param  string $comment 
      * @return Default_Model_Comment
      */
-    public function setText ($text)
+    public function setComment ($comment)
     {
-        $this->_text = (string) $text;
+        $this->_comment = (string) $comment;
         return $this;
     }
     /**
@@ -110,9 +111,9 @@ class Default_Model_Comment
      * 
      * @return null|string
      */
-    public function getText ()
+    public function getComment ()
     {
-        return $this->_text;
+        return $this->_comment;
     }
     /**
      * Set created timestamp
@@ -140,9 +141,9 @@ class Default_Model_Comment
      * @param  string $user 
      * @return Default_Model_Comment
      */
-    public function setCruser ($user)
+    public function setUser ($user)
     {
-        $this->_cruser = $user;
+        $this->_user = $user;
         return $this;
     }
     /**
@@ -150,9 +151,9 @@ class Default_Model_Comment
      * 
      * @return string
      */
-    public function getCruser ()
+    public function getUser ()
     {
-        return $this->_cruser;
+        return $this->_user;
     }
     /**
      * Set comment id

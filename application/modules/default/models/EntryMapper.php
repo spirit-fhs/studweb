@@ -67,9 +67,11 @@ class Default_Model_EntryMapper
             
         $entry->setId($row->id)
             ->setSubject($row->subject)
-            ->setText($row->text)
+            ->setNews($row->news)
             ->setCrdate($row->crdate)
-            ->setCruser($row->cruser)
+            ->setUser($row->user)
+            ->setDisplayName($row->displayName)
+            ->setSemester($row->semester)
             ->setComments($comments);
     }
     /**
@@ -89,9 +91,11 @@ class Default_Model_EntryMapper
             
         	$entry->setId($row->id)
                 ->setSubject($row->subject)
-                ->setText($row->text)
+                ->setNews($row->news)
                 ->setCrdate($row->crdate)
-                ->setCruser($row->cruser)
+                ->setUser($row->user)
+                ->setDisplayName($row->displayName)
+                ->setSemester($row->semester)
                 ->setComments($comments)
                 ->setMapper($this);
             $entries[] = $entry;

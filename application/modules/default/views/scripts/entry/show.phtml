@@ -1,42 +1,22 @@
-<article>
-<table width="100%" cellspacing="0" cellpadding="0" border="0"
-	class="news">
-	<thead>
-		<tr>
-			<th width="100%" colspan="4"><a
-				href="show?q=<?=$this->escape($this->entry->id)?>">Betreff: <?=$this->escape($this->entry->subject)?></a></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>Semester: </a></td>
-			<td>Verfasser: <?=$this->escape($this->entry->cruser)?></td>
-			<td>Vom: <?=$this->escape($this->entry->crdate)?></td>
-			<td>Nr: <?=$this->escape($this->entry->id)?></td>
-		</tr>
-		<tr>
-			<td colspan="4">
-			<p><?=$this->escape($this->entry->text)?></p>
-			</td>
-		</tr>
-	</tbody>
-</table>
-</article>
-Entries:
+<?php
+$this->partial()->setObjectKey('entry');
+echo $this->partial('partails/entry.phtml', $this->entry);
+?>
 <br />
-<!-- Loop through the entries that were provided to us by the controller -->
 <?php
 foreach ($this->entry->comments as $comment) :
     ?>
-<?=$this->escape($comment->id)?><br>
-<?=$this->escape($comment->text)?><br>
-<?=$this->escape($comment->cruser)?><br>
+<?=
+
+    $this->escape($comment->id)?><br>
+<?=$this->escape($comment->comment)?><br>
+<?=$this->escape($comment->user)?><br>
 <?=$this->escape($comment->crdate)?><br>
 <br>
 
 <?php
-endforeach;
+endforeach
+;
 if (isset($this->form)) {
-    $this->form->setAction($this->url());
     echo $this->form;
 }

@@ -9,7 +9,7 @@ class Default_Form_Comment extends Zend_Form
 	public function init(){
 		$this->setMethod('post');
         $this->addElement(
-            'textarea', 'text', array(
+            'textarea', 'comment', array(
                 'label' => 'Kommentar',
                 'required' => true,
         		'rows' => '5',
@@ -24,11 +24,8 @@ class Default_Form_Comment extends Zend_Form
         $this->addElement('hash', 'csrf', array(
             'ignore' => true,
         ));
-        
-        // And finally add some CSRF protection
-        $this->addElement('hash', 'csrf', array(
-            'ignore' => true,
-        ));        
+                
+        $this->addElement('hidden', 'entryId', array('required' => true));
 	}
 }
 ?>
