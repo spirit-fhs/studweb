@@ -72,7 +72,7 @@ class Default_Model_CommentMapper
      */
     public function find ($id, Default_Model_Comment $comment)
     {
-        $result = $this->getDbTable()->find($id);
+        $result = $this->getDbTable()->find((int)$id);
         if (0 == count($result)) {
             return;
         }
@@ -90,6 +90,7 @@ class Default_Model_CommentMapper
      */
     public function fetchAll ($where)
     {
+        $where = $this->getDbTable()->getAdapter()->quoteInto('entryId=?', (int)$where,'SQLT_INT');
         $resultSet = $this->getDbTable()->fetchAll($where);
         $comments = array();
         foreach ($resultSet as $row) {
@@ -104,4 +105,16 @@ class Default_Model_CommentMapper
         }
         return $comments;
     }
+    /**
+     * Delete comment
+     * 
+     * @return array
+     */
+    public function delete ($where)
+    {
+        $where = $this->getDbTable()->getAdapter()->quoteInto('id=?', (int)$where,'SQLT_INT');
+        $resultSet = $this->getDbTable()->delete($where);
+
+        return $resultSet;
+    }    
 }

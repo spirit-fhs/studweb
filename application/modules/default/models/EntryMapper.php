@@ -56,7 +56,7 @@ class Default_Model_EntryMapper
      */
     public function find ($id, Default_Model_Entry $entry)
     {
-        $result = $this->getDbTable()->find($id);
+        $result = $this->getDbTable()->find((int)$id);
         if (0 == count($result)) {
             return;
         }

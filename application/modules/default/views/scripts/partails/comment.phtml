@@ -1,1 +1,17 @@
-<?php
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+	<thead>
+		<tr>
+			<th>#<?= $this->escape($this->comment->getId())?></th>
+			<th><?= $this->escape($this->comment->getUser())?></th>
+			<th><?= $this->escape($this->comment->getCrdate())?></th>
+			<th><?= $this->deleteCommentLink($this->comment->getUser(),$this->comment->getId())?>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td colspan="3"><?=$this->escape($this->comment->getComment())?></td>
+		</tr>
+	</tbody>
+</table>
+

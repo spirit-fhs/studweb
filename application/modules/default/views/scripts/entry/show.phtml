@@ -1,22 +1,9 @@
 <?php
 $this->partial()->setObjectKey('entry');
 echo $this->partial('partails/entry.phtml', $this->entry);
-?>
-<br />
-<?php
-foreach ($this->entry->comments as $comment) :
-    ?>
-<?=
 
-    $this->escape($comment->id)?><br>
-<?=$this->escape($comment->comment)?><br>
-<?=$this->escape($comment->user)?><br>
-<?=$this->escape($comment->crdate)?><br>
-<br>
-
-<?php
-endforeach
-;
+$this->partialLoop()->setObjectKey('comment');
+echo $this->partialLoop('partails/comment.phtml', $this->entry->comments);
 if (isset($this->form)) {
     echo $this->form;
 }

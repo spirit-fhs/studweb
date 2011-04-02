@@ -9,6 +9,7 @@ protected $_title;
 protected $_lastName;
 protected $_course;
 protected $_faculty;
+protected $_lastEntry;
 /**
 	 * @return the $_cn
 	 */
@@ -127,5 +128,22 @@ protected $_faculty;
 		$this->_faculty = $_faculty;
 		return $this;		
 	}
+	/**
+     * @return the $_lastEntry
+     */
+    public function getLastEntry ()
+    {
+        return $this->_lastEntry;
+    }
+
+	/**
+     * @param field_type $_lastEntry
+     */
+    public function setLastEntry ($_lastEntry)
+    {
+        $this->_lastEntry = $_lastEntry;
+        return $this;
+    }
+
 
 }

@@ -13,7 +13,7 @@ syntax: glob
 .hg*
 
 # DB
-studweb.db
+*.db
 
 # Docs
 docs

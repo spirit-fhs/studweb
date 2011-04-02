@@ -24,8 +24,6 @@ class Default_Form_Comment extends Zend_Form
         $this->addElement('hash', 'csrf', array(
             'ignore' => true,
         ));
-                
-        $this->addElement('hidden', 'entryId', array('required' => true));
 	}
 }
 ?>

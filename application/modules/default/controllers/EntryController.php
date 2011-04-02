@@ -14,8 +14,10 @@ class EntryController extends Zend_Controller_Action
     {
         $request = $this->getRequest();
         $id = $request->getParam('id');
+
         $entry = new Default_Model_Entry();
         $this->view->entry = $entry->find($id);
+
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity() && is_object($auth->getIdentity())) {
             $role = Application_Plugin_Auth_Roles::STUDENT;
@@ -24,8 +26,9 @@ class EntryController extends Zend_Controller_Action
         }
         $acl = new Application_Plugin_Auth_Acl();
         if ($acl->isAllowed($role, 'entry', 'process')) {
+            $auth->getIdentity()->setLastEntry($id);
+            
             $form = new Default_Form_Comment();
-            $form->getElement('entryId')->setValue($id);
             $form->setAction('/entry/process/');
             // Assign the form to the view
             $this->view->form = $form;
@@ -46,6 +49,7 @@ class EntryController extends Zend_Controller_Action
                 // into our model:
                 $values = $form->getValues();
                 $values['user'] = $auth->getIdentity()->getUid();
+                $values['entryId'] = $auth->getIdentity()->getLastEntry();
                 $model = new Default_Model_Comment($values);
                 $model->save();
                  // Now that we have saved our model, lets url redirect
@@ -55,6 +59,23 @@ class EntryController extends Zend_Controller_Action
             }
         }
         return $this->_helper->redirector->gotoSimple('index', 'entry');
+    }
+    public function deleteAction(){
+        $request = $this->getRequest();
+        $id = $request->getParam('commentId');
+        
+        $auth = Zend_Auth::getInstance();
+        if($auth->hasIdentity()){
+            $lastEntry=$auth->getIdentity()->getLastEntry();
+            $model = new Default_Model_Comment();
+            $cruser=$model->find($id)->getUser();
+            if($auth->getIdentity()->getUid() == $cruser){
+                $model->delete($id);
+            }
+            return $this->_helper->redirector->gotoSimple(
+                'show', 'entry', null, array('id' => $lastEntry));            
+        }
+        return $this->_helper->redirector->gotoSimple('index', 'entry');        
     }
 }
 

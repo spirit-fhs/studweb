@@ -243,7 +243,15 @@ class Default_Model_Comment
      */
     public function fetchAll ($where)
     {
-        $where = 'entryId = ' . $where;
         return $this->getMapper()->fetchAll($where);
+    }
+    /**
+     * delete comment
+     * 
+     * @return array
+     */
+    public function delete ($where)
+    {
+        return $this->getMapper()->delete($where);
     }
 }
