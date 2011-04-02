@@ -8,7 +8,6 @@ CREATE TABLE entry (
   semester VARCHAR(255) NULL
 );
 
-
 CREATE TABLE users (
   id INTEGER  NOT NULL PRIMARY KEY,
   username VARCHAR(50) UNIQUE NOT NULL,
