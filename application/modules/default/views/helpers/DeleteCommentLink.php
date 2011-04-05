@@ -22,7 +22,7 @@ class Zend_View_Helper_DeleteCommentLink
     {
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity() && $auth->getIdentity()->getUid() == $cruser)
-            return '<a href="' . $this->view->url(array('controller' => 'entry', 'action' => 'delete','commentId' => $this->view->escape($commentId))) . '">Delete</a>';
+            return '<a href="' . $this->view->url(array('controller' => 'entry', 'action' => 'delete','commentId' => $this->view->escape($commentId))) . '">[Eintrag löschen]</a>';
         return "";
     }
     /**

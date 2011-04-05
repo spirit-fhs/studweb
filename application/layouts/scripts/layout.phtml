@@ -1,34 +1,34 @@
-<!-- Dummy Layout by http://www.cssguru.de/html-5-layout/ -->
-
-<?php echo $this->doctype() ?> <!-- This line will output the doctype we set inside the bootstrap file -->
-<html xmlns="http://www.w3.org/1999/xhtml"> 
-<head>  
-  <title>SPIRIT = (ServicePoint: Information) => Read IT</title>
-  <!--
-      The line below demonstrates usage of the headLink() view helper
-      @see http://framework.zend.com/manual/en/zend.view.helpers.html
-      -->
-  <?php echo $this->headLink()->appendStylesheet('/css/global.css') ?>
-  <?php echo $this->headMeta() ?>
-</head> 
+<?=$this->doctype()?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SPIRIT = (ServicePoint: Information) => Read IT</title>
+  <?=$this->headLink()->appendStylesheet($this->baseUrl().'/css/global.css')?>
+  <?=$this->headMeta()?>
+  <!-- to learn the IE HTML5 elements  -->
+  <!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
 <body>
-<div id="doc">
-  <header id="header">
-    <h1>HTML5 Layout</h1>
-    <nav>
-		<?= $this->navigation()->menu(); ?> <!-- This line will output the navigation -->
-    </nav>
-  </header>
-  <section id="content">
-	<?php echo $this->layout()->content ?> <!-- This line will output the content -->
-  </section>
-  <aside>
-    <h2>Sidebar</h2>
-    <p>Lorum ipsum...</p>
-  </aside>
-  <footer>
-    <a href="#">Impressum</a>
-  </footer>
+<header id="header">
+<div id="logo"></div>
+<div id="pot"></div>
+<div id="clips"></div>
+<div class="clear"></div>
+</header>
+<div id="container"><nav>
+	<?=$this->navigation()->menu();?> <!-- This line will output the navigation -->
+</nav>
+
+<div id="doc"><section id="content">
+	<?php
+echo $this->layout()->content?> <!-- This line will output the content -->
+</section> <aside>
+<h2>Sidebar</h2>
+<p>Lorum ipsum...</p>
+</aside> <footer> <a href="#">Impressum</a> </footer></div>
+<div class="clear"></div>
 </div>
+
 </body>
 </html>

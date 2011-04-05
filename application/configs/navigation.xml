@@ -5,11 +5,13 @@
 			<label>Home</label>
 			<controller>index</controller>
 			<action>index</action>
+			<class>home</class>
 		</home>
 		<login>
 			<label>Anmelden</label>
 			<controller>login</controller>
 			<action>login</action>
+			<class>login</class>
 		</login>
 	</nav>
 </config>

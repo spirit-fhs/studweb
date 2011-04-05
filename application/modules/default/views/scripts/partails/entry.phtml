@@ -1,28 +1,24 @@
-<article>
-<table width="100%" cellspacing="0" cellpadding="0" border="0"
-	class="news">
-	<thead>
-		<tr>
-			<th width="100%" colspan="4"><a
-				href="<?=$this->url(array('controller' => 'entry', 'action' => 'show', 'id' => $this->escape($this->entry->getId())))?>">Betreff: <?=$this->escape($this->entry->getSubject())?></a></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>Semester: <?=$this->escape($this->entry->getSemester())?></a></td>
-			<td>Verfasser: <a name="<?=$this->escape($this->entry->getUser())?>"><?=$this->escape($this->entry->getDisplayName())?></a></td>
-			<td>Vom: <?=$this->escape($this->entry->getCrdate())?></td>
-			<td>Nr: <?=$this->escape($this->entry->getId())?></td>
-		</tr>
-		<tr>
-			<td colspan="4">
-			<p><?=$this->escape($this->entry->getNews())?></p>
-			</td>
-		</tr>
-		<tr>
-			<td>Kommentare:</td>
-			<td colspan="3"><?=count($this->entry->getComments())?></td>
-		</tr>
-	</tbody>
-</table>
+<article class="news">
+<div class="newsHead">
+	<div class="newsSemester">SEMESTER: <?=$this->escape($this->entry->getSemester())?></div>
+	<div class="newsId">NR: <?=$this->escape($this->entry->getId())?></div>
+    <div class="newsOwner">VERFASSER: 
+    	<a name="<?=$this->escape($this->entry->getUser())?>"><?=$this->escape($this->entry->getDisplayName())?></a>
+    </div>
+	<div class="clear"></div>
+</div>
+<div class="newsBody">
+	<div class="newsSubject"><h1><?=$this->escape($this->entry->getSubject())?></h1></div>
+	<div class="newsDate"><?=$this->escape($this->entry->getCrdate())?></div>
+	<div class=clear></div>
+	<div class="newsContent"><?=$this->escape($this->entry->getNews())?></div>
+</div>
+<div class="newsFooter">
+	<div class="newsMoreLink">
+		<a href="<?=$this->url(array('controller' => 'entry', 'action' => 'show', 'id' => $this->escape($this->entry->getId())))?>"
+		>...einzeln lesen!</a>
+	</div>
+	<div class="newsComments">Kommentare: <?=count($this->entry->getComments())?></div>
+	<div class="clear"></div>
+</div>
 </article>
