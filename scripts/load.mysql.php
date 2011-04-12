@@ -1,5 +1,5 @@
 <?php
-// scripts/load.sqlite.php
+// scripts/load.mysql.php
 /**
  * Script for creating and loading database
  */
@@ -49,26 +49,19 @@ if ('testing' != APPLICATION_ENV) {
         sleep(1);
     }
 }
-// Check to see if we have a database file already
-$options = $bootstrap->getOption('resources');
-$dbFile = $options['db']['params']['dbname'];
-if (file_exists($dbFile)) {
-    unlink($dbFile);
-}
 // this block executes the actual statements that were loaded from
 // the schema file.
 try {
-    $schemaSql = file_get_contents(dirname(__FILE__) . '/schema.sqlite.sql');
+    $schemaSql = file_get_contents(dirname(__FILE__) . '/schema.mysql.sql');
     // use the connection directly to load sql in batches
     $dbAdapter->getConnection()->exec($schemaSql);
-    chmod($dbFile, 0666);
     if ('testing' != APPLICATION_ENV) {
         echo PHP_EOL;
         echo 'Database Created';
         echo PHP_EOL;
     }
     if ($withData) {
-        $dataSql = file_get_contents(dirname(__FILE__) . '/data.sqlite.sql');
+        $dataSql = file_get_contents(dirname(__FILE__) . '/data.mysql.sql');
         // use the connection directly to load sql in batches
         $dbAdapter->getConnection()->exec($dataSql);
         if ('testing' != APPLICATION_ENV) {

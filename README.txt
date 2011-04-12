@@ -7,16 +7,23 @@ Feature list and more details coming soon!
 Programming hints:
 * PHP with Zend Framework
 * HTML5
-* SQLite (for development - later it will be REST for productional usage)
+* MySQL (for development - later it will be REST for productional usage)
 
 
 INSTALLATION:
 
+Please fit the following parameters in the file application.ini to your own needs:
+resources.db.adapter = "PDO_MYSQL"
+resources.db.params.dbname = "spirit"
+resources.db.params.host = localhost
+resources.db.params.username = "spiritUser"
+resources.db.params.password = "spirit"
+
 In the sub-directory "scripts/" are the load scripts for the actual db-structure and testing data stored.
 You have to execute this script from a terminal or the DOS command line with the following command:
-	% php scripts/load.sqlite.php --withdata
+	% php scripts/load.mysql.php --withdata
 
-Now you have a running SQLite database.
+Now you have a running MySQL database.
 
 You will also need to point your web server to the
 application. Using apache, you could add a vhost as follows:

@@ -19,6 +19,23 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         //Add modules dirs to the controllers for default routes...  
         $front->addModuleDirectory(APPLICATION_PATH . '/modules');
     }
+    
+    /**
+     * Autoloader
+     * 
+     */
+    protected function _initAutoload()
+    {
+            $moduleLoader = new Zend_Application_Module_Autoloader(array(
+                    'namespace' => '',
+                    'basePath' => APPLICATION_PATH));
+
+            $autoloader = Zend_Loader_Autoloader::getInstance();
+            $autoloader->registerNamespace(array('Application_'));
+            
+            return $moduleLoader;           
+    }
+    
     /**
      * Bootstrap the view headMeta
      * 

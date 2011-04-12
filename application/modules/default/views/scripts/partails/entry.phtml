@@ -9,9 +9,11 @@
 </div>
 <div class="newsBody">
 	<div class="newsSubject"><h1><?=$this->escape($this->entry->getSubject())?></h1></div>
-	<div class="newsDate"><?=$this->escape($this->entry->getCrdate())?></div>
+	<div class="newsDate"><time datetime="<?=$this->toHtml5Datetime($this->entry->getCrdate())?>"><?=$this->escape($this->entry->getCrdate())?></time></div>
 	<div class=clear></div>
-	<div class="newsContent"><?=$this->escape($this->entry->getNews())?></div>
+
+	<div class="newsContent"><?php $textile = new Application_Textile();
+	 echo $textile->TextileThis($this->entry->getNews())?></div>
 </div>
 <div class="newsFooter">
 	<div class="newsMoreLink">

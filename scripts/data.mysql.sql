@@ -1,6 +1,6 @@
-INSERT INTO users ('username', 'password') VALUES ('Student', 'geheim');
-INSERT INTO comment (user, entryId, comment, crdate) VALUES ('KUENZEL2', 1, 'blubl dasdwads.', strftime('%d.%m.%Y', 'NOW'));
-INSERT INTO comment (user, entryId, comment, crdate) VALUES ('KUENZEL2', 1, 'blubl dasdwads.', strftime('%d.%m.%Y', 'NOW'));
+INSERT INTO users (username, password) VALUES ('Student', 'geheim');
+INSERT INTO comment (user, entryId, comment, crdate) VALUES ('KUENZEL2', 1, 'blubl dasdwads.', DATE_FORMAT(NOW(),'%d.%m.%Y'));
+INSERT INTO comment (user, entryId, comment, crdate) VALUES ('KUENZEL2', 1, 'blubl dasdwads.', DATE_FORMAT(NOW(),'%d.%m.%Y'));
 
 INSERT INTO entry (user,subject,semester,displayName, crdate,  news) VALUES
 ('neuhardt','Ausfall Lehrveranstaltungen','I2 I4 IS4 MM4 ','Neuhardt','09.04.2011','Wegen Krankheit fallen meine Lehrveranstaltungen und meine Sprechstunde bis einschließlich Freitag, den 8. April, aus.\r\n\r\nNachholtermine werden in den Lehrveranstaltungen besprochen.');
