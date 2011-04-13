@@ -228,7 +228,7 @@ nav ul li.active a,nav ul li a:hover {
 	color: #ffffff;
 	text-decoration: none;
 }
-
+/*home*/
 nav ul li a.home {
 	background: url(../images/nav-home.png) no-repeat;
 }
@@ -236,13 +236,47 @@ nav ul li a.home {
 nav ul li.active a.home,nav ul li a.home:hover {
 	background: url(../images/nav-home-active.png) no-repeat;
 }
-
+/*login*/
 nav ul li a.login {
 	background: url(../images/nav-login.png) no-repeat;
 }
 
 nav ul li.active a.login,nav ul li a.login:hover {
 	background: url(../images/nav-login-active.png) no-repeat;
+}
+/*timetable*/
+nav ul li a.timetable {
+	background: url(../images/nav-timetable.png) no-repeat;
+}
+
+nav ul li.active a.timetable,nav ul li a.timetable:hover {
+	background: url(../images/nav-timetable-active.png) no-repeat;
+}
+
+/*Subnavigation*/
+.subnav {
+	min-width: 530px;
+	max-width:67%;
+	margin: 0 0 10px 0;
+	float: left;
+    min-height: 30px;
+    padding: 12px 15px;
+	background: url(../images/kachelTimetable.png) repeat scroll 0 0 transparent;
+}
+.subnav a{
+	color: #FFFFFF;
+    font-size: 10pt;
+}
+ul.subnav{
+	list-style: none;
+}
+ul.subnav li{
+	display:inline;
+	margin-right:10px
+}
+ul.subnav li a.last{
+	border-right:1px dotted;
+	padding-right:12px;
 }
 
 /* CONTENT ------------------------------------------ */
@@ -255,7 +289,7 @@ nav ul li.active a.login,nav ul li a.login:hover {
 }
 
 /* SIDEBAR ------------------------------------------ */
-aside {
+aside.sidebar {
 	width: 200px;
 	padding: 0 15px;
 	margin: 0 0 10px 0;

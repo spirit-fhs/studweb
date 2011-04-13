@@ -7,6 +7,12 @@
 			<action>index</action>
 			<class>home</class>
 		</home>
+		<timetable>
+			<label>Stundenplan</label>
+			<controller>timetable</controller>
+			<action>index</action>
+			<class>timetable</class>
+		</timetable>
 		<login>
 			<label>Anmelden</label>
 			<controller>login</controller>

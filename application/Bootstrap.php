@@ -32,7 +32,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
             $autoloader = Zend_Loader_Autoloader::getInstance();
             $autoloader->registerNamespace(array('Application_'));
-            
+            Zend_Controller_Action_HelperBroker::addPath(APPLICATION_PATH . '/modules/default/controllers/helpers');
             return $moduleLoader;           
     }
     
@@ -66,13 +66,32 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initNavigation ()
     {
-        $config = new Zend_Config_Xml(
-        APPLICATION_PATH . '/configs/navigation.xml', 'nav');
-        $container = new Zend_Navigation($config);
         $this->bootstrap('layout');
         $layout = $this->getResource('layout');
         $view = $layout->getView();
+        
+        $config = new Zend_Config_Xml(
+        APPLICATION_PATH . '/configs/navigation.xml', 'nav');
+        $container = new Zend_Navigation($config);
+
+        /*
+         * Load timetable navigaton depending on
+         * the todays date and the semester start/end dates
+         **/
+        /*
+        $today = mktime(0,0,0,2,1,2011);//strtotime('today');
+        if(mktime(0,0,0, 3, 1, date('Y')) <= $today && 
+        $today < mktime(0,0,0, 9, 1, date('Y')))
+            $xmlTag = 'SS';
+        else
+            $xmlTag = 'WS';
+
+        $subconfig = new Zend_Config_Xml(
+        APPLICATION_PATH . '/configs/timetables.xml', $xmlTag);
+        $container->findOneBy('label','Stundenplan')->addPages($subconfig);
+        */
         $view->getHelper('navigation')->navigation($container);
+
     }
     /**
      * Bootstrap the Auth + Acl

@@ -17,13 +17,20 @@
 <div class="clear"></div>
 </header>
 <div id="container"><nav>
-	<?=$this->navigation()->menu();?> <!-- This line will output the navigation -->
+	<?=$this->navigation()->menu()->setMaxDepth(0)?> <!-- This line will output the navigation -->
 </nav>
 
-<div id="doc"><section id="content">
-	<?php
-echo $this->layout()->content?> <!-- This line will output the content -->
-</section> <aside>
+<div id="doc">
+	<?=$this->navigation()->menu()->renderMenu(null, array(
+    'minDepth' => 1,
+    'maxDepth' => 1,
+    'onlyActiveBranch' => true,
+    'renderParents' => false,
+	'ulClass' => 'subnav'))?> <!-- This line will output the navigation -->
+<section id="content">
+	<?= $this->layout()->content?> <!-- This line will output the content -->
+</section> 
+<aside class="sidebar">
 <h2>Sidebar</h2>
 <p>Lorum ipsum...</p>
 </aside> <footer> <a href="#">Impressum</a> </footer></div>
