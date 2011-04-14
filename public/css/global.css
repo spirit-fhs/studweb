@@ -208,24 +208,39 @@ input.login {
 	float:right;
 	width: 65px;
 }
-form.comment{
-	width:500px;
+form.comments{
+	width:490px;
 	margin:0 auto 15px;
-	padding: 5px;
+	padding: 10px;
+	background-color:#ffffff;
+	border-top:2px solid #FF6666;
+	border-bottom:1px solid #FF6666;
+	position: relative;
 }
-.commentElement textarea{
-	width:500px;
+textarea#comment{
+	width:490px;
 	height: 100px;
 	border:1px solid #999999;
 }
-.commentButton{
+.commentsButton{
 	margin-top:10px;
 	float: right;
 }
-.commentButton .button{
+.commentsButton .button{
 	border-color:#ff0000 #990000 #990000 #ff0000;
 	background-color:#dd0000;	
 }
+label.overlabel {
+    color:#999;
+  }
+
+label.over-apply {
+    position:absolute;
+    top:10px;
+    left:12px;
+    z-index:1;
+    color:#999;
+  }
 /* NAVIGATION ------------------------------ */
 nav {
 	float: left;

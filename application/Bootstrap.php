@@ -15,30 +15,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $autoloader = Zend_Loader_Autoloader::getInstance();
             $autoloader->registerNamespace(array('Application_'));
     }
-    
-    /**
-     * Bootstrap the view headMeta
-     * 
-     * @return void
-     */
-    protected function _initMeta ()
-    {
-        $this->bootstrap('view');
-        $view = $this->getResource('view');
-        $view->headMeta()->appendHttpEquiv('Content-Type', 
-        'text/html;charset=utf-8');
-    }
-    /**
-     * Bootstrap the view doctype
-     * 
-     * @return void
-     */
-    protected function _initDoctype ()
-    {
-        $this->bootstrap('view');
-        $view = $this->getResource('view');
-        $view->doctype('HTML5');
-    }
     /**
      * Bootstrap the layout navigation
      * 
@@ -84,6 +60,31 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $db = $resource->getDbAdapter();
             Zend_Registry::set("db", $db);
         }
+    }
+    /**
+     * Bootstrap the View with all header data
+     * @return void
+     */
+    protected function _initView() {
+        $layout = $this->getResource('layout');
+        $view = $layout->getView();
+
+        $view->doctype('HTML5');
+        $view->headLink()->appendStylesheet($view->baseUrl().'/css/global.css');
+        
+        $view->headScript()->appendFile($view->baseUrl().'/js/label_over.js');
+        $view->headScript()->appendScript('$(document).ready(function() {$(".overlabel").labelOver("over-apply")});');
+        //to learn the IE HTML5 elements
+        $view->headScript()->appendFile($view->baseUrl().'/js/html5.js','text/javascript',array('conditional' => 'lt IE 9'));
+        
+        $view->headMeta()->appendHttpEquiv('Content-Type','text/html;charset=utf-8');
+        
+        $view->addHelperPath("ZendX/JQuery/View/Helper", "ZendX_JQuery_View_Helper");
+        $view->jQuery()->enable();
+        $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+        $viewRenderer->setView($view);
+        Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+            
     }
 }
 

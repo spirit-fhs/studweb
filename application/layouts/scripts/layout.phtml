@@ -2,12 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>SPIRIT = (ServicePoint: Information) => Read IT</title>
-  <?=$this->headLink()->appendStylesheet($this->baseUrl().'/css/global.css')?>
+  <?=$this->headLink()?>
   <?=$this->headMeta()?>
-  <!-- to learn the IE HTML5 elements  -->
-  <!--[if lt IE 9]>
-	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
+  <?=$this->jQuery()?>
+  <?=$this->headScript()?>
 </head>
 <body>
 <header id="header">
@@ -19,7 +17,6 @@
 <div id="container"><nav>
 	<?=$this->navigation()->menu()->setMaxDepth(0)?> <!-- This line will output the navigation -->
 </nav>
-
 <div id="doc">
 	<?=$this->navigation()->menu()->renderMenu(null, array(
     'minDepth' => 1,

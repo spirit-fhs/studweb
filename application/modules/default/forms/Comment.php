@@ -12,7 +12,7 @@ public $buttonDeco = array(
         array(
         'data' => 'HtmlTag'), 
     array(
-        'tag' => 'div', 'class' => 'commentButton')), 
+        'tag' => 'div', 'class' => 'commentsButton')), 
     array(
         'Label', array(
         'tag' => 'div')));
@@ -20,13 +20,8 @@ public $buttonDeco = array(
     public $elementDeco = array(
         'ViewHelper', 'Errors', 
     array(
-        array(
-        'data' => 'HtmlTag'), 
-    array(
-        'tag' => 'div', 'class' => 'commentElement')), 
-    array(
         'Label', array(
-        'tag' => 'div')));
+        'class' => 'overlabel')));
     
     public $hiddenDeco = array(
         'ViewHelper', 'Errors', 
@@ -41,7 +36,7 @@ public $buttonDeco = array(
        
 	public function init(){
 		$this->setMethod('post');
-	    $this->setAttrib('class', 'comment');
+	    $this->setAttrib('class', 'comments');
         $this->setDecorators(
         array(
             'FormElements', 
@@ -68,7 +63,6 @@ public $buttonDeco = array(
         ));
         
         
-        $this->comment->removeDecorator('label');
         $this->submit->removeDecorator('label');
         $this->csrf->removeDecorator('label');
 	}
