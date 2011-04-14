@@ -29,7 +29,6 @@ class EntryController extends Zend_Controller_Action
             $auth->getIdentity()->setLastEntry($id);
             
             $form = new Default_Form_Comment();
-            $form->setAction('/entry/process/');
             // Assign the form to the view
             $this->view->form = $form;
         }
