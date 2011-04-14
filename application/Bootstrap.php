@@ -6,6 +6,8 @@
  */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+    private $_acl = null;
+    private $_auth = null;
     /**
      * Autoloader
      * 
@@ -40,12 +42,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initAuth ()
     {
         $this->bootstrap('frontController');
-        $auth = Zend_Auth::getInstance();
-        $acl = new Application_Plugin_Auth_Acl();
+        $this->_auth = Zend_Auth::getInstance();
+        $this->_acl = new Application_Plugin_Auth_Acl();
         $this->getResource('frontController')
             ->registerPlugin(
-        new Application_Plugin_Auth_AccessControl($auth, $acl))
-            ->setParam('auth', $auth);
+        new Application_Plugin_Auth_AccessControl($this->_auth, $this->_acl))
+            ->setParam('auth', $this->_auth);
     }
     /**
      * Bootstrap the Database and save it to the Registry

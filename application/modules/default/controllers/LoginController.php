@@ -11,12 +11,7 @@ class LoginController extends Zend_Controller_Action
      */
     public function indexAction ()
     {
-        $storage = new Zend_Auth_Storage_Session();
-        $data = $storage->read();
-        if (! $data) {
-            $this->_redirect('login/login');
-        }
-        $this->view->username = $data->getCn();
+        $this->_redirect('/');
     }
     public function loginAction ()
     {
@@ -57,7 +52,7 @@ class LoginController extends Zend_Controller_Action
                         $filter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG);
                         $logger->addFilter($filter);
                         foreach ($messages as $i => $message) {
-                            if ($i -- > 1) { // $messages[2] und höher sind Log Nachrichten
+                            if ($i -- > 1) { // $messages[2] und hï¿½her sind Log Nachrichten
                                 $message = str_replace(
                                 "\n", "\n  ", $message);
                                 $logger->log("Ldap: $i: $message", 
@@ -75,7 +70,7 @@ class LoginController extends Zend_Controller_Action
 					$user = new Default_Model_User();
 					
                     // die gesamte Tabellenzeile in der Session speichern,
-                    // wobei das Passwort unterdrückt wird
+                    // wobei das Passwort unterdrï¿½ckt wird
                     if ('development' == APPLICATION_ENV) { //DB
                         $temp = $authAdapter->getResultRowObject(null, 'password');
 
@@ -102,7 +97,7 @@ class LoginController extends Zend_Controller_Action
 
                     }
 					$storage->write($user);
-                    $this->_redirect('login/index');
+                    $this->_redirect('/');
                 }
             }
         }

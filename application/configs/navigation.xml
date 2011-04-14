@@ -18,6 +18,16 @@
 			<controller>login</controller>
 			<action>login</action>
 			<class>login</class>
+			<resource>login</resource>
+			<privilege>login</privilege>
 		</login>
+		<logout>
+			<label>Abmelden</label>
+			<controller>login</controller>
+			<action>logout</action>
+			<class>login</class>
+			<resource>login</resource>
+			<privilege>logout</privilege>
+		</logout>
 	</nav>
 </config>

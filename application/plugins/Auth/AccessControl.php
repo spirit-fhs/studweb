@@ -20,7 +20,16 @@ class Application_Plugin_Auth_AccessControl extends Zend_Controller_Plugin_Abstr
         } else {
             $role = Application_Plugin_Auth_Roles::GUEST;
         }
-
+        
+        /*
+         * get the view to set the acl role 
+         * for the navigation
+         */
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getExistingHelper('ViewRenderer');
+        $viewRenderer->initView();
+        $view = $viewRenderer->view;
+        $view->navigation()->setRole($role);
+        
         // resources = controller
         // privilege = action
         $resource = $controller;
