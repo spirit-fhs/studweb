@@ -41,9 +41,6 @@ class Default_Form_Login extends Zend_Form
     public $hiddenDeco = array(
         'ViewHelper', 'Errors', 
     array(
-        'HtmlTag', array(
-        'tag' => 'div')), 
-    array(
         'Label', array(
         'tag' => 'div')), 
     array(
@@ -74,12 +71,12 @@ class Default_Form_Login extends Zend_Form
             'label' => 'Passwort:', 'required' => true, 
         	'decorators' => $this->elementDeco,
             'class' => 'login'));
-        $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-        
-        $this->addElement('image', 'submit', 
+
+        $this->addElement('submit', 'submit', 
         array(
             'ignore' => true,
-            'src' => $baseUrl.'/images/loginButton.png',
+            'class' => 'button',
+            'label' => 'Anmelden',
         	'decorators' => $this->buttonDeco));
         // And finally add some CSRF protection
         $this->addElement('hash', 'csrf', 

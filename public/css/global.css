@@ -77,6 +77,15 @@ a:hover{
 	text-decoration: underline;
 }
 
+.button{
+    border-style: solid;
+    border-width: 1px;
+	color: #FFFFFF;
+    cursor: pointer;
+    font-size: 11px;
+    padding: 1px 3px;	
+}
+
 form.login {
 	background:url(../images/kachelLogin.png) repeat;
 	padding:15px 15px;
@@ -99,7 +108,11 @@ input.login {
 	margin-top:3px;
 }
 .loginButton{
-	margin-top: 9px;
+	margin-top: 18px;
+}
+.loginButton .button{
+	border-color:#1d8687 #074848 #074848 #1d8687;
+	background-color:#18797a;
 }
 /***  News***/
 .news{
@@ -194,6 +207,24 @@ input.login {
 .commentsDate{
 	float:right;
 	width: 65px;
+}
+form.comment{
+	width:500px;
+	margin:0 auto 15px;
+	padding: 5px;
+}
+.commentElement textarea{
+	width:500px;
+	height: 100px;
+	border:1px solid #999999;
+}
+.commentButton{
+	margin-top:10px;
+	float: right;
+}
+.commentButton .button{
+	border-color:#ff0000 #990000 #990000 #ff0000;
+	background-color:#dd0000;	
 }
 /* NAVIGATION ------------------------------ */
 nav {

@@ -5,7 +5,7 @@
  * @version 
  */
 /**
- * getActualSemester Action Helper 
+ * ActualSemester Action Helper 
  * 
  * @uses actionHelper Zend_Controller_Action_Helper
  */
@@ -22,7 +22,6 @@ class Zend_Controller_Action_Helper_ActualSemester extends Zend_Controller_Actio
      */
     public function __construct ()
     {
-        // TODO Auto-generated Constructor
         $this->pluginLoader = new Zend_Loader_PluginLoader();
     }
     /**
