@@ -7,33 +7,13 @@
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     /**
-     * Bootstrap the modular file structure 
-     * 
-     * @return void
-     */
-    protected function _initSiteModules ()
-    {
-        //Don't forget to bootstrap the front controller as the resource may not been created yet...  
-        $this->bootstrap("frontController");
-        $front = $this->getResource("frontController");
-        //Add modules dirs to the controllers for default routes...  
-        $front->addModuleDirectory(APPLICATION_PATH . '/modules');
-    }
-    
-    /**
      * Autoloader
      * 
      */
     protected function _initAutoload()
     {
-            $moduleLoader = new Zend_Application_Module_Autoloader(array(
-                    'namespace' => '',
-                    'basePath' => APPLICATION_PATH));
-
             $autoloader = Zend_Loader_Autoloader::getInstance();
             $autoloader->registerNamespace(array('Application_'));
-            Zend_Controller_Action_HelperBroker::addPath(APPLICATION_PATH . '/modules/default/controllers/helpers');
-            return $moduleLoader;           
     }
     
     /**
@@ -73,23 +53,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $config = new Zend_Config_Xml(
         APPLICATION_PATH . '/configs/navigation.xml', 'nav');
         $container = new Zend_Navigation($config);
-
-        /*
-         * Load timetable navigaton depending on
-         * the todays date and the semester start/end dates
-         **/
-        /*
-        $today = mktime(0,0,0,2,1,2011);//strtotime('today');
-        if(mktime(0,0,0, 3, 1, date('Y')) <= $today && 
-        $today < mktime(0,0,0, 9, 1, date('Y')))
-            $xmlTag = 'SS';
-        else
-            $xmlTag = 'WS';
-
-        $subconfig = new Zend_Config_Xml(
-        APPLICATION_PATH . '/configs/timetables.xml', $xmlTag);
-        $container->findOneBy('label','Stundenplan')->addPages($subconfig);
-        */
         $view->getHelper('navigation')->navigation($container);
 
     }

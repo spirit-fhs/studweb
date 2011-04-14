@@ -8,11 +8,15 @@
 class TimetableController extends Zend_Controller_Action
 {
     public function init(){
-
+        /*
+         * Load timetable navigaton depending on
+         * the todays date and the semester start/end dates
+         **/
+        
         $xmlTag = $this->_helper->ActualSemester();
         $subconfig = new Zend_Config_Xml(
         APPLICATION_PATH . '/configs/timetables.xml', $xmlTag);
-        $nav = $this->view->navigation()->findOneBy('label','Stundenplan')->addPages($subconfig);;
+        $nav = $this->view->navigation()->findOneBy('label','Stundenplan')->setPages($subconfig->toArray());
     }
     
     /**
