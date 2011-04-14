@@ -156,6 +156,7 @@ input.login {
 }
 .newsOwner a{
 	color:#000000;
+	font-weight: bold;
 }
 .newsSubject{
 	float:left;
@@ -186,23 +187,30 @@ input.login {
 	background-color: #ffffff;
 	margin: 0 auto 15px;
 	width: 500px;
-	padding:5px;
+	padding:2px 5px 5px;
+	border-bottom: 1px solid #FF6666;
+    border-top: 2px solid #FF6666;
 }
 .commentsHead{
-	background-color: #ff6666;
+	border-bottom: 1px solid #999999;
+	padding-bottom: 2px;
 }
 .commentsContent{
-	margin-top:10px;
+	margin-top:5px;
 }
 .commentsFunctions{
 	margin-top:10px;
 }
+.commentsFunctions a {
+	color:#DD0000;
+}
 .commentsId{
 	float:left;
-	width: 50px;
+	width: 35px;
 }
 .commentsOwner{
 	float:left;
+	font-weight: bold;
 }
 .commentsDate{
 	float:right;
