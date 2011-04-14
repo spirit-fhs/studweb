@@ -62,6 +62,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
     }
     /**
+     * We need to initialize the request to get
+     * a valid baseUrl from the baseUrl view helper
+     * in the _initView.
+     * @return void
+     */
+    protected function _initBaseUrl() {
+        $this->bootstrap("frontController");
+        $front=$this->getResource("frontController");
+        $request=new Zend_Controller_Request_Http();
+        $front->setRequest($request);
+    }     
+    /**
      * Bootstrap the View with all header data
      * @return void
      */
@@ -70,6 +82,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view = $layout->getView();
 
         $view->doctype('HTML5');
+
         $view->headLink()->appendStylesheet($view->baseUrl().'/css/global.css');
         
         $view->headScript()->appendFile($view->baseUrl().'/js/label_over.js');
@@ -86,5 +99,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
             
     }
+
 }
 
