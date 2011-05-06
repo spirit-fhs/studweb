@@ -30,4 +30,11 @@
 			<privilege>logout</privilege>
 		</logout>
 	</nav>
+	<sidebar>
+		<geo>
+			<label>Geolocation API</label>
+			<controller>html5</controller>
+			<action>geo</action>
+		</geo>
+	</sidebar>
 </config>

@@ -15,7 +15,8 @@
 <div class="clear"></div>
 </header>
 <div id="container"><nav>
-	<?=$this->navigation()->menu()->setMaxDepth(0)?> <!-- This line will output the navigation -->
+	<?=$this->navigation()->menu()->renderMenu(Zend_Registry::get('mainMenu'),
+	array('maxDepth' => 0))?> <!-- This line will output the navigation -->
 </nav>
 <div id="doc">
 	<?=$this->navigation()->menu()->renderMenu(null, array(
@@ -28,8 +29,10 @@
 	<?= $this->layout()->content?> <!-- This line will output the content -->
 </section> 
 <aside class="sidebar">
-<h2>Sidebar</h2>
-<p>Lorum ipsum...</p>
+<h2>HTML5 Sidebar</h2>
+<?=$this->navigation()->menu()->renderMenu(Zend_Registry::get('Sidebar'),
+array('maxDepth' => 0,
+	'ulClass' => ''))?> <!-- This line will output the navigation -->
 </aside> <footer> <a href="#">Impressum</a> </footer></div>
 <div class="clear"></div>
 </div>

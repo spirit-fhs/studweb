@@ -31,7 +31,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $config = new Zend_Config_Xml(
         APPLICATION_PATH . '/configs/navigation.xml', 'nav');
         $container = new Zend_Navigation($config);
-        $view->getHelper('navigation')->navigation($container);
+        Zend_Registry::set("mainMenu", $container);
+
+        $config = new Zend_Config_Xml(
+        APPLICATION_PATH . '/configs/navigation.xml', 'sidebar');
+        $container = new Zend_Navigation($config);
+        Zend_Registry::set("Sidebar", $container);
+        //$view->getHelper('navigation')->navigation($container);
 
     }
     /**
