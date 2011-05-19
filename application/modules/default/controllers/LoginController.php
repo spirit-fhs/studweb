@@ -70,7 +70,7 @@ class LoginController extends Zend_Controller_Action
 					$user = new Default_Model_User();
 					
                     // die gesamte Tabellenzeile in der Session speichern,
-                    // wobei das Passwort unterdr�ckt wird
+                    // wobei das Passwort unterdrueckt wird
                     if ('development' == APPLICATION_ENV) { //DB
                         $temp = $authAdapter->getResultRowObject(null, 'password');
 

@@ -1,10 +1,10 @@
 <div class="comments">
     <div class="commentsHead">
 	    <div class="commentsId">#<?=$this->escape($this->comment->getId())?></div>
-    	<div class="commentsOwner"><?=$this->escape($this->comment->getUser())?></div>
-    	<div class="commentsDate"><time datetime="<?=$this->toHtml5Datetime($this->comment->getCrdate())?>"><?=$this->escape($this->comment->getCrdate())?></time></div>
+    	<div class="commentsOwner"><a name="<?=$this->escape($this->comment->getOwner())?>"><?=$this->escape($this->comment->getDisplayedName())?></a></div>
+    	<div class="commentsDate"><time datetime="<?=$this->toHtml5Datetime($this->comment->getCreationDate())?>"><?=$this->DateFormat($this->comment->getCreationDate())?></time></div>
     	<div class="clear"></div>
     </div>
-    <div class="commentsContent"><?=$this->escape($this->comment->getComment())?></div>
-    <div class="commentsFunctions"><?=$this->deleteCommentLink($this->comment->getUser(), $this->comment->getId())?></div>
+    <div class="commentsContent"><?=$this->escape($this->comment->getContent())?></div>
+    <div class="commentsFunctions"><?=$this->deleteCommentLink($this->comment->getOwner(), $this->comment->getId())?></div>
 </div>

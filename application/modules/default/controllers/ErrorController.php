@@ -62,6 +62,10 @@ class ErrorController extends Zend_Controller_Action
     public function noaccessAction(){
     	$this->view->message = "You have no access!";
     }
+    
+    public function notfoundAction(){
+    	$this->view->message = "Sorry News not found!";
+    }
 
 
 }

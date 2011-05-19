@@ -36,6 +36,7 @@ public $buttonDeco = array(
        
 	public function init(){
 		$this->setMethod('post');
+		$this->setAction(Zend_Controller_Front::getInstance()->getBaseUrl() .'/entry/process/');
 	    $this->setAttrib('class', 'comments');
         $this->setDecorators(
         array(

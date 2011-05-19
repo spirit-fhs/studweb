@@ -5,11 +5,11 @@
  * @version 
  */
 /**
- * toHtml5Datetime helper
+ * DateFormat helper
  *
  * @uses viewHelper Zend_View_Helper
  */
-class Zend_View_Helper_ToHtml5Datetime
+class Zend_View_Helper_DateFormat
 {
     /**
      * @var Zend_View_Interface 
@@ -18,10 +18,9 @@ class Zend_View_Helper_ToHtml5Datetime
     /**
      * 
      */
-    public function toHtml5Datetime ($time)
+    public function DateFormat ($time)
     {
-	    //$time = explode('.',$time); 
-        return date("Y-m-d",strtotime($time));
+        return date("d.m.Y H:s",strtotime($time));
     }
     /**
      * Sets the view field 

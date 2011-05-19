@@ -4,7 +4,6 @@ class Application_Plugin_Auth_Acl extends Zend_Acl
     public function __construct ()
     {
         // RESSOURCES
-        // TODO Change this
         /**
          * role = student
          * resource  = controller

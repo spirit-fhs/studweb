@@ -8,7 +8,16 @@ class EntryController extends Zend_Controller_Action
     public function indexAction ()
     {
         $entry = new Default_Model_Entry();
-        $this->view->entries = $entry->fetchAll();
+                
+        $request = $this->getRequest();
+        $filterParams = array();
+        if(null !== $owner = $request->getParam('owner')){
+            $filterParams['owner'] = $owner;
+        }
+        if(null !== $class = $request->getParam('class')){
+            $filterParams['class'] = $class;
+        }        
+        $this->view->entries = $entry->fetchAll($filterParams);
     }
     public function showAction ()
     {
@@ -17,6 +26,11 @@ class EntryController extends Zend_Controller_Action
 
         $entry = new Default_Model_Entry();
         $this->view->entry = $entry->find($id);
+        // no news found
+        if($this->view->entry->getId() == null){
+            $this->_redirect('error/notFound');
+        }
+            
 
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity() && is_object($auth->getIdentity())) {

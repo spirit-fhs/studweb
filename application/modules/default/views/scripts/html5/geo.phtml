@@ -117,7 +117,9 @@ if(typeof navigator.geolocation !== 'undefined'){
 
 		// call the geolocation api
 		navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
-		/* How does it work in firefox?
+		/* How does firefox (or an other browser) knows where you are?
+		 * Its called "Google Location Services".
+		 * More information here:
 		 * http://www.mozilla.com/en/firefox/geolocation/
 		 **/
 		

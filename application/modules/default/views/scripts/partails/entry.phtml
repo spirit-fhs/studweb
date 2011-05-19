@@ -1,23 +1,28 @@
 <article class="news">
 <div class="newsHead">
-	<div class="newsSemester">SEMESTER: <?=$this->escape($this->entry->getSemester())?></div>
+<!-- // TODO vorbereitet für Link Generierung; zuerst muss-->
+	<div class="newsSemester">SEMESTER: <?=$this->escape($this->entry->getClasses())?><?= $this->MakeClassLinks()?></div>
 	<div class="newsId">NR: <?=$this->escape($this->entry->getId())?></div>
     <div class="newsOwner">VERFASSER: 
-    	<a name="<?=$this->escape($this->entry->getUser())?>"><?=$this->escape($this->entry->getDisplayName())?></a>
+    	<a href="<?=$this->url(array(
+    		'controller' => 'entry',
+    	    'action' => 'index',
+    	    'owner' =>$this->escape($this->entry->getOwner()) 
+    	),null,true)?>"><?=$this->escape($this->entry->getDisplayedName())?></a>
     </div>
 	<div class="clear"></div>
 </div>
 <div class="newsBody">
-	<div class="newsSubject"><h1><?=$this->escape($this->entry->getSubject())?></h1></div>
-	<div class="newsDate"><time datetime="<?=$this->toHtml5Datetime($this->entry->getCrdate())?>"><?=$this->escape($this->entry->getCrdate())?></time></div>
+	<div class="newsSubject"><h1><?=$this->escape($this->entry->getTitle())?></h1></div>
+	<div class="newsDate"><time datetime="<?=$this->toHtml5Datetime($this->entry->getCreationDate())?>"><?=$this->DateFormat($this->entry->getCreationDate())?></time></div>
 	<div class=clear></div>
 
 	<div class="newsContent"><?php $textile = new Application_Textile();
-	 echo $textile->TextileThis($this->entry->getNews())?></div>
+	 echo $textile->TextileThis($this->entry->getContent())?></div>
 </div>
 <div class="newsFooter">
 	<div class="newsMoreLink">
-		<a href="<?=$this->url(array('controller' => 'entry', 'action' => 'show', 'id' => $this->escape($this->entry->getId())))?>"
+		<a href="<?=$this->url(array('controller' => 'entry', 'action' => 'show', 'id' => $this->escape($this->entry->getId())),null,true)?>"
 		>...einzeln lesen!</a>
 	</div>
 	<div class="newsComments">Kommentare: <?=count($this->entry->getComments())?></div>

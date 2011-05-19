@@ -5,7 +5,8 @@
  * Utilizes the Data Mapper pattern to persist data. Represents a single 
  * entry.
  * @author	   Florian Schuhmann
- * @uses       Default_Model_EntryMapper
+ * @uses       Default_Model_EntryDbMapper
+ * @uses       Default_Model_EntryRestMapper
  * @package    Default
  * @subpackage Model
  */
@@ -18,30 +19,36 @@ class Default_Model_Entry
     /**
      * @var string
      */
-    protected $_user;
+    protected $_owner;
     /**
      * @var string
      */
-    protected $_subject;
+    protected $_title;
     /**
      * @var string
      */
-    protected $_news;
+    protected $_content;
     /**
      * @var string
      */
-    protected $_crdate;
+    protected $_creationDate;
     /**
      * @var Array 
      */
     protected $_comments;
     /**
-     * @var Default_Model_EntryMapper
+     * @var Default_Model_EntryDbMapper / Default_Model_EntryRestMapper
      */
     protected $_mapper;
-
-    protected $_displayName;
-    protected $_semester;
+    /**
+     * @var string
+     */
+    protected $_displayedName;
+    /**
+     * TODO change Type
+     * @var unknown_type
+     */
+    protected $_classes;
     /**
      * @return the $_comments
      */
@@ -116,44 +123,44 @@ class Default_Model_Entry
         return $this;
     }
     /**
-     * Set entry news
+     * Set entry content
      * 
-     * @param  string $news 
+     * @param  string $content 
      * @return Default_Model_Entry
      */
-    public function setNews ($news)
+    public function setContent ($content)
     {
-        $this->_news = (string) $news;
+        $this->_content = (string) $content;
         return $this;
     }
     /**
-     * Get entry news
+     * Get entry content
      * 
      * @return null|string
      */
-    public function getNews ()
+    public function getContent ()
     {
-        return $this->_news;
+        return $this->_content;
     }
     /**
-     * Set entry subject
+     * Set entry title
      * 
-     * @param  string $subject
+     * @param  string $title
      * @return Default_Model_Entry
      */
-    public function setSubject ($subject)
+    public function setTitle ($title)
     {
-        $this->_subject = (string) $subject;
+        $this->_title = (string) $title;
         return $this;
     }
     /**
-     * Get entry subject
+     * Get entry title
      * 
      * @return null|string
      */
-    public function getSubject ()
+    public function getTitle ()
     {
-        return $this->_subject;
+        return $this->_title;
     }
     /**
      * Set created timestamp
@@ -161,9 +168,9 @@ class Default_Model_Entry
      * @param  string $ts 
      * @return Default_Model_Entry
      */
-    public function setCrdate ($ts)
+    public function setCreationDate ($ts)
     {
-        $this->_crdate = $ts;
+        $this->_creationDate = $ts;
         return $this;
     }
     /**
@@ -171,29 +178,29 @@ class Default_Model_Entry
      * 
      * @return string
      */
-    public function getCrdate ()
+    public function getCreationDate ()
     {
-        return $this->_crdate;
+        return $this->_creationDate;
     }
     /**
-     * Set created user
+     * Set created owner
      * 
-     * @param  string $user 
+     * @param  string $owner 
      * @return Default_Model_Entry
      */
-    public function setUser ($user)
+    public function setOwner ($owner)
     {
-        $this->_user = $user;
+        $this->_owner = $owner;
         return $this;
     }
     /**
-     * Get entry user
+     * Get entry owner
      * 
      * @return string
      */
-    public function getUser ()
+    public function getOwner ()
     {
-        return $this->_user;
+        return $this->_owner;
     }
     /**
      * Set entry id
@@ -229,14 +236,17 @@ class Default_Model_Entry
     /**
      * Get data mapper
      *
-     * Lazy loads Default_Model_EntryMapper instance if no mapper registered.
+     * Lazy loads Default_Model_EntryDbMapper / Default_Model_EntryRestMapper instance if no mapper registered.
      * 
-     * @return Default_Model_EntryMapper
+     * @return Default_Model_EntryDbMapper / Default_Model_EntryRestMapper
      */
     public function getMapper ()
     {
         if (null === $this->_mapper) {
-            $this->setMapper(new Default_Model_EntryMapper());
+            if ('development' == APPLICATION_ENV)
+                $this->setMapper(new Default_Model_EntryDbMapper());
+            else
+                $this->setMapper(new Default_Model_EntryRestMapper());
         }
         return $this->_mapper;
     }
@@ -258,44 +268,40 @@ class Default_Model_Entry
      * 
      * @return array
      */
-    public function fetchAll ()
+    public function fetchAll (array $filterParams = array())
     {
-        return $this->getMapper()->fetchAll();
+        return $this->getMapper()->fetchAll($filterParams);
     }
-	/**
+    /**
      * @return null|string
      */
-    public function getDisplayName ()
+    public function getDisplayedName ()
     {
-        return $this->_displayName;
+        return $this->_displayedName;
     }
-
-	/**
-     * @param string $_displayName
+    /**
+     * @param string $_displayedName
      * @return Default_Model_Entry
      */
-    public function setDisplayName ($_displayName)
+    public function setDisplayedName ($_displayedName)
     {
-        $this->_displayName = $_displayName;
+        $this->_displayedName = $_displayedName;
         return $this;
     }
-	/**
+    /**
      * @return null|string
      */
-    public function getSemester ()
+    public function getClasses ()
     {
-        return $this->_semester;
+        return $this->_classes;
     }
-
-	/**
-     * @param string $_semester
+    /**
+     * @param string $_classes
      * @return Default_Model_Entry
      */
-    public function setSemester ($_semester)
+    public function setClasses ($_classes)
     {
-        $this->_semester = $_semester;
+        $this->_classes = $_classes;
         return $this;
     }
-
-
 }

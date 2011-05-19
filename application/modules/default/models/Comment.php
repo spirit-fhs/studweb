@@ -22,20 +22,23 @@ class Default_Model_Comment
     /**
      * @var string
      */
-    protected $_user;
+    protected $_owner;
     /**
      * @var string
      */
-    protected $_comment;
+    protected $_content;
     /**
      * @var string
      */
-    protected $_crdate;
+    protected $_creationDate;
     /**
      * @var Default_Model_CommentMapper
      */
     protected $_mapper;
-
+    /**
+     * @var string
+     */
+    protected $_displayedName;
 	/**
      * Constructor
      * 
@@ -96,24 +99,24 @@ class Default_Model_Comment
         return $this;
     }
     /**
-     * Set comment
+     * Set content
      * 
-     * @param  string $comment 
+     * @param  string $content 
      * @return Default_Model_Comment
      */
-    public function setComment ($comment)
+    public function setContent ($content)
     {
-        $this->_comment = (string) $comment;
+        $this->_content = (string) $content;
         return $this;
     }
     /**
-     * Get comment
+     * Get content
      * 
      * @return null|string
      */
-    public function getComment ()
+    public function getContent ()
     {
-        return $this->_comment;
+        return $this->_content;
     }
     /**
      * Set created timestamp
@@ -121,9 +124,9 @@ class Default_Model_Comment
      * @param  string $ts 
      * @return Default_Model_Comment
      */
-    public function setCrdate ($ts)
+    public function setCreationDate ($ts)
     {
-        $this->_crdate = $ts;
+        $this->_creationDate = $ts;
         return $this;
     }
     /**
@@ -131,29 +134,29 @@ class Default_Model_Comment
      * 
      * @return string
      */
-    public function getCrdate ()
+    public function getCreationDate ()
     {
-        return $this->_crdate;
+        return $this->_creationDate;
     }
     /**
-     * Set created user
+     * Set created owner
      * 
-     * @param  string $user 
+     * @param  string $owner 
      * @return Default_Model_Comment
      */
-    public function setUser ($user)
+    public function setOwner ($owner)
     {
-        $this->_user = $user;
+        $this->_owner = $owner;
         return $this;
     }
     /**
-     * Get comment user
+     * Get comment owner
      * 
      * @return string
      */
-    public function getUser ()
+    public function getOwner ()
     {
-        return $this->_user;
+        return $this->_owner;
     }
     /**
      * Set comment id
@@ -210,7 +213,10 @@ class Default_Model_Comment
     public function getMapper ()
     {
         if (null === $this->_mapper) {
-            $this->setMapper(new Default_Model_CommentMapper());
+            if ('development' == APPLICATION_ENV)
+                $this->setMapper(new Default_Model_CommentDbMapper());
+            else
+                $this->setMapper(new Default_Model_CommentRestMapper());
         }
         return $this->_mapper;
     }
@@ -254,4 +260,21 @@ class Default_Model_Comment
     {
         return $this->getMapper()->delete($where);
     }
+	/**
+     * @return the $_displayedName
+     */
+    public function getDisplayedName ()
+    {
+        return $this->_displayedName;
+    }
+
+	/**
+     * @param string $_displayedName
+     */
+    public function setDisplayedName ($_displayedName)
+    {
+        $this->_displayedName = $_displayedName;
+        return $this;
+    }
+
 }

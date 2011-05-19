@@ -5,6 +5,5 @@ echo $this->partial('partails/entry.phtml', $this->entry);
 $this->partialLoop()->setObjectKey('comment');
 echo $this->partialLoop('partails/comment.phtml', $this->entry->comments);
 if (isset($this->form)) {
-    $this->form->setAction($this->baseUrl().'/entry/process/');
     echo $this->form;
 }

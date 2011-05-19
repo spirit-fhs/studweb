@@ -12,7 +12,7 @@ class Html5Controller extends Zend_Controller_Action
      */
     public function indexAction ()
     {
-        // TODO Auto-generated Html5Controller::indexAction() default action
+
     }
     public function geoAction()
     {
