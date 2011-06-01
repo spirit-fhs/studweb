@@ -26,7 +26,7 @@ class Default_Service_Spirit extends Zend_Rest_Client
         $client = self::getHttpClient();
         $client->setHeaders(array(
             'Accept' => 'application/'.$this->getResponseType(),
-        	'Accept-Charset' => 'ISO-8859-1,urf-8'
+        	'Accept-Charset' => 'ISO-8859-1,utf-8'
         ));
     }
     /**
