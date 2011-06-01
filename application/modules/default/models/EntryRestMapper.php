@@ -70,7 +70,7 @@ class Default_Model_EntryRestMapper
             $comment = new Default_Model_Comment();
             $comment->setContent($values->content)
                     ->setCreationDate($values->creationDate)
-                    ->setEntryId($result[0]->id)
+                    ->setEntryId($result[0]->news_id)
                     ->setId($values->id)
                     //->setOwner($values->owner)
                     ->setDisplayedName($values->displayedName);
@@ -78,18 +78,18 @@ class Default_Model_EntryRestMapper
         }
         
         //convert classes from stdClass to string
-        $classes ='';
+        /*$classes ='';
         foreach ($result[0]->classes as $class){
             $classes .= $class->title . ' ';
-        }
+        }*/
         //put all in the $entry
-        $entry->setId($result[0]->id)
+        $entry->setNews_id($result[0]->news_id)
             ->setTitle($result[0]->title)
             ->setContent($result[0]->content)
             ->setCreationDate($result[0]->creationDate)
-            //->setOwner($result[0]->owner)
+            ->setOwner($result[0]->owner)
             ->setDisplayedName($result[0]->displayedName)
-            ->setClasses($classes)
+            ->setClasses($result[0]->classes)
             ->setComments($comments);
     }
     /**
@@ -113,7 +113,7 @@ class Default_Model_EntryRestMapper
                 $comment = new Default_Model_Comment();
                 $comment->setContent($values->content)
                         ->setCreationDate($values->creationDate)
-                        ->setEntryId($row->id)
+                        ->setEntryId($row->news_id)
                         ->setId($values->id)
                         //->setOwner($values->owner)
                         ->setDisplayedName($values->displayedName);
@@ -121,19 +121,20 @@ class Default_Model_EntryRestMapper
             }
 
             //convert classes from stdClass to string
-            $classes ='';
+            /*$classes ='';
             foreach ($row->classes as $class){
                 $classes .= $class->title . ' ';
-            }
+            }*/
             
             //put all in the $entry
-            $entry->setId($row->id)
+            $entry->setNews_id($row->news_id)
                 ->setTitle($row->title)
                 ->setContent($row->content)
                 ->setCreationDate($row->creationDate)
-                //->setOwner($row->owner) // TODO add owner when the REST-Service provides him
+                ->setOwner($row->owner)
                 ->setDisplayedName($row->displayedName)
-                ->setClasses($classes)
+                //->setClasses($classes)
+                ->setClasses($row->classes)
                 ->setComments($comments);
             $entries[] = $entry;
             

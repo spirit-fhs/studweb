@@ -15,7 +15,7 @@ class Default_Model_Entry
     /**
      * @var int
      */
-    protected $_id;
+    protected $_news_id;
     /**
      * @var string
      */
@@ -46,7 +46,7 @@ class Default_Model_Entry
     protected $_displayedName;
     /**
      * TODO change Type
-     * @var unknown_type
+     * @var string // array
      */
     protected $_classes;
     /**
@@ -203,24 +203,24 @@ class Default_Model_Entry
         return $this->_owner;
     }
     /**
-     * Set entry id
+     * Set entry news_id
      * 
-     * @param  int $id 
+     * @param  int $news_id 
      * @return Default_Model_Entry
      */
-    public function setId ($id)
+    public function setNews_id ($news_id)
     {
-        $this->_id = (int) $id;
+        $this->_news_id = (int) $news_id;
         return $this;
     }
     /**
-     * Retrieve entry id
+     * Retrieve entry news_id
      * 
      * @return null|int
      */
-    public function getId ()
+    public function getNews_id ()
     {
-        return $this->_id;
+        return $this->_news_id;
     }
     /**
      * Set data mapper
@@ -253,14 +253,14 @@ class Default_Model_Entry
     /**
      * Find an entry
      *
-     * Resets entry state if matching id found.
+     * Resets entry state if matching news_id found.
      * 
-     * @param  int $id 
+     * @param  int $news_id 
      * @return Default_Model_Entry
      */
-    public function find ($id)
+    public function find ($news_id)
     {
-        $this->getMapper()->find($id, $this);
+        $this->getMapper()->find($news_id, $this);
         return $this;
     }
     /**

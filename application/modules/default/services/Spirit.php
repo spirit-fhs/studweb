@@ -6,9 +6,12 @@
  */
 class Default_Service_Spirit extends Zend_Rest_Client
 {
-    //protected $_uri = 'http://212.201.64.226:8443/';
-    protected $_uri = 'http://spiritdev.fh-schmalkalden.de/';
-    protected $_prefix = '/database';
+    protected $_uri = 'https://212.201.64.226:8443/';
+    protected $_prefix = '/fhs-spirit';
+
+    //protected $_uri = 'http://spiritdev.fh-schmalkalden.de/';
+    //protected $_prefix = '/database';
+    
     protected $_params = array();
     protected $_filterParams = array();
     protected $_responseType = 'json';

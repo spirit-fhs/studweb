@@ -14,20 +14,23 @@ class EntryController extends Zend_Controller_Action
         if(null !== $owner = $request->getParam('owner')){
             $filterParams['owner'] = $owner;
         }
-        if(null !== $class = $request->getParam('class')){
-            $filterParams['class'] = $class;
-        }        
-        $this->view->entries = $entry->fetchAll($filterParams);
+        if(null !== $classes = $request->getParam('classes')){
+            $filterParams['classes'] = $classes;
+        }
+        
+        if(count($this->view->entries = $entry->fetchAll($filterParams)) == 0){
+            $this->_redirect('error/notFound');
+        }
     }
     public function showAction ()
     {
         $request = $this->getRequest();
-        $id = $request->getParam('id');
+        $news_id = $request->getParam('news_id');
 
         $entry = new Default_Model_Entry();
-        $this->view->entry = $entry->find($id);
+        $this->view->entry = $entry->find($news_id);
         // no news found
-        if($this->view->entry->getId() == null){
+        if($this->view->entry->getNews_id() == null){
             $this->_redirect('error/notFound');
         }
             
@@ -40,7 +43,7 @@ class EntryController extends Zend_Controller_Action
         }
         $acl = new Application_Plugin_Auth_Acl();
         if ($acl->isAllowed($role, 'entry', 'process')) {
-            $auth->getIdentity()->setLastEntry($id);
+            $auth->getIdentity()->setLastEntry($news_id);
             
             $form = new Default_Form_Comment();
             // Assign the form to the view
@@ -61,14 +64,18 @@ class EntryController extends Zend_Controller_Action
                 // start integrating that data sumitted via the form
                 // into our model:
                 $values = $form->getValues();
-                $values['user'] = $auth->getIdentity()->getUid();
+                $values['owner'] = $auth->getIdentity()->getUid();
                 $values['entryId'] = $auth->getIdentity()->getLastEntry();
-                $model = new Default_Model_Comment($values);
+                
+                if(APPLICATION_ENV == 'development')
+                    $values['displayedName'] = $auth->getIdentity()->getUid();
+                
+                    $model = new Default_Model_Comment($values);
                 $model->save();
                  // Now that we have saved our model, lets url redirect
                  // to a new location.
                 return $this->_helper->redirector->gotoSimple(
-                'show', 'entry', null, array('id' => $values['entryId']));
+                'show', 'entry', null, array('news_id' => $values['entryId']));
             }
         }
         return $this->_helper->redirector->gotoSimple('index', 'entry');
@@ -81,12 +88,12 @@ class EntryController extends Zend_Controller_Action
         if($auth->hasIdentity()){
             $lastEntry=$auth->getIdentity()->getLastEntry();
             $model = new Default_Model_Comment();
-            $cruser=$model->find($id)->getUser();
+            $cruser=$model->find($id)->getOwner();
             if($auth->getIdentity()->getUid() == $cruser){
                 $model->delete($id);
             }
             return $this->_helper->redirector->gotoSimple(
-                'show', 'entry', null, array('id' => $lastEntry));            
+                'show', 'entry', null, array('news_id' => $lastEntry));            
         }
         return $this->_helper->redirector->gotoSimple('index', 'entry');        
     }

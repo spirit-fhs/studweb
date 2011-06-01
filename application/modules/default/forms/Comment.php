@@ -46,7 +46,7 @@ public $buttonDeco = array(
             'tag' => 'div')), 'Form'));
         		
         $this->addElement(
-            'textarea', 'comment', array(
+            'textarea', 'content', array(
                 'label' => 'Kommentar',
                 'required' => true,
         		'decorators' => $this->elementDeco,

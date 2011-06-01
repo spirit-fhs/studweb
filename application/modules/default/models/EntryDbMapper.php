@@ -54,24 +54,30 @@ class Default_Model_EntryDbMapper
      * @uses   Default_Model_Comment $comment,$comments
      * @return void
      */
-    public function find ($id, Default_Model_Entry $entry)
+    public function find ($news_id, Default_Model_Entry $entry)
     {
-        $result = $this->getDbTable()->find((int)$id);
+        $result = $this->getDbTable()->find((int)$news_id);
         if (0 == count($result)) {
             return;
         }
         $row = $result->current();
         
         $comment = new Default_Model_Comment();
-        $comments = $comment->fetchAll($row->id);
-            
-        $entry->setId($row->id)
+        $comments = $comment->fetchAll($row->news_id);
+        
+    	// hook to filter with class
+    	// because REST provides an array with objects 
+    	$class = new stdClass();
+    	$class->id = $row->classes;
+    	$class->title =$row->classes;
+    	
+        $entry->setNews_id($row->news_id)
             ->setTitle($row->title)
             ->setContent($row->content)
             ->setCreationDate($row->creationDate)
             ->setOwner($row->owner)
             ->setDisplayedName($row->displayedName)
-            ->setClasses($row->classes)
+            ->setClasses(array($class))
             ->setComments($comments);
     }
     /**
@@ -85,7 +91,6 @@ class Default_Model_EntryDbMapper
         $table = $this->getDbTable();
         $filterParamsDb = array();
         foreach ($filterParams as $k => $v) {
-            if($k == 'class') $k='classes';
             $filterParamsDb[$k . ' = ?'] = $v;
         }
         $resultSet = $table->fetchAll($filterParamsDb);
@@ -93,15 +98,21 @@ class Default_Model_EntryDbMapper
         foreach ($resultSet as $row) {
             $entry = new Default_Model_Entry();
             $comment = new Default_Model_Comment();
-        	$comments = $comment->fetchAll($row->id);
+        	$comments = $comment->fetchAll($row->news_id);
             
-        	$entry->setId($row->id)
+        	// hook to filter with class
+        	// because REST provides an array with objects 
+        	$class = new stdClass();
+        	$class->id = $row->classes;
+        	$class->title =$row->classes;
+        	
+        	$entry->setNews_id($row->news_id)
                 ->setTitle($row->title)
                 ->setContent($row->content)
                 ->setCreationDate($row->creationDate)
                 ->setOwner($row->owner)
                 ->setDisplayedName($row->displayedName)
-                ->setClasses($row->classes)
+                ->setClasses(array($class))
                 ->setComments($comments);
             $entries[] = $entry;
         }

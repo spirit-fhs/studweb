@@ -1,8 +1,13 @@
 <article class="news">
 <div class="newsHead">
-<!-- // TODO vorbereitet für Link Generierung; zuerst muss-->
-	<div class="newsSemester">SEMESTER: <?=$this->escape($this->entry->getClasses())?><?= $this->MakeClassLinks()?></div>
-	<div class="newsId">NR: <?=$this->escape($this->entry->getId())?></div>
+	<div class="newsSemester">SEMESTER: <?
+	// changes the ObjectKey for the partail to "class" 
+	$this->partialLoop()->setObjectKey('class');
+	echo $this->partialLoop('partails/classesLinks.phtml', $this->entry->getClasses());
+	// switch back to "entry" for ObjectKey
+	$this->partialLoop()->setObjectKey('entry');
+	?></div>
+	<div class="newsId">NR: <?=$this->escape($this->entry->getNews_id())?></div>
     <div class="newsOwner">VERFASSER: 
     	<a href="<?=$this->url(array(
     		'controller' => 'entry',
@@ -22,7 +27,7 @@
 </div>
 <div class="newsFooter">
 	<div class="newsMoreLink">
-		<a href="<?=$this->url(array('controller' => 'entry', 'action' => 'show', 'id' => $this->escape($this->entry->getId())),null,true)?>"
+		<a href="<?=$this->url(array('controller' => 'entry', 'action' => 'show', 'news_id' => $this->escape($this->entry->getNews_id())),null,true)?>"
 		>...einzeln lesen!</a>
 	</div>
 	<div class="newsComments">Kommentare: <?=count($this->entry->getComments())?></div>
