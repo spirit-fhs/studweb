@@ -20,7 +20,6 @@ class LoginController extends Zend_Controller_Action
             return $this->_redirect('login/index');
         }
         $form = new Default_Form_Login();
-        $this->view->form = $form;
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($_POST)) {
                 $data = $form->getValues();
@@ -61,9 +60,15 @@ class LoginController extends Zend_Controller_Action
                         }
                     }
                 }
-                if (! $result->isValid()) {
-                    $messages = $result->getMessages();
-                    $view->message = $messages[0];
+                if (!$result->isValid()) {
+                    // Needed for debugging
+                    //$messages = $result->getMessages();
+                    
+                    // User gets this message if:
+                    //     username and password did not match or
+                    //     username is not found
+                    
+                    $form->setDescription('Invalid credentials provided');
                 } else {
                     $storage = $auth->getStorage();
 					
@@ -101,6 +106,7 @@ class LoginController extends Zend_Controller_Action
                 }
             }
         }
+        $this->view->form = $form;
     }
     public function logoutAction ()
     {
