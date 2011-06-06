@@ -9,7 +9,7 @@
  * @package    Default
  * @subpackage Model
  */
-class Default_Model_EntryRestMapper
+class Default_Model_Mapper_EntryRestMapper
 {
     /**
      * @var Default_Service_Spirit
@@ -19,7 +19,7 @@ class Default_Model_EntryRestMapper
      * Specify Default_Service_Spirit instance to use for data operations
      * 
      * @param  Default_Service_Spirit $service 
-     * @return Default_Model_EntryRestMapper
+     * @return Default_Model_Mapper_EntryRestMapper
      */
     public function setService ($service)
     {
@@ -77,11 +77,13 @@ class Default_Model_EntryRestMapper
             $comments[] = $comment; 
         }
         
-        //convert classes from stdClass to string
-        /*$classes ='';
+        //convert classes from stdClass to Default_Model_Class
+        $classes = array();
         foreach ($result[0]->classes as $class){
-            $classes .= $class->title . ' ';
-        }*/
+            $c = new Default_Model_Class();
+            $c->setClass_id($class->id)->setTitle($class->title);
+            $classes[] = $c;
+        }
         //put all in the $entry
         $entry->setNews_id($result[0]->news_id)
             ->setTitle($result[0]->title)
@@ -89,7 +91,7 @@ class Default_Model_EntryRestMapper
             ->setCreationDate($result[0]->creationDate)
             ->setOwner($result[0]->owner)
             ->setDisplayedName($result[0]->displayedName)
-            ->setClasses($result[0]->classes)
+            ->setClasses($classes)
             ->setComments($comments);
     }
     /**
@@ -120,11 +122,13 @@ class Default_Model_EntryRestMapper
                 $comments[] = $comment; 
             }
 
-            //convert classes from stdClass to string
-            /*$classes ='';
-            foreach ($row->classes as $class){
-                $classes .= $class->title . ' ';
-            }*/
+                //convert classes from stdClass to Default_Model_Class
+                $classes = array();
+                foreach ($row->classes as $class){
+                    $c = new Default_Model_Class();
+                    $c->setClass_id($class->id)->setTitle($class->title);
+                    $classes[] = $c;
+                }
             
             //put all in the $entry
             $entry->setNews_id($row->news_id)
@@ -133,8 +137,7 @@ class Default_Model_EntryRestMapper
                 ->setCreationDate($row->creationDate)
                 ->setOwner($row->owner)
                 ->setDisplayedName($row->displayedName)
-                //->setClasses($classes)
-                ->setClasses($row->classes)
+                ->setClasses($classes)
                 ->setComments($comments);
             $entries[] = $entry;
             

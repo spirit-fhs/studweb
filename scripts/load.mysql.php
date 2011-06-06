@@ -2,6 +2,9 @@
 // scripts/load.mysql.php
 /**
  * Script for creating and loading database
+ * @author	   Florian Schuhmann
+ * @package    Default
+ * @subpackage installScript
  */
 // Initialize the application path and autoloading
 defined('APPLICATION_PATH') ||

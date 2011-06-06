@@ -1,15 +1,13 @@
 <?php
 /**
- * Html5Controller
- * 
- * @author Florian Schuhmann
- * @version 
+ * This controller is used to show some HTML5 features.
+ *  
+ * @author	   Florian Schuhmann
+ * @package    Default
+ * @subpackage Controllers
  */
 class Html5Controller extends Zend_Controller_Action
 {
-    /**
-     * The default action - show the home page
-     */
     public function indexAction ()
     {
 

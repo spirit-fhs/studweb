@@ -9,42 +9,42 @@
  * @package    Default
  * @subpackage Model
  */
-class Default_Model_CommentRestMapper
+class Default_Model_Mapper_CommentDbMapper
 {
     /**
-     * @var Default_Service_Spirit
+     * @var Zend_Db_Table_Abstract
      */
-    protected $_service;
+    protected $_dbTable;
     /**
-     * Specify Default_Service_Spirit instance to use for data operations
+     * Specify Zend_Db_Table instance to use for data operations
      * 
-     * @param  Default_Service_Spirit $service 
-     * @return Default_Model_EntryRestMapper
+     * @param  Zend_Db_Table_Abstract $dbTable 
+     * @return Default_Model_Mapper_CommentMapper
      */
-    public function setService ($service)
+    public function setDbTable ($dbTable)
     {
-        if (is_string($service)) {
-            $service = new $service();
+        if (is_string($dbTable)) {
+            $dbTable = new $dbTable();
         }
-        if (! $service instanceof Zend_Rest_Client) {
-            throw new Exception('Invalid data gateway provided');
+        if (! $dbTable instanceof Zend_Db_Table_Abstract) {
+            throw new Exception('Invalid table data gateway provided');
         }
-        $this->_service = $service;
+        $this->_dbTable = $dbTable;
         return $this;
     }
     /**
-     * Get registered Default_Service_Spirit instance
+     * Get registered Zend_Db_Table instance
      *
-     * Lazy loads Default_Service_Spirit if no instance registered
+     * Lazy loads Default_Model_DbTable_Comment if no instance registered
      * 
-     * @return Default_Service_Spirit
+     * @return Zend_Db_Table_Abstract
      */
-    public function getService ()
+    public function getDbTable ()
     {
-        if (null === $this->_service) {
-            $this->setService('Default_Service_Spirit');
+        if (null === $this->_dbTable) {
+            $this->setDbTable('Default_Model_DbTable_Comment');
         }
-        return $this->_service;
+        return $this->_dbTable;
     }
     /**
      * Save a comment
@@ -55,16 +55,13 @@ class Default_Model_CommentRestMapper
     public function save (Default_Model_Comment $comment)
     {
         $data = array('content' => $comment->getContent(), 'owner' => $comment->getOwner(), 
-        'creationDate' => date('d.m.Y'), 'entryId' => $comment->getEntryId());
-        
-        $params = array('type'=>'json');
-        
+        'creationDate' => date('d.m.Y'), 'entryId' => $comment->getEntryId(),
+        'displayedName' =>$comment->getDisplayedName());
         if (null === ($id = $comment->getId())) {
             unset($data['id']);
-            
-            $this->getService()->saveComment($data, $params);
+            $this->getDbTable()->insert($data);
         } else {
-            $this->getService()->updateComment($data, array('id' => $id), $params);
+            $this->getDbTable()->update($data, array('id = ?' => $id));
         }
     }
     /**
@@ -76,20 +73,17 @@ class Default_Model_CommentRestMapper
      */
     public function find ($id, Default_Model_Comment $comment)
     {
-        $params = array('type'=>'json');
-        $result = $this->getService()->findComment((int)$id,$params);
-
-        // check if news available
+        $result = $this->getDbTable()->find((int)$id);
         if (0 == count($result)) {
             return;
         }
-        
-        $comment->setId($result[0]->id)
-        	->setEntryId($result[0]->entryId)
-            ->setContent($result[0]->content)
-            ->setCreationDate($result[0]->creationDate)
-            ->setOwner($result[0]->owner)
-            ->setDisplayedName($result[0]->displayedName);
+        $row = $result->current();
+        $comment->setId($row->id)
+        	->setEntryId($row->entryId)
+            ->setContent($row->content)
+            ->setCreationDate($row->creationDate)
+            ->setOwner($row->owner)
+            ->setDisplayedName($row->displayedName);
     }
     /**
      * Fetch all comments

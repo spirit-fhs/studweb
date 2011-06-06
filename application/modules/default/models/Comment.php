@@ -5,7 +5,7 @@
  * Utilizes the Data Mapper pattern to persist data. Represents a single 
  * comment.
  * @author	   Florian Schuhmann
- * @uses       Default_Model_CommentMapper
+ * @uses       Default_Model_Mapper_CommentMapper
  * @package    Default
  * @subpackage Model
  */
@@ -32,7 +32,7 @@ class Default_Model_Comment
      */
     protected $_creationDate;
     /**
-     * @var Default_Model_CommentMapper
+     * @var Default_Model_Mapper_CommentMapper
      */
     protected $_mapper;
     /**
@@ -179,7 +179,7 @@ class Default_Model_Comment
         return $this->_id;
     }
     /**
-	 * @return the $_entryId
+	 * @return int
 	 */
 	public function getEntryId() {
 		return $this->_entryId;
@@ -206,17 +206,17 @@ class Default_Model_Comment
     /**
      * Get data mapper
      *
-     * Lazy loads Default_Model_CommentMapper instance if no mapper registered.
+     * Lazy loads Default_Model_Mapper_CommentDbMapper / Default_Model_Mapper_CommentRestMapper instance if no mapper registered.
      * 
-     * @return Default_Model_CommentMapper
+     * @return Default_Model_Mapper_CommentDbMapper / Default_Model_Mapper_CommentRestMapper
      */
     public function getMapper ()
     {
         if (null === $this->_mapper) {
             if ('development' == APPLICATION_ENV)
-                $this->setMapper(new Default_Model_CommentDbMapper());
+                $this->setMapper(new Default_Model_Mapper_CommentDbMapper());
             else
-                $this->setMapper(new Default_Model_CommentRestMapper());
+                $this->setMapper(new Default_Model_Mapper_CommentRestMapper());
         }
         return $this->_mapper;
     }
@@ -261,7 +261,7 @@ class Default_Model_Comment
         return $this->getMapper()->delete($where);
     }
 	/**
-     * @return the $_displayedName
+     * @return string
      */
     public function getDisplayedName ()
     {

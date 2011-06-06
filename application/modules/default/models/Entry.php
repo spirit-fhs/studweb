@@ -5,8 +5,8 @@
  * Utilizes the Data Mapper pattern to persist data. Represents a single 
  * entry.
  * @author	   Florian Schuhmann
- * @uses       Default_Model_EntryDbMapper
- * @uses       Default_Model_EntryRestMapper
+ * @uses       Default_Model_Mapper_EntryDbMapper
+ * @uses       Default_Model_Mapper_EntryRestMapper
  * @package    Default
  * @subpackage Model
  */
@@ -37,7 +37,7 @@ class Default_Model_Entry
      */
     protected $_comments;
     /**
-     * @var Default_Model_EntryDbMapper / Default_Model_EntryRestMapper
+     * @var Default_Model_Mapper_EntryDbMapper / Default_Model_Mapper_EntryRestMapper
      */
     protected $_mapper;
     /**
@@ -45,8 +45,7 @@ class Default_Model_Entry
      */
     protected $_displayedName;
     /**
-     * TODO change Type
-     * @var string // array
+     * @var array Default_Model_Class
      */
     protected $_classes;
     /**
@@ -57,7 +56,7 @@ class Default_Model_Entry
         return $this->_comments;
     }
     /**
-     * @param field_type $_comments
+     * @param array $_comments
      */
     public function setComments ($_comments)
     {
@@ -236,17 +235,17 @@ class Default_Model_Entry
     /**
      * Get data mapper
      *
-     * Lazy loads Default_Model_EntryDbMapper / Default_Model_EntryRestMapper instance if no mapper registered.
+     * Lazy loads Default_Model_Mapper_EntryDbMapper / Default_Model_Mapper_EntryRestMapper instance if no mapper registered.
      * 
-     * @return Default_Model_EntryDbMapper / Default_Model_EntryRestMapper
+     * @return Default_Model_Mapper_EntryDbMapper / Default_Model_Mapper_EntryRestMapper
      */
     public function getMapper ()
     {
         if (null === $this->_mapper) {
             if ('development' == APPLICATION_ENV)
-                $this->setMapper(new Default_Model_EntryDbMapper());
+                $this->setMapper(new Default_Model_Mapper_EntryDbMapper());
             else
-                $this->setMapper(new Default_Model_EntryRestMapper());
+                $this->setMapper(new Default_Model_Mapper_EntryRestMapper());
         }
         return $this->_mapper;
     }

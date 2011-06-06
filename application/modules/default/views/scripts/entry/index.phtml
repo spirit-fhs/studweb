@@ -1,4 +1,12 @@
-<?php 
+<? 
+/**
+ * This is the index view
+ * 
+ * @author	   Florian Schuhmann
+ * @package    Default
+ * @subpackage viewScripts
+ */
+ 
 $this->partialLoop()->setObjectKey('entry');
 echo $this->partialLoop('partails/entry.phtml',$this->entries);
 ?>

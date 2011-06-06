@@ -1,13 +1,12 @@
 <?php
 /**
- *
- * @author Florian Schuhmann
- * @version 
- */
-/**
  * deleteCommentLink helper
- *
+ * 
+ * @author	   Florian Schuhmann
+ * @package    Default
+ * @subpackage viewHelper
  * @uses viewHelper Zend_View_Helper
+ *  
  */
 class Zend_View_Helper_DeleteCommentLink
 {
@@ -15,9 +14,10 @@ class Zend_View_Helper_DeleteCommentLink
      * @var Zend_View_Interface 
      */
     public $view;
-    /**
-     * 
-     */
+	/**
+	 * @param string $cruser
+	 * @param int $commentId
+	 */
     public function deleteCommentLink ($cruser,$commentId)
     {
         $auth = Zend_Auth::getInstance();

@@ -1,13 +1,12 @@
 <?php
 /**
- *
- * @author Florian Schuhmann
- * @version 
- */
-/**
  * toHtml5Datetime helper
  *
+ * @author	   Florian Schuhmann
+ * @package    Default
+ * @subpackage viewHelper
  * @uses viewHelper Zend_View_Helper
+ *  
  */
 class Zend_View_Helper_ToHtml5Datetime
 {
@@ -16,7 +15,7 @@ class Zend_View_Helper_ToHtml5Datetime
      */
     public $view;
     /**
-     * 
+     * @param timestamp $time
      */
     public function toHtml5Datetime ($time)
     {

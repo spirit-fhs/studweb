@@ -10,8 +10,11 @@ class IndexController extends Zend_Controller_Action
 {
     public function init ()
     {
-        /* Initialize action controller here */
     }
+    /**
+     * 
+     * this action only forwards to the indexAction of the EntryController
+     */
     public function indexAction ()
     {
         $this->_forward('index', 'entry');

@@ -1,4 +1,15 @@
 <?php
+/**
+ * This is the access control list with all resources, roles, privileges and theirs relationships.
+ * 
+ * @author	   Florian Schuhmann
+ * @package    Default
+ * @subpackage Plugin
+ * @uses Application_Plugin_Auth_Roles
+ * @uses Zend_Acl_Resource
+ * @uses Zend_View_Helper_Navigation_HelperAbstract
+ *
+ */
 class Application_Plugin_Auth_Acl extends Zend_Acl
 {
     public function __construct ()

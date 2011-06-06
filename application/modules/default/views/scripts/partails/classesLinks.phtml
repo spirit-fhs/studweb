@@ -1,6 +1,15 @@
+<? 
+/**
+ * This is the classesLinks partail
+ * 
+ * @author	   Florian Schuhmann
+ * @package    Default
+ * @subpackage viewScripts
+ */
+?>
 <a href="<?= $this->url(array(
             		'controller' => 'entry',
             	    'action' => 'index',
-            	    'classes' =>$this->class->id),null,true) ?>">
+            	    'classes' =>$this->class->class_id),null,true) ?>">
 <?=$this->class->title?></a>
 

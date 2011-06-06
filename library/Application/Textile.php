@@ -1,11 +1,10 @@
 <?php
-
 /**
- * Example: get XHTML from a given Textile-markup string ($string)
- *
- *        $textile = new Textile;
- *        echo $textile->TextileThis($string);
- *
+ * This is an integration of the textile parser from http://thresholdstate.com/.
+ * 
+ * @author	   Florian Schuhmann
+ * @package    Default
+ * @subpackage Addons
  */
 
 /*

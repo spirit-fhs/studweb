@@ -9,7 +9,7 @@
  * @package    Default
  * @subpackage Model
  */
-class Default_Model_EntryDbMapper
+class Default_Model_Mapper_EntryDbMapper
 {
     /**
      * @var Zend_Db_Table_Abstract
@@ -19,7 +19,7 @@ class Default_Model_EntryDbMapper
      * Specify Zend_Db_Table instance to use for data operations
      * 
      * @param  Zend_Db_Table_Abstract $dbTable 
-     * @return Default_Model_EntryDbMapper
+     * @return Default_Model_Mapper_EntryDbMapper
      */
     public function setDbTable ($dbTable)
     {
@@ -67,9 +67,9 @@ class Default_Model_EntryDbMapper
         
     	// hook to filter with class
     	// because REST provides an array with objects 
-    	$class = new stdClass();
-    	$class->id = $row->classes;
-    	$class->title =$row->classes;
+    	$class = new Default_Model_Class();
+    	$class->setClass_id($row->classes)
+    	      ->setTitle($row->class_title);
     	
         $entry->setNews_id($row->news_id)
             ->setTitle($row->title)
@@ -102,9 +102,9 @@ class Default_Model_EntryDbMapper
             
         	// hook to filter with class
         	// because REST provides an array with objects 
-        	$class = new stdClass();
-        	$class->id = $row->classes;
-        	$class->title =$row->classes;
+        	$class = new Default_Model_Class();
+        	$class->setClass_id($row->classes)
+        	      ->setTitle($row->class_title);
         	
         	$entry->setNews_id($row->news_id)
                 ->setTitle($row->title)

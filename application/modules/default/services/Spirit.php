@@ -1,20 +1,41 @@
 <?php
-/** 
- * @author Florian Schuhmann
+/**
+ * This is the Spirit REST service.
  * 
- * 
+ * @author	   Florian Schuhmann
+ * @package    Default
+ * @subpackage Service
  */
 class Default_Service_Spirit extends Zend_Rest_Client
 {
+    /**
+     * @var string URL of the REST service
+     */
     protected $_uri = 'https://212.201.64.226:8443/';
-    protected $_prefix = '/fhs-spirit';
+    /**
+     * @var string suffix of the URL
+     */
+    protected $_suffix = '/fhs-spirit';
 
+    // other server info
     //protected $_uri = 'http://spiritdev.fh-schmalkalden.de/';
-    //protected $_prefix = '/database';
+    //protected $_suffix = '/database';
     
+    /**
+     * @var array
+     */
     protected $_params = array();
+    /**
+     * @var array
+     */
     protected $_filterParams = array();
+    /**
+     * @var string
+     */
     protected $_responseType = 'json';
+    /**
+     * @var array
+     */
     protected $_responseTypes = array('xml', 'json');
     /**
      * 
@@ -122,6 +143,8 @@ class Default_Service_Spirit extends Zend_Rest_Client
      * 
      * @return stdClass
      * @param Zend_Http_Response $response
+     * @uses Zend_Json_Decoder
+     * @uses Zend_Rest_Client_Result
      */
     public function formatResponse(Zend_Http_Response $response)
     {
@@ -136,26 +159,27 @@ class Default_Service_Spirit extends Zend_Rest_Client
      * 
      * fetchs all news with comments
      * which passes the filter criteria
+     * @param array $filterParams
      * @param array $params
      */
     public function fetchAllNews(array $filterParams = array(), array $params = array()) {
         $this->setParams($params);
         $this->setFilterParams($filterParams);
         
-        $path = $this->_prefix . '/news';
+        $path = $this->_suffix . '/news';
 
         return $this->sendRequest('GET', $path);
     }
     /**
      * 
      * find one news with comments
-     * @param array $params
      * @param int $id
+     * @param array $params
      */
     public function findNews($id, array $params = array()) {
         $this->setParams($params);
         
-        $path = sprintf($this->_prefix . '/news/%s', trim(strtolower($id)));
+        $path = sprintf($this->_suffix . '/news/%s', trim(strtolower($id)));
         return $this->sendRequest('GET', $path);
     }
     // TODO add some functions for comments

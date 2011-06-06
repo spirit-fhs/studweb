@@ -1,10 +1,11 @@
 <?php
 /**
- * Entry table data gateway
+ * User table data gateway
  * 
  * @uses   Zend_Db_Table_Abstract
  * @author Florian Schuhmann
- * @version 
+ * @package    Default
+ * @subpackage DbTable 
  */
 class Default_Model_DbTable_Users extends Zend_Db_Table_Abstract
 {

@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Default ErrorController
  *
@@ -10,7 +8,10 @@
  */
 class ErrorController extends Zend_Controller_Action
 {
-
+    /**
+     * 
+     * This action is called when an error occurs somewhere.
+     */
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
@@ -48,7 +49,10 @@ class ErrorController extends Zend_Controller_Action
         
         $this->view->request   = $errors->request;
     }
-
+    /**
+     * 
+     * gets the log from the bootstrap if it is available
+     */
     public function getLog()
     {
         $bootstrap = $this->getInvokeArg('bootstrap');
@@ -58,13 +62,19 @@ class ErrorController extends Zend_Controller_Action
         $log = $bootstrap->getResource('Log');
         return $log;
     }
-    
+    /**
+     * 
+     * This action ist called if the user have no access.
+     */
     public function noaccessAction(){
     	$this->view->message = "You have no access!";
     }
-    
+    /**
+     * 
+     * This action is called if no news were found.
+     */
     public function notfoundAction(){
-    	$this->view->message = "Sorry News not found!";
+    	$this->view->message = "Sorry no News found!";
     }
 
 

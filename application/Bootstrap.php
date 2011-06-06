@@ -1,16 +1,22 @@
 <?php
 /**
- * Zend Bootstrap
+ * Bootstrap
  * @author	   Florian Schuhmann
  * @package    Default
  */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+    /**
+     * @var Zend_Acl
+     */
     private $_acl = null;
+    /**
+     * @var Zend_Auth
+     */
     private $_auth = null;
     /**
-     * Autoloader
-     * 
+     * init Autoloader
+     * @return void
      */
     protected function _initAutoload()
     {
