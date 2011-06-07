@@ -14,13 +14,13 @@ class Default_Model_Comment
     /**
      * @var int
      */
-    protected $_id;
+    protected $_comment_id;
     /**
      * @var int
      */
-    protected $_entryId;
+    protected $_news_id;
     /**
-     * @var string
+     * @var Default_Model_Owner
      */
     protected $_owner;
     /**
@@ -35,10 +35,6 @@ class Default_Model_Comment
      * @var Default_Model_Mapper_CommentMapper
      */
     protected $_mapper;
-    /**
-     * @var string
-     */
-    protected $_displayedName;
 	/**
      * Constructor
      * 
@@ -159,37 +155,37 @@ class Default_Model_Comment
         return $this->_owner;
     }
     /**
-     * Set comment id
+     * Set comment comment_id
      * 
-     * @param  int $id 
+     * @param  int $comment_id 
      * @return Default_Model_Comment
      */
-    public function setId ($id)
+    public function setComment_id ($comment_id)
     {
-        $this->_id = (int) $id;
+        $this->_comment_id = (int) $comment_id;
         return $this;
     }
     /**
-     * Retrieve comment id
+     * Retrieve comment comment_id
      * 
      * @return null|int
      */
-    public function getId ()
+    public function getComment_id ()
     {
-        return $this->_id;
+        return $this->_comment_id;
     }
     /**
 	 * @return int
 	 */
-	public function getEntryId() {
-		return $this->_entryId;
+	public function getNews_id() {
+		return $this->_news_id;
 	}
 
 	/**
-	 * @param int $_entryId
+	 * @param int $_news_id
 	 */
-	public function setEntryId($entryId) {
-		$this->_entryId = $entryId;
+	public function setNews_id($news_id) {
+		$this->_news_id = $news_id;
 		return $this;
 	}
     /**
@@ -260,21 +256,4 @@ class Default_Model_Comment
     {
         return $this->getMapper()->delete($where);
     }
-	/**
-     * @return string
-     */
-    public function getDisplayedName ()
-    {
-        return $this->_displayedName;
-    }
-
-	/**
-     * @param string $_displayedName
-     */
-    public function setDisplayedName ($_displayedName)
-    {
-        $this->_displayedName = $_displayedName;
-        return $this;
-    }
-
 }

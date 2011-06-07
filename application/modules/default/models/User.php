@@ -24,7 +24,7 @@ class Default_Model_User
     /**
      * @var string
      */
-    protected $_uid;
+    protected $_fhs_id;
     /**
      * @var string
      */
@@ -67,8 +67,8 @@ class Default_Model_User
 	/**
 	 * @return string
 	 */
-	public function getUid() {
-		return $this->_uid;
+	public function getFhs_id() {
+		return $this->_fhs_id;
 	}
 	/**
 	 * @return string
@@ -115,10 +115,10 @@ class Default_Model_User
 		return $this;		
 	}
 	/**
-	 * @param string $_uid
+	 * @param string $_fhs_id
 	 */
-	public function setUid($_uid) {
-		$this->_uid = $_uid;
+	public function setFhs_id($_fhs_id) {
+		$this->_fhs_id = $_fhs_id;
 		return $this;		
 	}
 	/**

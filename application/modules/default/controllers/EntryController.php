@@ -22,8 +22,8 @@ class EntryController extends Zend_Controller_Action
         if(null !== $owner = $request->getParam('owner')){
             $filterParams['owner'] = $owner;
         }
-        if(null !== $classes = $request->getParam('classes')){
-            $filterParams['classes'] = $classes;
+        if(null !== $class = $request->getParam('degreeClass')){
+            $filterParams['degreeClass'] = $class;
         }
         // check if their are news found
         if(count($this->view->entries = $entry->fetchAll($filterParams)) == 0){
@@ -93,13 +93,17 @@ class EntryController extends Zend_Controller_Action
                 
                 // Now we need some extra informations from the session
                 $auth = Zend_Auth::getInstance();
-                $values['owner'] = $auth->getIdentity()->getUid();
-                $values['entryId'] = $auth->getIdentity()->getLastEntry();
-
                 // Check if we are in development and therefore the DB is used.
                 // For the database use we need the following additional field.  
+                $owner = new Default_Model_Owner();
+                
                 if(APPLICATION_ENV == 'development')
-                    $values['displayedName'] = $auth->getIdentity()->getUid();
+                    $owner->setDisplayedName($auth->getIdentity()->getFhs_id());
+                
+                $owner->setFhs_id($auth->getIdentity()->getFhs_id());
+                $values['owner'] = $owner;
+                $values['news_id'] = $auth->getIdentity()->getLastEntry();
+
 
                 // creating a Default_Model_Comment with the subitted and 
                 //checked values and save it.
@@ -108,7 +112,7 @@ class EntryController extends Zend_Controller_Action
                  // Now that we have saved our model, lets url redirect
                  // to a new location.
                 return $this->_helper->redirector->gotoSimple(
-                'show', 'entry', null, array('news_id' => $values['entryId']));
+                'show', 'entry', null, array('news_id' => $values['news_id']));
             }
         }
         // If this action hasn't been POST'ed to we must url redirect.
@@ -121,7 +125,7 @@ class EntryController extends Zend_Controller_Action
      */
     public function deleteAction(){
         $request = $this->getRequest();
-        $id = $request->getParam('commentId');
+        $id = $request->getParam('comment_id');
         
         // check if the user is logged in
         $auth = Zend_Auth::getInstance();
@@ -134,7 +138,7 @@ class EntryController extends Zend_Controller_Action
             $cruser=$model->find($id)->getOwner();
             
             // check if the user is the owner of the comment
-            if($auth->getIdentity()->getUid() == $cruser){
+            if($auth->getIdentity()->getFhs_id() == $cruser->getFhs_id()){
                 // delete the comment
                 $model->delete($id);
             }

@@ -12,7 +12,7 @@
 	<div class="newsSemester">SEMESTER: <?
 	// changes the ObjectKey for the partail to "class" 
 	$this->partialLoop()->setObjectKey('class');
-	echo $this->partialLoop('partails/classesLinks.phtml', $this->entry->getClasses());
+	echo $this->partialLoop('partails/classesLinks.phtml', $this->entry->getDegreeClass());
 	// switch back to "entry" for ObjectKey
 	$this->partialLoop()->setObjectKey('entry');
 	?></div>
@@ -21,8 +21,7 @@
     	<a href="<?=$this->url(array(
     		'controller' => 'entry',
     	    'action' => 'index',
-    	    'owner' =>$this->escape($this->entry->getOwner()) 
-    	),null,true)?>"><?=$this->escape($this->entry->getDisplayedName())?></a>
+    	    'owner' =>$this->escape($this->entry->getOwner()->getFhs_id())),null,true)?>"><?=$this->escape($this->entry->getOwner()->getDisplayedName())?></a>
     </div>
 	<div class="clear"></div>
 </div>

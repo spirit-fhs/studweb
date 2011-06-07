@@ -47,27 +47,6 @@ class Default_Model_Mapper_CommentRestMapper
         return $this->_service;
     }
     /**
-     * Save a comment
-     * 
-     * @param  Default_Model_Comment $comment 
-     * @return void
-     */
-    public function save (Default_Model_Comment $comment)
-    {
-        $data = array('content' => $comment->getContent(), 'owner' => $comment->getOwner(), 
-        'creationDate' => date('d.m.Y'), 'entryId' => $comment->getEntryId());
-        
-        $params = array('type'=>'json');
-        
-        if (null === ($id = $comment->getId())) {
-            unset($data['id']);
-            
-            $this->getService()->saveComment($data, $params);
-        } else {
-            $this->getService()->updateComment($data, array('id' => $id), $params);
-        }
-    }
-    /**
      * Find a comment by id
      * 
      * @param  int $id 
@@ -83,13 +62,16 @@ class Default_Model_Mapper_CommentRestMapper
         if (0 == count($result)) {
             return;
         }
-        
-        $comment->setId($result[0]->id)
-        	->setEntryId($result[0]->entryId)
+
+        //convert classes from stdClass to Default_Model_Owner
+        $owner = new Default_Model_Owner();
+    	$owner->setFhs_id($result->owner)->setDisplayedName($result->displayedName); 
+
+        $comment->setComment_id($result[0]->comment_id)
+        	->setNews_id($result[0]->news_id)
             ->setContent($result[0]->content)
             ->setCreationDate($result[0]->creationDate)
-            ->setOwner($result[0]->owner)
-            ->setDisplayedName($result[0]->displayedName);
+            ->setOwner($owner);
     }
     /**
      * Fetch all comments
@@ -98,32 +80,23 @@ class Default_Model_Mapper_CommentRestMapper
      */
     public function fetchAll ($where)
     {
-        $where = $this->getDbTable()->getAdapter()->quoteInto('entryId=?', (int)$where,'SQLT_INT');
+        $where = $this->getDbTable()->getAdapter()->quoteInto('news_id=?', (int)$where,'SQLT_INT');
         $resultSet = $this->getDbTable()->fetchAll($where);
         $comments = array();
         foreach ($resultSet as $row) {
-            $comment = new Default_Model_Comment();
-            $comment->setId($row->id)
-            	->setEntryId($row->entryId)
+            //convert classes from stdClass to Default_Model_Owner
+            $owner = new Default_Model_Owner();
+        	$owner->setFhs_id($result->owner)->setDisplayedName($result->displayedName); 
+
+        	$comment = new Default_Model_Comment();
+            $comment->setComment_id($row->comment_id)
+            	->setNews_id($row->news_id)
                 ->setContent($row->content)
                 ->setCreationDate($row->creationDate)
-                ->setOwner($row->owner)
-                ->setDisplayedName($row->displayedName)
+                ->setOwner($owner)
                 ->setMapper($this);
             $comments[] = $comment;
         }
         return $comments;
     }
-    /**
-     * Delete comment
-     * 
-     * @return array
-     */
-    public function delete ($where)
-    {
-        $where = $this->getDbTable()->getAdapter()->quoteInto('id=?', (int)$where,'SQLT_INT');
-        $resultSet = $this->getDbTable()->delete($where);
-
-        return $resultSet;
-    }    
 }

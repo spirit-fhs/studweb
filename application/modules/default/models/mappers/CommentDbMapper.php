@@ -54,14 +54,14 @@ class Default_Model_Mapper_CommentDbMapper
      */
     public function save (Default_Model_Comment $comment)
     {
-        $data = array('content' => $comment->getContent(), 'owner' => $comment->getOwner(), 
-        'creationDate' => date('d.m.Y'), 'entryId' => $comment->getEntryId(),
-        'displayedName' =>$comment->getDisplayedName());
-        if (null === ($id = $comment->getId())) {
-            unset($data['id']);
+        $data = array('content' => $comment->getContent(), 'owner' => $comment->getOwner()->getFhs_id(), 
+        'creationDate' => date('d.m.Y'), 'news_id' => $comment->getNews_id(),
+        'displayedName' =>$comment->getOwner()->getDisplayedName());
+        if (null === ($id = $comment->getComment_id())) {
+            unset($data['comment_id']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('id = ?' => $id));
+            $this->getDbTable()->update($data, array('comment_id = ?' => $id));
         }
     }
     /**
@@ -78,12 +78,17 @@ class Default_Model_Mapper_CommentDbMapper
             return;
         }
         $row = $result->current();
-        $comment->setId($row->id)
-        	->setEntryId($row->entryId)
+
+        // REST provides an owner object
+    	// so the db must do this too
+    	$owner = new Default_Model_Owner();
+    	$owner->setFhs_id($row->owner)->setDisplayedName($row->displayedName); 
+
+        $comment->setComment_id($row->comment_id)
+        	->setNews_id($row->news_id)
             ->setContent($row->content)
             ->setCreationDate($row->creationDate)
-            ->setOwner($row->owner)
-            ->setDisplayedName($row->displayedName);
+            ->setOwner($owner);
     }
     /**
      * Fetch all comments
@@ -92,17 +97,21 @@ class Default_Model_Mapper_CommentDbMapper
      */
     public function fetchAll ($where)
     {
-        $where = $this->getDbTable()->getAdapter()->quoteInto('entryId=?', (int)$where,'SQLT_INT');
+        $where = $this->getDbTable()->getAdapter()->quoteInto('news_id=?', (int)$where,'SQLT_INT');
         $resultSet = $this->getDbTable()->fetchAll($where);
         $comments = array();
         foreach ($resultSet as $row) {
+            // REST provides an owner object
+        	// so the db must do this too
+        	$owner = new Default_Model_Owner();
+        	$owner->setFhs_id($row->owner)->setDisplayedName($row->displayedName); 
+            
             $comment = new Default_Model_Comment();
-            $comment->setId($row->id)
-            	->setEntryId($row->entryId)
+            $comment->setComment_id($row->comment_id)
+            	->setNews_id($row->news_id)
                 ->setContent($row->content)
                 ->setCreationDate($row->creationDate)
-                ->setOwner($row->owner)
-                ->setDisplayedName($row->displayedName)
+                ->setOwner($owner)
                 ->setMapper($this);
             $comments[] = $comment;
         }
@@ -115,7 +124,7 @@ class Default_Model_Mapper_CommentDbMapper
      */
     public function delete ($where)
     {
-        $where = $this->getDbTable()->getAdapter()->quoteInto('id=?', (int)$where,'SQLT_INT');
+        $where = $this->getDbTable()->getAdapter()->quoteInto('comment_id=?', (int)$where,'SQLT_INT');
         $resultSet = $this->getDbTable()->delete($where);
 
         return $resultSet;

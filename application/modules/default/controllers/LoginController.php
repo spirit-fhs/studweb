@@ -116,7 +116,7 @@ class LoginController extends Zend_Controller_Action
                     if ('development' == APPLICATION_ENV) { //DB
                         $temp = $authAdapter->getResultRowObject(null, 'password');
 
-                        $user->setUid($temp->id)
+                        $user->setFhs_id($temp->id)
                         ->setTitle("")
                         ->setMail("novalide@mail")
                         ->setLastName($temp->username)
@@ -128,7 +128,7 @@ class LoginController extends Zend_Controller_Action
                     } else { //LDAP
                         $temp = $authAdapter->getAccountObject(array('cn', 'givenname', 'mail','uid', 'personaltitle', 'sn', 'stg', 'ou'));
                         
-                        $user->setUid($temp->uid)
+                        $user->setFhs_id($temp->uid)
                         ->setTitle($temp->personaltitle)
                         ->setMail($temp->mail)
                         ->setLastName($temp->sn)

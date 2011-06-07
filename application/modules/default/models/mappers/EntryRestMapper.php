@@ -66,32 +66,38 @@ class Default_Model_Mapper_EntryRestMapper
 
         //convert comments to Default_Model_Comment
         $comments = array();
-        foreach($result[0]->newsComments as $values){
+        foreach($result[0]->newsComment as $values){
+            //convert classes from stdClass to Default_Model_Owner
+            $owner = new Default_Model_Owner();
+        	$owner->setFhs_id($values->owner->fhs_id)->setDisplayedName($values->owner->displayedName); 
+              
             $comment = new Default_Model_Comment();
             $comment->setContent($values->content)
                     ->setCreationDate($values->creationDate)
-                    ->setEntryId($result[0]->news_id)
-                    ->setId($values->id)
-                    //->setOwner($values->owner)
-                    ->setDisplayedName($values->displayedName);
+                    ->setNews_id($result[0]->news_id)
+                    ->setComment_id($values->comment_id)
+                    ->setOwner($owner);
             $comments[] = $comment; 
         }
         
         //convert classes from stdClass to Default_Model_Class
         $classes = array();
-        foreach ($result[0]->classes as $class){
+        foreach ($result[0]->degreeClass as $class){
             $c = new Default_Model_Class();
-            $c->setClass_id($class->id)->setTitle($class->title);
+            $c->setClass_id($class->class_id)->setTitle($class->title)->setMail($class->mail);
             $classes[] = $c;
         }
+        //convert classes from stdClass to Default_Model_Owner
+        $owner = new Default_Model_Owner();
+    	$owner->setFhs_id($result[0]->owner->fhs_id)->setDisplayedName($result[0]->owner->displayedName); 
+        	
         //put all in the $entry
         $entry->setNews_id($result[0]->news_id)
             ->setTitle($result[0]->title)
             ->setContent($result[0]->content)
             ->setCreationDate($result[0]->creationDate)
-            ->setOwner($result[0]->owner)
-            ->setDisplayedName($result[0]->displayedName)
-            ->setClasses($classes)
+            ->setOwner($owner)
+            ->setdegreeClass($classes)
             ->setComments($comments);
     }
     /**
@@ -111,33 +117,39 @@ class Default_Model_Mapper_EntryRestMapper
             
             //convert comments to Default_Model_Comment
             $comments = array();
-            foreach($row->newsComments as $values){
+            foreach($row->newsComment as $values){
+                //convert classes from stdClass to Default_Model_Owner
+                $owner = new Default_Model_Owner();
+            	$owner->setFhs_id($values->owner->fhs_id)->setDisplayedName($values->owner->displayedName); 
+                    
                 $comment = new Default_Model_Comment();
                 $comment->setContent($values->content)
                         ->setCreationDate($values->creationDate)
-                        ->setEntryId($row->news_id)
-                        ->setId($values->id)
-                        //->setOwner($values->owner)
-                        ->setDisplayedName($values->displayedName);
+                        ->setNews_id($row->news_id)
+                        ->setComment_id($values->comment_id)
+                        ->setOwner($owner);
                 $comments[] = $comment; 
             }
 
-                //convert classes from stdClass to Default_Model_Class
-                $classes = array();
-                foreach ($row->classes as $class){
-                    $c = new Default_Model_Class();
-                    $c->setClass_id($class->id)->setTitle($class->title);
-                    $classes[] = $c;
-                }
+            //convert classes from stdClass to Default_Model_Class
+            $classes = array();
+            foreach ($row->degreeClass as $class){
+                $c = new Default_Model_Class();
+                $c->setClass_id($class->class_id)->setTitle($class->title)->setMail($class->mail);
+                $classes[] = $c;
+            }
             
-            //put all in the $entry
+            //convert classes from stdClass to Default_Model_Owner
+            $owner = new Default_Model_Owner();
+        	$owner->setFhs_id($row->owner->fhs_id)->setDisplayedName($row->owner->displayedName); 
+
+        	//put all in the $entry
             $entry->setNews_id($row->news_id)
                 ->setTitle($row->title)
                 ->setContent($row->content)
                 ->setCreationDate($row->creationDate)
-                ->setOwner($row->owner)
-                ->setDisplayedName($row->displayedName)
-                ->setClasses($classes)
+                ->setOwner($owner)
+                ->setdegreeClass($classes)
                 ->setComments($comments);
             $entries[] = $entry;
             

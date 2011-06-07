@@ -7,8 +7,8 @@ CREATE TABLE entry (
   title VARCHAR(255) NOT NULL,
   content TEXT NULL,
   creationDate VARCHAR(10) NOT NULL,
-  classes INTEGER NOT NULL,
-  class_title VARCHAR (255) NULL
+  degreeClass INTEGER NOT NULL,
+  degreeClass_title VARCHAR (255) NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE users (
@@ -18,8 +18,8 @@ CREATE TABLE users (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE comment (
-  id INTEGER NOT NULL  PRIMARY KEY AUTO_INCREMENT,
-  entryId INTEGER NOT NULL,
+  comment_id INTEGER NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+  news_id INTEGER NOT NULL,
   owner VARCHAR(255) NOT NULL,
   displayedName VARCHAR(255),
   content TEXT NULL,

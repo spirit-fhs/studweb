@@ -65,19 +65,23 @@ class Default_Model_Mapper_EntryDbMapper
         $comment = new Default_Model_Comment();
         $comments = $comment->fetchAll($row->news_id);
         
-    	// hook to filter with class
-    	// because REST provides an array with objects 
+    	// REST provides an array with objects
+    	// so the db must do this too 
     	$class = new Default_Model_Class();
-    	$class->setClass_id($row->classes)
-    	      ->setTitle($row->class_title);
+    	$class->setClass_id($row->degreeClass)
+    	      ->setTitle($row->degreeClass_title);
+    	      
+    	// REST provides an owner object
+    	// so the db must do this too
+    	$owner = new Default_Model_Owner();
+    	$owner->setFhs_id($row->owner)->setDisplayedName($row->displayedName); 
     	
         $entry->setNews_id($row->news_id)
             ->setTitle($row->title)
             ->setContent($row->content)
             ->setCreationDate($row->creationDate)
-            ->setOwner($row->owner)
-            ->setDisplayedName($row->displayedName)
-            ->setClasses(array($class))
+            ->setOwner($owner)
+            ->setDegreeClass(array($class))
             ->setComments($comments);
     }
     /**
@@ -100,19 +104,24 @@ class Default_Model_Mapper_EntryDbMapper
             $comment = new Default_Model_Comment();
         	$comments = $comment->fetchAll($row->news_id);
             
-        	// hook to filter with class
-        	// because REST provides an array with objects 
+        	// REST provides an array with objects
+        	// so the db must do this too 
         	$class = new Default_Model_Class();
-        	$class->setClass_id($row->classes)
-        	      ->setTitle($row->class_title);
+        	$class->setClass_id($row->degreeClass)
+        	      ->setTitle($row->degreeClass_title);
+        	      
+        	// REST provides an owner object
+        	// so the db must do this too
+        	$owner = new Default_Model_Owner();
+        	$owner->setFhs_id($row->owner)->setDisplayedName($row->displayedName); 
         	
+            	
         	$entry->setNews_id($row->news_id)
                 ->setTitle($row->title)
                 ->setContent($row->content)
                 ->setCreationDate($row->creationDate)
-                ->setOwner($row->owner)
-                ->setDisplayedName($row->displayedName)
-                ->setClasses(array($class))
+                ->setOwner($owner)
+                ->setDegreeClass(array($class))
                 ->setComments($comments);
             $entries[] = $entry;
         }

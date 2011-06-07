@@ -9,11 +9,11 @@
 ?>
 <div class="comments">
     <div class="commentsHead">
-	    <div class="commentsId">#<?=$this->escape($this->comment->getId())?></div>
-    	<div class="commentsOwner"><a name="<?=$this->escape($this->comment->getOwner())?>"><?=$this->escape($this->comment->getDisplayedName())?></a></div>
+	    <div class="commentsId">#<?=$this->escape($this->comment->getComment_id())?></div>
+    	<div class="commentsOwner"><a name="<?=$this->escape($this->comment->getOwner()->getFhs_id())?>"><?=$this->escape($this->comment->getOwner()->getDisplayedName())?></a></div>
     	<div class="commentsDate"><time datetime="<?=$this->toHtml5Datetime($this->comment->getCreationDate())?>"><?=$this->DateFormat($this->comment->getCreationDate())?></time></div>
     	<div class="clear"></div>
     </div>
     <div class="commentsContent"><?=$this->escape($this->comment->getContent())?></div>
-    <div class="commentsFunctions"><?=$this->deleteCommentLink($this->comment->getOwner(), $this->comment->getId())?></div>
+    <div class="commentsFunctions"><?=$this->deleteCommentLink($this->comment->getOwner(), $this->comment->getComment_id())?></div>
 </div>

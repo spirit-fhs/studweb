@@ -1,25 +1,21 @@
 <?php
 /**
- * Class model
+ * Owner model
  *
  * @author	   Florian Schuhmann
  * @package    Default
  * @subpackage Model
  */
-class Default_Model_Class
+class Default_Model_Owner
 {
     /**
      * @var int
      */
-    protected $_class_id;
+    protected $_fhs_id;
     /**
      * @var string
      */
-    protected $_title;
-    /**
-     * @var string
-     */
-    protected $_mail;
+    protected $_displayedName;
     /**
      * Constructor
      * 
@@ -42,7 +38,7 @@ class Default_Model_Class
     public function __set ($name, $value)
     {
         $method = 'set' . $name;
-        if (! method_exists($this, $method)) {
+        if ('mapper' == $name || ! method_exists($this, $method)) {
             throw Exception('Invalid property specified');
         }
         $this->$method($value);
@@ -56,7 +52,7 @@ class Default_Model_Class
     public function __get ($name)
     {
         $method = 'get' . $name;
-        if (! method_exists($this, $method)) {
+        if ('mapper' == $name || ! method_exists($this, $method)) {
             throw Exception('Invalid property specified');
         }
         return $this->$method();
@@ -65,7 +61,7 @@ class Default_Model_Class
      * Set object state
      * 
      * @param  array $options 
-     * @return Default_Model_Entry
+     * @return Default_Model_Owner
      */
     public function setOptions (array $options)
     {
@@ -79,61 +75,39 @@ class Default_Model_Class
         return $this;
     }
     /**
-     * Set class title
+     * Set fhs_id
      * 
-     * @param  string $title
-     * @return Default_Model_Class
+     * @param  string $fhs_id 
+     * @return Default_Model_Owner
      */
-    public function setTitle ($title)
+    public function setFhs_id ($fhs_id)
     {
-        $this->_title = (string) $title;
+        $this->_fhs_id = $fhs_id;
         return $this;
     }
     /**
-     * Get class title
-     * 
-     * @return null|string
-     */
-    public function getTitle ()
-    {
-        return $this->_title;
-    }
-    /**
-     * Set class class_id
-     * 
-     * @param  int $class_id 
-     * @return Default_Model_Class
-     */
-    public function setClass_id ($class_id)
-    {
-        $this->_class_id = $class_id;
-        return $this;
-    }
-    /**
-     * Retrieve class class_id
+     * Retrieve fhs_id
      * 
      * @return null|int
      */
-    public function getClass_id ()
+    public function getFhs_id ()
     {
-        return $this->_class_id;
+        return $this->_fhs_id;
     }
-	/**
-     * @return string
+    /**
+     * @return null|string
      */
-    public function getMail ()
+    public function getDisplayedName ()
     {
-        return $this->_mail;
+        return $this->_displayedName;
     }
-
-	/**
-     * @param string $_mail
-     * @return Default_Model_Class
+    /**
+     * @param string $_displayedName
+     * @return Default_Model_Owner
      */
-    public function setMail ($_mail)
+    public function setDisplayedName ($_displayedName)
     {
-        $this->_mail = $_mail;
+        $this->_displayedName = $_displayedName;
         return $this;
     }
-
 }

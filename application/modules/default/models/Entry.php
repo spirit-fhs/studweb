@@ -17,7 +17,7 @@ class Default_Model_Entry
      */
     protected $_news_id;
     /**
-     * @var string
+     * @var Default_Model_Owner
      */
     protected $_owner;
     /**
@@ -41,13 +41,9 @@ class Default_Model_Entry
      */
     protected $_mapper;
     /**
-     * @var string
-     */
-    protected $_displayedName;
-    /**
      * @var array Default_Model_Class
      */
-    protected $_classes;
+    protected $_degreeClass;
     /**
      * @return the $_comments
      */
@@ -274,33 +270,17 @@ class Default_Model_Entry
     /**
      * @return null|string
      */
-    public function getDisplayedName ()
+    public function getDegreeClass ()
     {
-        return $this->_displayedName;
+        return $this->_degreeClass;
     }
     /**
-     * @param string $_displayedName
+     * @param string $_degreeClass
      * @return Default_Model_Entry
      */
-    public function setDisplayedName ($_displayedName)
+    public function setDegreeClass ($_degreeClass)
     {
-        $this->_displayedName = $_displayedName;
-        return $this;
-    }
-    /**
-     * @return null|string
-     */
-    public function getClasses ()
-    {
-        return $this->_classes;
-    }
-    /**
-     * @param string $_classes
-     * @return Default_Model_Entry
-     */
-    public function setClasses ($_classes)
-    {
-        $this->_classes = $_classes;
+        $this->_degreeClass = $_degreeClass;
         return $this;
     }
 }

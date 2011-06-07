@@ -18,11 +18,11 @@ class Zend_View_Helper_DeleteCommentLink
 	 * @param string $cruser
 	 * @param int $commentId
 	 */
-    public function deleteCommentLink ($cruser,$commentId)
+    public function deleteCommentLink ($cruser,$comment_id)
     {
         $auth = Zend_Auth::getInstance();
-        if ($auth->hasIdentity() && $auth->getIdentity()->getUid() == $cruser)
-            return '<a href="' . $this->view->url(array('controller' => 'entry', 'action' => 'delete','commentId' => $this->view->escape($commentId))) . '">[Eintrag löschen]</a>';
+        if ($auth->hasIdentity() && $auth->getIdentity()->getFhs_id() == $cruser->getFhs_id())
+            return '<a href="' . $this->view->url(array('controller' => 'entry', 'action' => 'delete','comment_id' => $this->view->escape($comment_id))) . '">[Eintrag löschen]</a>';
         return "";
     }
     /**
