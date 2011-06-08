@@ -68,7 +68,7 @@ class Default_Model_Mapper_EntryDbMapper
     	// REST provides an array with objects
     	// so the db must do this too 
     	$class = new Default_Model_Class();
-    	$class->setClass_id($row->degreeClass)
+    	$class->setClass_id($row->class_id)
     	      ->setTitle($row->degreeClass_title);
     	      
     	// REST provides an owner object
@@ -107,7 +107,7 @@ class Default_Model_Mapper_EntryDbMapper
         	// REST provides an array with objects
         	// so the db must do this too 
         	$class = new Default_Model_Class();
-        	$class->setClass_id($row->degreeClass)
+        	$class->setClass_id($row->class_id)
         	      ->setTitle($row->degreeClass_title);
         	      
         	// REST provides an owner object

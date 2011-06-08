@@ -7,7 +7,7 @@ CREATE TABLE entry (
   title VARCHAR(255) NOT NULL,
   content TEXT NULL,
   creationDate VARCHAR(10) NOT NULL,
-  degreeClass INTEGER NOT NULL,
+  class_id INTEGER NOT NULL,
   degreeClass_title VARCHAR (255) NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

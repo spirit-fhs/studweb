@@ -22,8 +22,8 @@ class EntryController extends Zend_Controller_Action
         if(null !== $owner = $request->getParam('owner')){
             $filterParams['owner'] = $owner;
         }
-        if(null !== $class = $request->getParam('degreeClass')){
-            $filterParams['degreeClass'] = $class;
+        if(null !== $class = $request->getParam('class_id')){
+            $filterParams['class_id'] = $class;
         }
         // check if their are news found
         if(count($this->view->entries = $entry->fetchAll($filterParams)) == 0){
