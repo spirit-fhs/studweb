@@ -108,6 +108,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         $view->addHelperPath("ZendX/JQuery/View/Helper", "ZendX_JQuery_View_Helper");
         $view->jQuery()->enable();
+        $view->headScript()->appendFile($view->baseUrl().'/js/jquery.qtip-1.0.0-rc3.min.js','text/javascript');
+
         $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
         $viewRenderer->setView($view);
         Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);

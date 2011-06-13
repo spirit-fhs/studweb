@@ -17,6 +17,18 @@ class TimetableController extends Zend_Controller_Action
         // setPages -> replaces the subpages if they exists
         // addPages -> adds only the sides this results in this scenario in dublication
         $nav = $this->view->navigation(Zend_Registry::get('mainMenu'))->findOneBy('label','Stundenplan')->setPages($subconfig->toArray());
+    
+        /**
+         * switching context for te getEventsAction
+         */
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        /** 
+         * needed because Zend will create a json like {events:[{},{}...]}
+         * but we need only [{},{}...]
+         */ 
+        $ajaxContext->setAutoJsonSerialization(false); 
+        $ajaxContext->setActionContext('getevents', 'json')
+                ->initContext('json'); // force the context use by passing the string
     }
     
     /**
@@ -26,7 +38,7 @@ class TimetableController extends Zend_Controller_Action
     {
         $course = $this->_getParam('course');
         if ($course != NULL) {
-            $this->view->course = $course;
+            $this->view->course = $course; // TODO add this to the js as query param or in the session
         }else{
             $this->view->message ='Please choose a course!';
         }
@@ -49,5 +61,32 @@ class TimetableController extends Zend_Controller_Action
  
         // all other methods throw an exception
         throw new Exception('Invalid method "' . $method . '" called',500);
+    }
+    /**
+     * 
+     * generates the JSON for the jQuery calendar
+     */
+    public function geteventsAction() {
+        // if it's no Ajax request redirect  
+        $request = $this->getRequest();
+        if(!$request->isXmlHttpRequest())
+            $this->_redirect('timetable');
+        // create default values if no param found
+        $startActualWeek = date("U", time()-((date("N")-1)*86400)); 
+        $endActualWeek = date("U", time()+((7-date("N"))*86400));
+        
+        // get requested values, if no param found, use the defaults
+        $requestedStart = $request->getParam('start', $startActualWeek);
+        $requestedEnd = $request->getParam('end', $endActualWeek);
+
+        // get the events from the service
+        $this->view->events = Zend_Json_Encoder::encode(array( 
+              array( 
+                 'id' => 1, 
+                 'title' => 'Event1', 
+                 'start' => '2011-06-13T15:00:00',//'Mon Jun 13 2011 16:00:00 GMT+0200', // Fri Jun 01 2011 16:00:00 GMT+0200
+                 'allDay' => false
+              )
+        ));
     }
 }
