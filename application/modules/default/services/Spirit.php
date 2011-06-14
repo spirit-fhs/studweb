@@ -151,7 +151,7 @@ class Default_Service_Spirit extends Zend_Rest_Client
         //die(var_dump($response));
         //$news = '{"news":[{"id":1,"title":"Heute ist Ausfall","content":"Heute scheint die Sonne so toll, weswegen wir heute keine Vorlesung machen.","displayedName":"Prof. Braun","classes":[{"title":"MAI3"}],"newsComments":[],"creationDate":"Mon May 09 00:00:00 CEST 2011"},{"id":2,"title":"Heute ist Party","content":"Heute ist Party am F Gebäude","displayedName":"Prof. Braun","classes":[{"title":"MAI3"}],"newsComments":[{"id":2,"content":"Für Bier ist gesorgt","displayedName":"Prof. Braun","creationDate":"Mon May 30 00:00:00 CEST 2011"},{"id":1,"content":"Juhu Party!!! Brauchen wir Bier?","displayedName":"Benjamin Lüdicke","creationDate":"Mon May 30 00:00:00 CEST 2011"}],"creationDate":"Mon May 09 00:00:00 CEST 2011"},{"id":3,"title":"DFT","content":"Am Mittwoch bringe ich euch allen die Diskrete Fourier-Transformation bei!","displayedName":"Prof. Golz","classes":[{"title":"MAI1"}],"newsComments":[{"id":3,"content":"DFT ist doch langweilig. Können wir nicht lernen, wie man als single-Informatiker durchs leben kommt?","displayedName":"Ronny Schleicher","creationDate":"Tue May 10 00:00:00 CEST 2011"}],"creationDate":"Mon May 09 00:00:00 CEST 2011"}]}';
         if ($this->getResponseType() === 'json')
-            return Zend_Json_Decoder::decode($response->getBody(), Zend_Json::TYPE_OBJECT)->news;
+            return Zend_Json_Decoder::decode($response->getBody(), Zend_Json::TYPE_OBJECT);
         else 
             return new Zend_Rest_Client_Result($response->getBody());        
     }
@@ -180,6 +180,36 @@ class Default_Service_Spirit extends Zend_Rest_Client
         $this->setParams($params);
         
         $path = sprintf($this->_suffix . '/news/%s', trim(strtolower($id)));
+        return $this->sendRequest('GET', $path);
+    }
+    /**
+     * 
+     * fetchs all degreeClasses
+     * which passes the filter criteria
+     * @param array $filterParams
+     * @param array $params
+     */
+    public function fetchAllDegreeClasses(array $filterParams = array(), array $params = array()) {
+        $this->setParams($params);
+        $this->setFilterParams($filterParams);
+        
+        $path = $this->_suffix . '/degreeClass';
+
+        return $this->sendRequest('GET', $path);
+    }
+    /**
+     * 
+     * fetchs all appointments
+     * which passes the filter criteria
+     * @param array $filterParams
+     * @param array $params
+     */
+    public function fetchAllAppointments(array $filterParams = array(), array $params = array()) {
+        $this->setParams($params);
+        $this->setFilterParams($filterParams);
+        
+        $path = $this->_suffix . '/appointment';
+
         return $this->sendRequest('GET', $path);
     }
     // TODO add some functions for comments

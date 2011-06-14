@@ -57,7 +57,7 @@ class Default_Model_Mapper_EntryRestMapper
     public function find ($id, Default_Model_Entry $entry)
     {
         $params = array('type'=>'json');
-        $result = $this->getService()->findNews((int)$id,$params);
+        $result = $this->getService()->findNews((int)$id,$params)->news;
 
         // check if news available
         if (0 == count($result)) {
@@ -109,7 +109,7 @@ class Default_Model_Mapper_EntryRestMapper
     public function fetchAll (array $filterParams = array())
     {
         $params = array('type'=>'json');
-        $resultSet = $this->getService()->fetchAllNews($filterParams,$params);
+        $resultSet = $this->getService()->fetchAllNews($filterParams,$params)->news;
         $entries = array();
 
         foreach ($resultSet as $row) {

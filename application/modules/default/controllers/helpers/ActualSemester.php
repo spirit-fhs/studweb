@@ -1,6 +1,6 @@
 <?php
 /**
- * This ist the ActualSemester Action Helper.
+ * This is the ActualSemester Action Helper.
  * It differs according to the current date between summer and winter semester.
  * 
  * @author	   Florian Schuhmann

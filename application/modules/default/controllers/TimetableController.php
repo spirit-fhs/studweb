@@ -17,12 +17,12 @@ class TimetableController extends Zend_Controller_Action
         // setPages -> replaces the subpages if they exists
         // addPages -> adds only the sides this results in this scenario in dublication
         $nav = $this->view->navigation(Zend_Registry::get('mainMenu'))->findOneBy('label','Stundenplan')->setPages($subconfig->toArray());
-    
-        /**
+
+        /*
          * switching context for te getEventsAction
          */
         $ajaxContext = $this->_helper->getHelper('AjaxContext');
-        /** 
+        /* 
          * needed because Zend will create a json like {events:[{},{}...]}
          * but we need only [{},{}...]
          */ 
@@ -36,9 +36,10 @@ class TimetableController extends Zend_Controller_Action
      */
     public function indexAction ()
     {
-        $course = $this->_getParam('course');
-        if ($course != NULL) {
-            $this->view->course = $course; // TODO add this to the js as query param or in the session
+        $class_id = $this->_getParam('class_id');
+        if ($class_id != NULL) {
+            $this->view->class_id = $class_id;
+            $this->view->showCalendar = true;
         }else{
             $this->view->message ='Please choose a course!';
         }
@@ -55,8 +56,8 @@ class TimetableController extends Zend_Controller_Action
         if ('Action' == substr($method, -6)) {
             // If the action method was not found, forward to the
             // index action with the class as param
-            $course = substr($method, 0,-6);
-            return $this->_forward('index',null,null,array('course'=>$course));
+            $class_id = substr($method, 0,-6);
+            return $this->_forward('index',null,null,array('class_id'=>$class_id));
         }
  
         // all other methods throw an exception
@@ -76,17 +77,18 @@ class TimetableController extends Zend_Controller_Action
         $endActualWeek = date("U", time()+((7-date("N"))*86400));
         
         // get requested values, if no param found, use the defaults
-        $requestedStart = $request->getParam('start', $startActualWeek);
-        $requestedEnd = $request->getParam('end', $endActualWeek);
+        $requestedStart = $this->_helper->toRestFilterDateFormat($request->getParam('start', $startActualWeek));
+        $requestedEnd = $this->_helper->toRestFilterDateFormat($request->getParam('end', $endActualWeek));
+        $requestedDegreeClass = $request->getParam('class_id');
+        
+        $filterParams = array('class_id' => $requestedDegreeClass, 
+        	'startAppointment' => $requestedStart,
+        	'endAppointment' => $requestedEnd
+        );
 
+        $appointments = new Default_Model_Appointment();
         // get the events from the service
-        $this->view->events = Zend_Json_Encoder::encode(array( 
-              array( 
-                 'id' => 1, 
-                 'title' => 'Event1', 
-                 'start' => '2011-06-13T15:00:00',//'Mon Jun 13 2011 16:00:00 GMT+0200', // Fri Jun 01 2011 16:00:00 GMT+0200
-                 'allDay' => false
-              )
-        ));
+        $this->view->events = Zend_Json_Encoder::encode(
+            $appointments->fetchAll($filterParams));
     }
 }
