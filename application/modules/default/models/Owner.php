@@ -17,6 +17,10 @@ class Default_Model_Owner
      */
     protected $_displayedName;
     /**
+     * @var string
+     */
+    protected $_memberType;
+    /**
      * Constructor
      * 
      * @param  array|null $options 
@@ -75,17 +79,6 @@ class Default_Model_Owner
         return $this;
     }
     /**
-     * Set fhs_id
-     * 
-     * @param  string $fhs_id 
-     * @return Default_Model_Owner
-     */
-    public function setFhs_id ($fhs_id)
-    {
-        $this->_fhs_id = $fhs_id;
-        return $this;
-    }
-    /**
      * Retrieve fhs_id
      * 
      * @return null|int
@@ -101,6 +94,24 @@ class Default_Model_Owner
     {
         return $this->_displayedName;
     }
+	/**
+     * @return null|string
+     */
+    public function getMemberType ()
+    {
+        return $this->_memberType;
+    }
+    /**
+     * Set fhs_id
+     * 
+     * @param  string $fhs_id 
+     * @return Default_Model_Owner
+     */
+    public function setFhs_id ($fhs_id)
+    {
+        $this->_fhs_id = $fhs_id;
+        return $this;
+    }
     /**
      * @param string $_displayedName
      * @return Default_Model_Owner
@@ -110,4 +121,14 @@ class Default_Model_Owner
         $this->_displayedName = $_displayedName;
         return $this;
     }
+	/**
+     * @param string $_memberType
+     * @return Default_Model_Owner
+     */
+    public function setMemberType ($_memberType)
+    {
+        $this->_memberType = $_memberType;
+        return $this;
+    }
+
 }

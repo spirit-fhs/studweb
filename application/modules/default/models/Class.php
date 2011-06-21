@@ -21,6 +21,10 @@ class Default_Model_Class
      */
     protected $_mail;
     /**
+     * @var string
+     */
+    protected $_classType;
+    /**
      * Constructor
      * 
      * @param  array|null $options 
@@ -135,5 +139,23 @@ class Default_Model_Class
         $this->_mail = $_mail;
         return $this;
     }
+	/**
+     * @return null|string
+     */
+    public function getClassType ()
+    {
+        return $this->_classType;
+    }
+
+	/**
+     * @param string $_classType
+     * @return Default_Model_Class
+     */
+    public function setClassType ($_classType)
+    {
+        $this->_classType = $_classType;
+        return $this;
+    }
+
 
 }

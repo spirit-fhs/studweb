@@ -69,7 +69,8 @@ class Default_Model_Mapper_AppointmentRestMapper
             foreach ($row->event->lecturer as $lecturer){
                 $l = new Default_Model_Owner();
                 $l->setFhs_id($lecturer->fhs_id)
-                    ->setDisplayedName($lecturer->displayedName);
+                    ->setDisplayedName($lecturer->displayedName)
+                    ->setMemberType($lecturer->memberType);
                 $lectureres[] = $l;
             }
             
@@ -79,7 +80,8 @@ class Default_Model_Mapper_AppointmentRestMapper
                 $c = new Default_Model_Class();
                 $c->setClass_id($class->class_id)
                     ->setTitle($class->title)
-                    ->setMail($class->mail);
+                    ->setMail($class->mail)
+                    ->setClassType($class->classType);
                 $classes[] = $c;
             }
 
@@ -90,12 +92,12 @@ class Default_Model_Mapper_AppointmentRestMapper
                 ->setTitleShort($row->event->titleShort)
                 ->setTitleLong($row->event->titleLong)
                 ->setLecturer($lectureres)
-                ->setDegreeClass($classes);
-                // TODO add EventType && Location
-                //->setEventType($row->event->eventType);
+                ->setDegreeClass($classes)
+                ->setEventType($row->event->eventType);
 
 
         	//put all in the $entry
+            // TODO add Location
             $appointment = new Default_Model_Appointment();
             $appointment->setAppointment_id($row->appointment_id)
                 ->setStartAppointment($row->startAppointment)

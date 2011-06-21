@@ -65,7 +65,9 @@ class Default_Model_Mapper_CommentRestMapper
 
         //convert classes from stdClass to Default_Model_Owner
         $owner = new Default_Model_Owner();
-    	$owner->setFhs_id($result->owner)->setDisplayedName($result->displayedName); 
+    	$owner->setFhs_id($result->owner)
+    	    ->setDisplayedName($result->displayedName)
+    	    ->setMemberType($result->memberType); 
 
         $comment->setComment_id($result[0]->comment_id)
         	->setNews_id($result[0]->news_id)
@@ -86,7 +88,9 @@ class Default_Model_Mapper_CommentRestMapper
         foreach ($resultSet as $row) {
             //convert classes from stdClass to Default_Model_Owner
             $owner = new Default_Model_Owner();
-        	$owner->setFhs_id($result->owner)->setDisplayedName($result->displayedName); 
+        	$owner->setFhs_id($row->owner)
+        	    ->setDisplayedName($row->displayedName)
+        	    ->setMemberType($row->memberType); 
 
         	$comment = new Default_Model_Comment();
             $comment->setComment_id($row->comment_id)

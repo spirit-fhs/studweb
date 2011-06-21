@@ -69,7 +69,9 @@ class Default_Model_Mapper_EntryRestMapper
         foreach($result[0]->newsComment as $values){
             //convert classes from stdClass to Default_Model_Owner
             $owner = new Default_Model_Owner();
-        	$owner->setFhs_id($values->owner->fhs_id)->setDisplayedName($values->owner->displayedName); 
+        	$owner->setFhs_id($values->owner->fhs_id)
+        	    ->setDisplayedName($values->owner->displayedName)
+        	    ->setMemberType($values->owner->memberType); 
               
             $comment = new Default_Model_Comment();
             $comment->setContent($values->content)
@@ -84,12 +86,17 @@ class Default_Model_Mapper_EntryRestMapper
         $classes = array();
         foreach ($result[0]->degreeClass as $class){
             $c = new Default_Model_Class();
-            $c->setClass_id($class->class_id)->setTitle($class->title)->setMail($class->mail);
+            $c->setClass_id($class->class_id)
+                ->setTitle($class->title)
+                ->setMail($class->mail)
+                ->setClassType($class->classType);
             $classes[] = $c;
         }
         //convert classes from stdClass to Default_Model_Owner
         $owner = new Default_Model_Owner();
-    	$owner->setFhs_id($result[0]->owner->fhs_id)->setDisplayedName($result[0]->owner->displayedName); 
+    	$owner->setFhs_id($result[0]->owner->fhs_id)
+    	    ->setDisplayedName($result[0]->owner->displayedName)
+            ->setMemberType($result[0]->owner->memberType); 
         	
         //put all in the $entry
         $entry->setNews_id($result[0]->news_id)
@@ -120,7 +127,9 @@ class Default_Model_Mapper_EntryRestMapper
             foreach($row->newsComment as $values){
                 //convert classes from stdClass to Default_Model_Owner
                 $owner = new Default_Model_Owner();
-            	$owner->setFhs_id($values->owner->fhs_id)->setDisplayedName($values->owner->displayedName); 
+            	$owner->setFhs_id($values->owner->fhs_id)
+            	    ->setDisplayedName($values->owner->displayedName)
+            	    ->setMemberType($values->owner->memberType); 
                     
                 $comment = new Default_Model_Comment();
                 $comment->setContent($values->content)
@@ -135,13 +144,18 @@ class Default_Model_Mapper_EntryRestMapper
             $classes = array();
             foreach ($row->degreeClass as $class){
                 $c = new Default_Model_Class();
-                $c->setClass_id($class->class_id)->setTitle($class->title)->setMail($class->mail);
+                $c->setClass_id($class->class_id)
+                    ->setTitle($class->title)
+                    ->setMail($class->mail)
+                    ->setClassType($class->classType);
                 $classes[] = $c;
             }
             
             //convert classes from stdClass to Default_Model_Owner
             $owner = new Default_Model_Owner();
-        	$owner->setFhs_id($row->owner->fhs_id)->setDisplayedName($row->owner->displayedName); 
+        	$owner->setFhs_id($row->owner->fhs_id)
+        	    ->setDisplayedName($row->owner->displayedName)
+        	    ->setMemberType($row->owner->memberType); 
 
         	//put all in the $entry
             $entry->setNews_id($row->news_id)
