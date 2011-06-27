@@ -19,7 +19,7 @@ class Zend_View_Helper_DateFormat
 	 */
     public function DateFormat ($time)
     {
-        return date("d.m.Y H:s",strtotime($time));
+        return date("d.m.Y H:i",strtotime($time));
     }
     /**
      * Sets the view field 
