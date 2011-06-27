@@ -6,7 +6,7 @@
  * @package    Default
  * @subpackage Service
  */
-class Default_Service_Spirit extends Zend_Rest_Client
+class Default_Service_Spirit extends Application_Rest_Client
 {
     /**
      * @var string URL of the REST service
@@ -26,17 +26,21 @@ class Default_Service_Spirit extends Zend_Rest_Client
      */
     protected $_params = array();
     /**
-     * @var array
+     * @var string
      */
-    protected $_filterParams = array();
+    protected $_data;
     /**
      * @var string
      */
     protected $_responseType = 'json';
     /**
+     * @var string
+     */
+    protected $_encryptType = 'json';
+    /**
      * @var array
      */
-    protected $_responseTypes = array('xml', 'json');
+    protected $_types = array('xml', 'json');
     /**
      * 
      * @return void
@@ -46,9 +50,9 @@ class Default_Service_Spirit extends Zend_Rest_Client
         $this->setUri($this->_uri);
         $client = self::getHttpClient();
         $client->setHeaders(array(
-            'Accept' => 'application/'.$this->getResponseType(),
-        	'Accept-Charset' => 'ISO-8859-1,utf-8'
-        ));
+            	'Accept:application/'.$this->getResponseType(),
+            	'Accept-Charset: utf-8'
+            ));
     }
     /**
      * 
@@ -59,8 +63,14 @@ class Default_Service_Spirit extends Zend_Rest_Client
 
         foreach ($params as $key => $value) {
             switch (strtolower($key)) {
-                case 'type':
+                case 'responseType':
                     $this->setResponseType($value);
+                    break;
+                case 'encryptType':
+                    $this->setEncryptType($value);
+                    break;
+                case 'data':
+                    $this->setData($value);
                     break;
                 default:
                     $this->_params[$key] = $value;
@@ -76,24 +86,7 @@ class Default_Service_Spirit extends Zend_Rest_Client
      */
     public function getParams()
     {
-    	return $this->_filterParams;
-    }
-    /**
-     * 
-     * @param array $params
-     */
-    public function setFilterParams($params)
-    {
-        $this->_filterParams=$params;
-        return $this;
-    }
-    /**
-     * 
-     * @return array $_params
-     */
-    public function getFilterParams()
-    {
-    	return $this->_filterParams;
+    	return $this->_params;
     }
     /**
      * 
@@ -102,7 +95,7 @@ class Default_Service_Spirit extends Zend_Rest_Client
      */
     public function setResponseType($responseType)
     {
-        if (!in_array(strtolower($responseType), $this->_responseTypes)) {
+        if (!in_array(strtolower($responseType), $this->_types)) {
             throw new Default_Service_Spirit_Exception('Invalid Response Type');
         }
 
@@ -119,21 +112,67 @@ class Default_Service_Spirit extends Zend_Rest_Client
     }
     /**
      * 
+     * @param string $encryptType
+     * @throws Default_Service_Spirit_Exception
+     */
+    public function setEncryptType($encryptType)
+    {
+        if (!in_array(strtolower($encryptType), $this->_types)) {
+            throw new Default_Service_Spirit_Exception('Invalid Encrypt Type');
+        }
+
+        $this->_encryptType = strtolower($encryptType);
+        return $this;
+    }
+    /**
+     * 
+     * @return string $_responseType
+     */
+    public function getEncryptType()
+    {
+        return $this->_encryptType;
+    }
+	/**
+     * @param string $_data
+     */
+    public function setData ($_data)
+    {
+        $this->_data = $_data;
+        return $this;
+    }
+	/**
+     * @return string $_data
+     */
+    public function getData ()
+    {
+        return $this->_data;
+    }
+    /**
+     * 
      * @param string $requestType
      * @param string $path
+     * @return stdClass
      * @throws Default_Service_Spirit_Exception
      */
     public function sendRequest($requestType, $path)
     {
         $requestType = ucfirst(strtolower($requestType));
-        if ($requestType !== 'Post' && $requestType !== 'Get') {
-            throw new Default_Service_Spirit_Exception('Invalid request type: ' . $requestType);
-        }
 
+        if ($requestType !== 'Delete' && $requestType !== 'Get' 
+            && $requestType !== 'Post' && $requestType !== 'Put'){
+                throw new Default_Service_Spirit_Exception('Invalid request type: ' . $requestType);
+        }
         try {
             $requestMethod = 'rest' . $requestType;
-            $response = $this->{$requestMethod}($path, $this->getParams(), $this->getFilterParams());
+            
+            if ($requestType === 'Put' || $requestType === 'Post') {
+                $response = $this->{$requestMethod}($path, $this->getData(), 'application/'.$this->getEncryptType());
+            }else{
+                $response = $this->{$requestMethod}($path, $this->getParams());
+            }
+            
             return $this->formatResponse($response);
+            
         } catch (Zend_Http_Client_Exception $e) {
             throw new Default_Service_Spirit_Exception($e->getMessage());
         }
@@ -148,8 +187,6 @@ class Default_Service_Spirit extends Zend_Rest_Client
      */
     public function formatResponse(Zend_Http_Response $response)
     {
-        //die(var_dump($response));
-        //$news = '{"news":[{"id":1,"title":"Heute ist Ausfall","content":"Heute scheint die Sonne so toll, weswegen wir heute keine Vorlesung machen.","displayedName":"Prof. Braun","classes":[{"title":"MAI3"}],"newsComments":[],"creationDate":"Mon May 09 00:00:00 CEST 2011"},{"id":2,"title":"Heute ist Party","content":"Heute ist Party am F Gebäude","displayedName":"Prof. Braun","classes":[{"title":"MAI3"}],"newsComments":[{"id":2,"content":"Für Bier ist gesorgt","displayedName":"Prof. Braun","creationDate":"Mon May 30 00:00:00 CEST 2011"},{"id":1,"content":"Juhu Party!!! Brauchen wir Bier?","displayedName":"Benjamin Lüdicke","creationDate":"Mon May 30 00:00:00 CEST 2011"}],"creationDate":"Mon May 09 00:00:00 CEST 2011"},{"id":3,"title":"DFT","content":"Am Mittwoch bringe ich euch allen die Diskrete Fourier-Transformation bei!","displayedName":"Prof. Golz","classes":[{"title":"MAI1"}],"newsComments":[{"id":3,"content":"DFT ist doch langweilig. Können wir nicht lernen, wie man als single-Informatiker durchs leben kommt?","displayedName":"Ronny Schleicher","creationDate":"Tue May 10 00:00:00 CEST 2011"}],"creationDate":"Mon May 09 00:00:00 CEST 2011"}]}';
         if ($this->getResponseType() === 'json')
             return Zend_Json_Decoder::decode($response->getBody(), Zend_Json::TYPE_OBJECT);
         else 
@@ -159,15 +196,14 @@ class Default_Service_Spirit extends Zend_Rest_Client
      * 
      * fetchs all news with comments
      * which passes the filter criteria
-     * @param array $filterParams
      * @param array $params
+	 * @return stdClass
      */
-    public function fetchAllNews(array $filterParams = array(), array $params = array()) {
+    public function fetchAllNews(array $params = array()) {
         $this->setParams($params);
-        $this->setFilterParams($filterParams);
         
         $path = $this->_suffix . '/news';
-
+        
         return $this->sendRequest('GET', $path);
     }
     /**
@@ -175,23 +211,24 @@ class Default_Service_Spirit extends Zend_Rest_Client
      * find one news with comments
      * @param int $id
      * @param array $params
+     * @return stdClass
      */
     public function findNews($id, array $params = array()) {
         $this->setParams($params);
         
         $path = sprintf($this->_suffix . '/news/%s', trim(strtolower($id)));
+        
         return $this->sendRequest('GET', $path);
     }
     /**
      * 
      * fetchs all degreeClasses
      * which passes the filter criteria
-     * @param array $filterParams
      * @param array $params
+     * @return stdClass
      */
-    public function fetchAllDegreeClasses(array $filterParams = array(), array $params = array()) {
+    public function fetchAllDegreeClasses(array $params = array()) {
         $this->setParams($params);
-        $this->setFilterParams($filterParams);
         
         $path = $this->_suffix . '/degreeClass';
 
@@ -201,17 +238,72 @@ class Default_Service_Spirit extends Zend_Rest_Client
      * 
      * fetchs all appointments
      * which passes the filter criteria
-     * @param array $filterParams
      * @param array $params
+     * @return stdClass
      */
-    public function fetchAllAppointments(array $filterParams = array(), array $params = array()) {
+    public function fetchAllAppointments(array $params = array()) {
         $this->setParams($params);
-        $this->setFilterParams($filterParams);
         
         $path = $this->_suffix . '/appointment';
 
         return $this->sendRequest('GET', $path);
     }
-    // TODO add some functions for comments
+    /**
+     * 
+     * find one appointment
+     * @param int $id
+     * @param array $params
+     * @return stdClass
+     */
+    public function findAppointment($id, array $params = array()) {
+        $this->setParams($params);
+        
+        $path = sprintf($this->_suffix . '/appointment/%s', trim(strtolower($id)));
+        
+        return $this->sendRequest('GET', $path);
+    }
+    /**
+     * 
+     * find one comment
+     * @param int $id
+     * @param array $params
+     * @return stdClass
+     */
+    public function findComment($id, array $params = array()) {
+        $this->setParams($params);
+
+        $path = sprintf($this->_suffix . '/news/comment/%s', trim(strtolower($id)));
+        
+        return $this->sendRequest('GET', $path);
+    }
+    /**
+     * save a new comment
+     * @param array $params
+     * @return stdClass 
+     */
+    public function saveComment(array $params = array()){
+        $this->setParams($params);
+
+        $path = $this->_suffix . '/news/comment';
+
+        return $this->sendRequest('PUT', $path);        
+        // Debug with:
+        //die(var_dump($this->getHttpClient()->getLastRequest()));
+    }
+    
+    /**
+     * 
+     * delete one comment
+     * @param int $id
+     * @param array $params
+     * @return stdClass
+     */
+    public function deleteComment($id, array $params = array()){
+        $this->setParams($params);
+
+        $path = sprintf($this->_suffix . '/news/comment/%s', trim(strtolower($id)));
+        
+        return $this->sendRequest('DELETE', $path);
+    }
 }
 ?>
