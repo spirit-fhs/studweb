@@ -107,9 +107,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->headMeta()->appendHttpEquiv('Content-Type','text/html;charset=utf-8');
         
         $view->addHelperPath("ZendX/JQuery/View/Helper", "ZendX_JQuery_View_Helper");
-        $view->jQuery()->enable();
-        $view->headScript()->appendFile($view->baseUrl().'/js/jquery.qtip-1.0.0-rc3.min.js','text/javascript');
-
+        $view->jQuery()->setVersion('1.5.1')->enable();
+        $view->jQuery()->setUiVersion('1.8.13')->uiEnable();
+        $view->jQuery()->addStylesheet($view->baseUrl().'/css/jQuery/jquery-ui-1.8.13.custom.css');
+        
+        $view->jQuery()->addJavascriptFile($view->baseUrl().'/js/jquery.qtip-1.0.0-rc3.min.js','text/javascript');
+        $view->jQuery()->addJavascriptFile($view->baseUrl().'/js/fullcalendar/fullcalendar.min.js','text/javascript');
+        $view->jQuery()->addStylesheet($view->baseUrl().'/js/fullcalendar/fullcalendar.css');
+       
         $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
         $viewRenderer->setView($view);
         Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
