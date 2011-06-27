@@ -8,16 +8,37 @@
  */
 class TimetableController extends Zend_Controller_Action
 {
+    private $configArray = array();
+    
     public function init(){
-        // Load timetable navigaton depending on
-        // the today's date and the semester start/end dates
-        $xmlTag = $this->_helper->ActualSemester();
-        $subconfig = new Zend_Config_Xml(
-            APPLICATION_PATH . '/configs/timetables.xml', $xmlTag);
+        if ('development' === APPLICATION_ENV) {
+            // Load timetable navigaton from XML depending on
+            // the today's date and the semester start/end dates
+            $xmlTag = $this->_helper->ActualSemester();
+            $subconfig = new Zend_Config_Xml(
+                APPLICATION_PATH . '/configs/timetables.xml', $xmlTag);
+                
+            $configArray = $subconfig->toArray();
+        }
+        else {
+            //Load timtable navigation from REST
+            
+            $service = new Default_Model_Class();
+            $filterParmas = array('classType' => 'Class');
+            $classes = $service->fetchAll($filterParmas);
+            $i = 0;
+            foreach ($classes as $class){
+                $configArray[$i]['label'] = $class->title;
+                $configArray[$i]['controller'] = 'timetable';
+                $configArray[$i]['action'] = (string)$class->getClass_id();// convert to string
+                $i++;
+            }
+        }
+
         // setPages -> replaces the subpages if they exists
         // addPages -> adds only the sides this results in this scenario in dublication
-        $nav = $this->view->navigation(Zend_Registry::get('mainMenu'))->findOneBy('label','Stundenplan')->setPages($subconfig->toArray());
-
+        $nav = $this->view->navigation(Zend_Registry::get('mainMenu'))->findOneBy('label','Stundenplan')->setPages($configArray);
+        
         /*
          * switching context for te getEventsAction
          */
@@ -65,7 +86,8 @@ class TimetableController extends Zend_Controller_Action
     }
     /**
      * 
-     * generates the JSON for the jQuery calendar
+     * generates the JSON for the jQuery fullcalendar
+     * @link http://arshaw.com/fullcalendar/docs/
      */
     public function geteventsAction() {
         // if it's no Ajax request redirect  
@@ -81,7 +103,7 @@ class TimetableController extends Zend_Controller_Action
         $requestedEnd = $this->_helper->toRestFilterDateFormat($request->getParam('end', $endActualWeek));
         $requestedDegreeClass = $request->getParam('class_id');
         
-        $filterParams = array('class_id' => $requestedDegreeClass, 
+        $params = array('class_id' => $requestedDegreeClass, 
         	'startAppointment' => $requestedStart,
         	'endAppointment' => $requestedEnd
         );
@@ -89,6 +111,6 @@ class TimetableController extends Zend_Controller_Action
         $appointments = new Default_Model_Appointment();
         // get the events from the service
         $this->view->events = Zend_Json_Encoder::encode(
-            $appointments->fetchAll($filterParams));
+            $appointments->fetchAll($params));
     }
 }

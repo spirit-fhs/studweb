@@ -136,7 +136,7 @@ class EntryController extends Zend_Controller_Action
             $model = new Default_Model_Comment();
             // get the owner of the comment
             $cruser=$model->find($id)->getOwner();
-            
+
             // check if the user is the owner of the comment
             if($auth->getIdentity()->getFhs_id() == $cruser->getFhs_id()){
                 // delete the comment

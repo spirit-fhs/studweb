@@ -7,6 +7,183 @@
  * @subpackage viewScripts
  */
 ?>
-<?=date("W"); ?>
 <?= $this->message?>
-<?= $this->course?>
+<?php if($this->showCalendar){?>
+<script type='text/javascript'>
+$.fn.qtip.styles.Spirit = { // Last part is the name of the style
+		width : 200,
+		textAlign : 'center',
+		border : {
+			width : 3,
+			radius : 5
+		},
+		tip : 'bottomLeft',
+		name : 'dark' // Inherit the rest of the attributes from the preset dark style
+};
+$.fn.qtip.styles.Spirit_moved = { // Last part is the name of the style
+		background : '<?= Default_Model_Mapper_AppointmentRestMapper::MOVED_BACKGROUND_COLOR?>',
+		color : '<?= Default_Model_Mapper_AppointmentRestMapper::MOVED_TEXT_COLOR?>',
+		border : {
+			color : '<?= Default_Model_Mapper_AppointmentRestMapper::MOVED_BORDER_COLOR?>'
+		},
+		name : 'Spirit'
+};
+$.fn.qtip.styles.Spirit_cancelled = { // Last part is the name of the style
+		background : '<?= Default_Model_Mapper_AppointmentRestMapper::CANCELLED_BACKGROUND_COLOR?>',
+		color : '<?= Default_Model_Mapper_AppointmentRestMapper::CANCELLED_TEXT_COLOR?>',
+		border : {
+			color : '<?= Default_Model_Mapper_AppointmentRestMapper::CANCELLED_BORDER_COLOR?>'
+		},
+		name : 'Spirit'
+};
+$.fn.qtip.styles.Spirit_Lecture = { // Last part is the name of the style
+		background : '<?= Default_Model_Mapper_AppointmentRestMapper::LECTURE_BACKGROUND_COLOR?>',
+		color : '<?= Default_Model_Mapper_AppointmentRestMapper::LECTURE_TEXT_COLOR?>',
+		border : {
+			color : '<?= Default_Model_Mapper_AppointmentRestMapper::LECTURE_BORDER_COLOR?>'
+		},
+		name : 'Spirit'
+};
+$.fn.qtip.styles.Spirit_Practice = { // Last part is the name of the style
+		background : '<?= Default_Model_Mapper_AppointmentRestMapper::PRACTICE_BACKGROUND_COLOR?>',
+		color : '<?= Default_Model_Mapper_AppointmentRestMapper::PRACTICE_TEXT_COLOR?>',
+		border : {
+			color : '<?= Default_Model_Mapper_AppointmentRestMapper::PRACTICE_BORDER_COLOR?>'
+		},
+		name : 'Spirit'
+};
+$.fn.qtip.styles.Spirit_BlockLecture = { // Last part is the name of the style
+		background : '<?= Default_Model_Mapper_AppointmentRestMapper::BLOCK_LECTURE_BACKGROUND_COLOR?>',
+		color : '<?= Default_Model_Mapper_AppointmentRestMapper::BLOCK_LECTURE_TEXT_COLOR?>',
+		border : {
+			color : '<?= Default_Model_Mapper_AppointmentRestMapper::BLOCK_LECTURE_BORDER_COLOR?>'
+		},
+		name : 'Spirit'
+};
+$.fn.qtip.styles.Spirit_BlockPractice = { // Last part is the name of the style
+		background : '<?= Default_Model_Mapper_AppointmentRestMapper::BLOCK_PRACTICE_BACKGROUND_COLOR?>',
+		color : '<?= Default_Model_Mapper_AppointmentRestMapper::BLOCK_PRACTICE_TEXT_COLOR?>',
+		border : {
+			color : '<?= Default_Model_Mapper_AppointmentRestMapper::BLOCK_PRACTICE_BORDER_COLOR?>'
+		},
+		name : 'Spirit'
+};
+	
+	function initCalendar() {
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+
+		$('#calendar')
+				.fullCalendar(
+						{
+							defaultView : 'agendaWeek',
+							header : {
+								left : 'prev,next today',
+								center : 'title',
+								right : 'month,agendaWeek,agendaDay'
+							},
+
+							theme : true, // include the css for a theme
+							editable : false,
+
+							isRTL : false,
+							firstDay : 1,
+							weekends : true,
+							
+							slotMinutes : 30,
+							defaultEventMinutes : 90,
+							minTime : '8:00',
+							maxTime : '22:00',
+							firstHour : 8,
+
+							monthNames : [ "Januar", "Februar", "März",
+									"April", "Mai", "Juni", "Juli", "August",
+									"September", "Oktober", "November",
+									"Dezember" ],
+							monthNamesShort : [ "Jan", "Feb", "Mär", "Apr",
+									"Mai", "Jun", "Jul", "Aug", "Sep", "Okt",
+									"Nov", "Dez" ],
+							dayNames : [ 'Sonntag', 'Montag', 'Dienstag',
+									'Mittwoch', 'Donnerstag', 'Freitag',
+									'Samstag' ],
+							dayNamesShort : [ "So", "Mo", "Di", "Mi", "Do",
+									"Fr", "Sa" ],
+							buttonText : {
+								today : 'heute',
+								month : 'Monat',
+								week : 'Woche',
+								day : 'Tag'
+							},
+							allDaySlot : true,
+							allDayText : 'KW <?=date("W"); ?>',
+							// time formats
+							axisFormat : "H:mm",
+
+							titleFormat : {
+								month : 'MMMM yyyy',
+								week : "d.[ MMMM][ yyyy]{ '&#8212;' d. MMMM yyyy}",
+								day : 'dddd, MMM d, yyyy'
+							},
+							columnFormat : {
+								month : 'ddd',
+								week : 'ddd d.M.',
+								day : 'dddd d.M.'
+							},
+							timeFormat : { // for event elements
+								'' : 'H:mm{ - H:mm}', // default
+								agendaWeek : 'H:mm{ - H:mm}',
+								agendaDay : 'H:mm{ - H:mm}',
+								month: '' // don't show the time in the event header in month view
+							},
+							weekMode : 'variable',
+
+							eventRender : function(event, element) {
+								var html;
+
+								html = '<b>' + event.titleLong + '</b><br>';
+								html += event.startTime + ' - ' + event.endTime + '<br>';
+								for (var key in event.locations) {    
+						    		html += '<b>' + event.locations[key] + '</b><br>';
+						    	}
+								//html += '<b>' + event.event_id + '</b><br>';
+								//htl += '<b>Child:' + event.child + ' APP:' + event.appointment_id+ '</b><br>';
+								for ( var key in event.owners) {
+									html += '<b>' + key + ':'
+											+ event.owners[key] + '</b><br>';
+								}
+								
+
+								str = (event.status == "ok")? event.eventType : event.status;
+								element.qtip({
+									position : {
+										corner : {
+											target : 'topRight',
+											tooltip : 'bottomLeft'
+										}
+									},
+									style : 'Spirit_'+ str,
+									content : html
+								});
+							},
+			
+			events:{
+		        url: 'getevents',
+		        type: 'POST',
+		        cache: true,
+		        data:{
+					class_id: '<?= $this->class_id?>'
+			    },
+		        error: function() {
+		            alert('Sorry, da lief was schief!');
+		        }
+		    }				
+		});
+	}
+$(document).ready(function() {
+		initCalendar();
+	});
+</script>
+<div id="calendar" style="min-width:730px;height:800px;margin:20px auto 0;font-family:arial"></div>
+<?php }?>
