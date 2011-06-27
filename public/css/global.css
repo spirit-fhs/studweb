@@ -312,7 +312,6 @@ nav ul li.active a.timetable,nav ul li a.timetable:hover {
 	min-width: 530px;
 	max-width:67%;
 	margin: 0 0 10px 0;
-	float: left;
     min-height: 30px;
     padding: 12px 15px;
 	background: url(../images/kachelTimetable.png) repeat scroll 0 0 transparent;
@@ -339,9 +338,10 @@ ul.subnav li a.last{
 	max-width:67%;
 	padding: 0 15px;
 	margin: 0 0 10px 0;
+}
+#main_content_wrapper{
 	float: left;
 }
-
 /* SIDEBAR ------------------------------------------ */
 aside.sidebar {
 	width: 200px;

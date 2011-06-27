@@ -28,6 +28,7 @@
 	array('maxDepth' => 0))?> <!-- This line will output the navigation -->
 </nav>
 <div id="doc">
+	<div id="main_content_wrapper">
 	<?=$this->navigation()->menu()->renderMenu(null, array(
     'minDepth' => 1,
     'maxDepth' => 1,
@@ -36,7 +37,8 @@
 	'ulClass' => 'subnav'))?> <!-- This line will output the navigation -->
 <section id="main_content">
 	<?= $this->layout()->content?> <!-- This line will output the content -->
-</section> 
+</section>
+</div>
 <aside class="sidebar">
 <h2>HTML5 Sidebar</h2>
 <?=$this->navigation()->menu()->renderMenu(Zend_Registry::get('Sidebar'),
