@@ -25,6 +25,10 @@ class Default_Model_Class
      */
     protected $_classType;
     /**
+     * @var Default_Model_Mapper_ClassRestMapper
+     */
+    protected $_mapper;
+    /**
      * Constructor
      * 
      * @param  array|null $options 
@@ -46,7 +50,7 @@ class Default_Model_Class
     public function __set ($name, $value)
     {
         $method = 'set' . $name;
-        if (! method_exists($this, $method)) {
+        if ('mapper' == $name || ! method_exists($this, $method)) {
             throw Exception('Invalid property specified');
         }
         $this->$method($value);
@@ -60,7 +64,7 @@ class Default_Model_Class
     public function __get ($name)
     {
         $method = 'get' . $name;
-        if (! method_exists($this, $method)) {
+        if ('mapper' == $name || ! method_exists($this, $method)) {
             throw Exception('Invalid property specified');
         }
         return $this->$method();
@@ -69,7 +73,7 @@ class Default_Model_Class
      * Set object state
      * 
      * @param  array $options 
-     * @return Default_Model_Entry
+     * @return Default_Model_Class
      */
     public function setOptions (array $options)
     {
@@ -81,6 +85,31 @@ class Default_Model_Class
             }
         }
         return $this;
+    }
+    /**
+     * Set data mapper
+     * 
+     * @param  mixed $mapper 
+     * @return Default_Model_Appointment
+     */
+    public function setMapper ($mapper)
+    {
+        $this->_mapper = $mapper;
+        return $this;
+    }
+    /**
+     * Get data mapper
+     *
+     * Lazy loads Default_Model_Mapper_ClassRestMapper instance if no mapper registered.
+     * 
+     * @return Default_Model_Mapper_ClassRestMapper
+     */
+    public function getMapper ()
+    {
+        if (null === $this->_mapper) {
+                $this->setMapper(new Default_Model_Mapper_ClassRestMapper());
+        }
+        return $this->_mapper;
     }
     /**
      * Set class title
@@ -156,6 +185,13 @@ class Default_Model_Class
         $this->_classType = $_classType;
         return $this;
     }
-
-
+    /**
+     * Fetch all classes
+     * 
+     * @return array
+     */
+    public function fetchAll (array $filterParams = array())
+    {
+        return $this->getMapper()->fetchAll($filterParams);
+    }
 }

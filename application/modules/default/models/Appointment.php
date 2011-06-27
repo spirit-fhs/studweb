@@ -33,6 +33,10 @@ class Default_Model_Appointment
      */
     protected $_childAppointment;
     /**
+     * @var array Default_Model_Location
+     */
+    protected $_location;
+    /**
      * @var Default_Model_Mapper_AppointmentRestMapper
      */
     protected $_mapper;
@@ -179,6 +183,14 @@ class Default_Model_Appointment
     {
         return $this->_childAppointment;
     }
+
+	/**
+     * @return null|array
+     */
+    public function getLocation ()
+    {
+        return $this->_location;
+    }
     
 	/**
      * @param string $_startAppointment
@@ -229,7 +241,15 @@ class Default_Model_Appointment
         $this->_childAppointment = $_childAppointment;
         return $this;
     }
-    
+	/**
+     * @param array $_location
+     * @return Default_Model_Location
+     */
+    public function setLocation ($_location)
+    {
+        $this->_location = $_location;
+        return $this;
+    }
     /**
      * Fetch all appointments
      * 
@@ -238,5 +258,16 @@ class Default_Model_Appointment
     public function fetchAll (array $filterParams = array())
     {
         return $this->getMapper()->fetchAllAsCalendarJson($filterParams);
+    }
+    /**
+     * Find an appointment
+     * 
+     * @param  int $appointment_id 
+     * @return Default_Model_Appointment
+     */
+    public function find ($appointment_id)
+    {
+        $this->getMapper()->find($appointment_id, $this);
+        return $this;
     }
 }

@@ -26,7 +26,7 @@ class Default_Model_Mapper_CommentRestMapper
         if (is_string($service)) {
             $service = new $service();
         }
-        if (! $service instanceof Zend_Rest_Client) {
+        if (! $service instanceof Application_Rest_Client) {
             throw new Exception('Invalid data gateway provided');
         }
         $this->_service = $service;
@@ -55,8 +55,8 @@ class Default_Model_Mapper_CommentRestMapper
      */
     public function find ($id, Default_Model_Comment $comment)
     {
-        $params = array('type'=>'json');
-        $result = $this->getService()->findComment((int)$id,$params);
+        $params = array('responseType' => 'json');
+        $result = $this->getService()->findComment((int)$id,$params)->newsComment;
 
         // check if news available
         if (0 == count($result)) {
@@ -65,42 +65,51 @@ class Default_Model_Mapper_CommentRestMapper
 
         //convert classes from stdClass to Default_Model_Owner
         $owner = new Default_Model_Owner();
-    	$owner->setFhs_id($result->owner)
-    	    ->setDisplayedName($result->displayedName)
-    	    ->setMemberType($result->memberType); 
+    	$owner->setFhs_id($result[0]->owner->fhs_id)
+    	    ->setDisplayedName($result[0]->owner->displayedName)
+    	    ->setMemberType($result[0]->owner->memberType); 
 
         $comment->setComment_id($result[0]->comment_id)
-        	->setNews_id($result[0]->news_id)
+        	->setNews_id($result[0]->news->news_id)
             ->setContent($result[0]->content)
             ->setCreationDate($result[0]->creationDate)
             ->setOwner($owner);
     }
     /**
-     * Fetch all comments
+     * Save a comment
+     * 
+     * @param  Default_Model_Comment $comment 
+     * @return void
+     */
+    public function save (Default_Model_Comment $comment)
+    {
+        $data = array("newsComment" => array(
+        	'content' => $comment->getContent(),
+            'creationDate' => date('Y-m-d H:i:s'),
+            'news' => array ('news_id' => (int)$comment->getNews_id()),
+        // TODO switch fhs_id in the DB
+            'owner' => array ( "fhs_id" => 'schuhmann'/*$comment->getOwner()->getFhs_id()*/)
+        ));
+        
+        $params = array('responseType' => 'json',
+            'data' => Zend_Json_Encoder::encode($data),
+            'encryptType' => 'json'
+        );
+        if (null === ($id = $comment->getComment_id())) {
+            unset($data['comment_id']);
+            $this->getService()->saveComment($params);
+        }
+    }
+    /**
+     * Delete comment
      * 
      * @return array
      */
-    public function fetchAll ($where)
+    public function delete ($where)
     {
-        $where = $this->getDbTable()->getAdapter()->quoteInto('news_id=?', (int)$where,'SQLT_INT');
-        $resultSet = $this->getDbTable()->fetchAll($where);
-        $comments = array();
-        foreach ($resultSet as $row) {
-            //convert classes from stdClass to Default_Model_Owner
-            $owner = new Default_Model_Owner();
-        	$owner->setFhs_id($row->owner)
-        	    ->setDisplayedName($row->displayedName)
-        	    ->setMemberType($row->memberType); 
+        $params = array('responseType' => 'json');
+        $resultSet = $this->getService()->deleteComment($where, $params);
 
-        	$comment = new Default_Model_Comment();
-            $comment->setComment_id($row->comment_id)
-            	->setNews_id($row->news_id)
-                ->setContent($row->content)
-                ->setCreationDate($row->creationDate)
-                ->setOwner($owner)
-                ->setMapper($this);
-            $comments[] = $comment;
-        }
-        return $comments;
+        return $resultSet;
     }
 }

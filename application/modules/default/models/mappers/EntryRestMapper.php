@@ -26,7 +26,7 @@ class Default_Model_Mapper_EntryRestMapper
         if (is_string($service)) {
             $service = new $service();
         }
-        if (! $service instanceof Zend_Rest_Client) {
+        if (! $service instanceof Application_Rest_Client) {
             throw new Exception('Invalid data gateway provided');
         }
         $this->_service = $service;
@@ -56,13 +56,12 @@ class Default_Model_Mapper_EntryRestMapper
      */
     public function find ($id, Default_Model_Entry $entry)
     {
-        $params = array('type'=>'json');
+        $params = array('responseType' => 'json');
         $result = $this->getService()->findNews((int)$id,$params)->news;
 
         // check if news available
-        if (0 == count($result)) {
+        if(isset($response->error))
             return;
-        }
 
         //convert comments to Default_Model_Comment
         $comments = array();
@@ -113,10 +112,10 @@ class Default_Model_Mapper_EntryRestMapper
      * @uses   Default_Service_Spirit $comment,$comments
      * @return array
      */
-    public function fetchAll (array $filterParams = array())
+    public function fetchAll (array $params = array())
     {
-        $params = array('type'=>'json');
-        $resultSet = $this->getService()->fetchAllNews($filterParams,$params)->news;
+        $params['responseType'] = 'json';
+        $resultSet = $this->getService()->fetchAllNews($params)->news;
         $entries = array();
 
         foreach ($resultSet as $row) {
