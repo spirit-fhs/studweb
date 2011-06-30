@@ -23,9 +23,9 @@ class TimetableController extends Zend_Controller_Action
         else {
             //Load timtable navigation from REST
             
-            $service = new Default_Model_Class();
+            $model = new Default_Model_Class();
             $filterParmas = array('classType' => 'Class');
-            $classes = $service->fetchAll($filterParmas);
+            $classes = $model->fetchAll($filterParmas);
             $i = 0;
             foreach ($classes as $class){
                 $configArray[$i]['label'] = $class->title;

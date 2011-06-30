@@ -87,8 +87,7 @@ class Default_Model_Mapper_CommentRestMapper
         	'content' => $comment->getContent(),
             'creationDate' => date('Y-m-d H:i:s'),
             'news' => array ('news_id' => (int)$comment->getNews_id()),
-        // TODO switch fhs_id in the DB
-            'owner' => array ( "fhs_id" => 'schuhmann'/*$comment->getOwner()->getFhs_id()*/)
+            'owner' => array ( "fhs_id" => $comment->getOwner()->getFhs_id()) // this fhs_id musst be in the DB! or no comment will saved
         ));
         
         $params = array('responseType' => 'json',

@@ -25,6 +25,10 @@ class Default_Model_Class
      */
     protected $_classType;
     /**
+     * @var array Default_Model_Class
+     */
+    protected $_subClasses;
+    /**
      * @var Default_Model_Mapper_ClassRestMapper
      */
     protected $_mapper;
@@ -194,4 +198,22 @@ class Default_Model_Class
     {
         return $this->getMapper()->fetchAll($filterParams);
     }
+	/**
+     * @return array Default_Model_Class
+     */
+    public function getSubClasses ()
+    {
+        return $this->_subClasses;
+    }
+
+	/**
+     * @param array $_subClasses
+     * @return Default_Model_Class
+     */
+    public function setSubClasses ($_subClasses)
+    {
+        $this->_subClasses = $_subClasses;
+        return $this;
+    }
+
 }
