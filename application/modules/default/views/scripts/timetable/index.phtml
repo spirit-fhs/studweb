@@ -78,6 +78,7 @@ $.fn.qtip.styles.Spirit_BlockPractice = { // Last part is the name of the style
 		$('#calendar')
 				.fullCalendar(
 						{
+							aspectRatio: 1,
 							defaultView : 'agendaWeek',
 							header : {
 								left : 'prev,next today',
@@ -185,5 +186,5 @@ $(document).ready(function() {
 		initCalendar();
 	});
 </script>
-<div id="calendar" style="min-width:730px;height:800px;margin:20px auto 0;font-family:arial"></div>
+<div id="calendar" style="min-width:650px;margin:20px auto 0;font-family:arial"></div>
 <?php }?>
