@@ -103,6 +103,7 @@ class Default_Model_Mapper_EntryRestMapper
             ->setTitle($result[0]->title)
             ->setContent($result[0]->content)
             ->setCreationDate($result[0]->creationDate)
+            ->setLastModified($result[0]->lastModified)
             ->setOwner($owner)
             ->setdegreeClass($classes)
             ->setComments($comments);
@@ -163,6 +164,7 @@ class Default_Model_Mapper_EntryRestMapper
                 ->setTitle($row->title)
                 ->setContent($row->content)
                 ->setCreationDate($row->creationDate)
+                ->setLastModified($row->lastModified)
                 ->setOwner($owner)
                 ->setdegreeClass($classes)
                 ->setComments($comments);

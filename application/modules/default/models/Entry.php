@@ -33,6 +33,10 @@ class Default_Model_Entry
      */
     protected $_creationDate;
     /**
+     * @var string
+     */
+    protected $_lastModified;
+    /**
      * @var Array 
      */
     protected $_comments;
@@ -283,4 +287,21 @@ class Default_Model_Entry
         $this->_degreeClass = $_degreeClass;
         return $this;
     }
+	/**
+     * @return string
+     */
+    public function getLastModified ()
+    {
+        return $this->_lastModified;
+    }
+
+	/**
+     * @param string $_lastModified
+     */
+    public function setLastModified ($_lastModified)
+    {
+        $this->_lastModified = $_lastModified;
+        return $this;
+    }
+
 }

@@ -27,7 +27,7 @@
 </div>
 <div class="newsBody">
 	<div class="newsSubject"><h1><?=$this->escape($this->entry->getTitle())?></h1></div>
-	<div class="newsDate"><time datetime="<?=$this->toHtml5Datetime($this->entry->getCreationDate())?>"><?=$this->DateFormat($this->entry->getCreationDate())?></time></div>
+	<div class="newsDate"><time datetime="<?=$this->toHtml5Datetime($this->entry->getLastModified())?>"><?=$this->DateFormat($this->entry->getLastModified())?></time></div>
 	<div class=clear></div>
 
 	<div class="newsContent"><?php $textile = new Application_Textile();
