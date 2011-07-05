@@ -29,6 +29,11 @@ class Default_Model_Class
      */
     protected $_subClasses;
     /**
+     * 
+     * @var int
+     */
+    protected $_parent_id;
+    /**
      * @var Default_Model_Mapper_ClassRestMapper
      */
     protected $_mapper;
@@ -198,6 +203,17 @@ class Default_Model_Class
     {
         return $this->getMapper()->fetchAll($filterParams);
     }
+    /**
+     * Find an class
+     * 
+     * @param  int $class_id 
+     * @return Default_Model_Class
+     */
+    public function find ($class_id)
+    {
+        $this->getMapper()->find($class_id, $this);
+        return $this;
+    }
 	/**
      * @return array Default_Model_Class
      */
@@ -215,5 +231,22 @@ class Default_Model_Class
         $this->_subClasses = $_subClasses;
         return $this;
     }
+	/**
+     * @return int
+     */
+    public function getParent_id ()
+    {
+        return $this->_parent_id;
+    }
+
+	/**
+     * @param int $_parent_id
+     */
+    public function setParent_id ($_parent_id)
+    {
+        $this->_parent_id = $_parent_id;
+        return $this; 
+    }
+
 
 }

@@ -187,6 +187,7 @@ class Default_Service_Spirit extends Application_Rest_Client
      */
     public function formatResponse(Zend_Http_Response $response)
     {
+        //die(var_dump($response));
         if ($this->getResponseType() === 'json')
             return Zend_Json_Decoder::decode($response->getBody(), Zend_Json::TYPE_OBJECT);
         else 
@@ -231,6 +232,20 @@ class Default_Service_Spirit extends Application_Rest_Client
         $this->setParams($params);
         
         $path = $this->_suffix . '/degreeClass';
+
+        return $this->sendRequest('GET', $path);
+    }
+    /**
+     * 
+     * find one degreeClasses
+     * @param int $id
+     * @param array $params
+     * @return stdClass
+     */
+    public function fetchDegreeClass($id, array $params = array()) {
+        $this->setParams($params);
+        
+        $path = sprintf($this->_suffix . '/degreeClass/%s', trim(strtolower($id)));
 
         return $this->sendRequest('GET', $path);
     }

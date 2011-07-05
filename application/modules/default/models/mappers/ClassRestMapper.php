@@ -69,11 +69,38 @@ class Default_Model_Mapper_ClassRestMapper
             $class->setClass_id($row->class_id)
                 ->setTitle($row->title)
                 ->setMail($row->mail)
-                ->setClassType($row->classType);
+                ->setClassType($row->classType)
+                ->setParent_id($row->parent_id);
                 // TODO add subClasses
             $classes[] = $class;
         }
         return $classes;
+    }
+    /**
+     * find one class
+     * 
+     * @param  int $id 
+     * @param  Default_Model_Class $class 
+     * @uses   Default_Service_Spirit
+     * @return void
+     */
+    public function find ($id, Default_Model_Class $class)
+    {
+        $params['responseType'] = 'json';
+        $response = $this->getService()->fetchDegreeClass($id, $params);
+
+        if(isset($response->error))
+            return;
+        $row = $response->degreeClass;
+
+        
+            //convert event degreeClass to Default_Model_Class
+            $class->setClass_id($row[0]->class_id)
+                ->setTitle($row[0]->title)
+                ->setMail($row[0]->mail)
+                ->setClassType($row[0]->classType)
+                ->setParent_id($row[0]->parent_id);
+                // TODO add subClasses
     }
 }
 ?>

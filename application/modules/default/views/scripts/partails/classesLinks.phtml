@@ -11,5 +11,15 @@
             		'controller' => 'entry',
             	    'action' => 'index',
             	    'class_id' =>$this->class->class_id),null,true) ?>">
-<?=$this->class->title?></a>
+<?php
+
+if($this->class->classType == 'Group'){
+    $class = new Default_Model_Class();
+    echo $class->find($this->class->parent_id)->title . '(';
+}
+
+echo $this->class->title;
+
+echo ($this->class->classType == 'Group')? ')' : '';
+?></a>
 
