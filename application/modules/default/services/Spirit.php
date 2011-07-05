@@ -242,7 +242,7 @@ class Default_Service_Spirit extends Application_Rest_Client
      * @param array $params
      * @return stdClass
      */
-    public function fetchDegreeClass($id, array $params = array()) {
+    public function findDegreeClass($id, array $params = array()) {
         $this->setParams($params);
         
         $path = sprintf($this->_suffix . '/degreeClass/%s', trim(strtolower($id)));

@@ -87,7 +87,7 @@ class Default_Model_Mapper_ClassRestMapper
     public function find ($id, Default_Model_Class $class)
     {
         $params['responseType'] = 'json';
-        $response = $this->getService()->fetchDegreeClass($id, $params);
+        $response = $this->getService()->findDegreeClass($id, $params);
 
         if(isset($response->error))
             return;
