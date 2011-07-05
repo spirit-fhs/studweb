@@ -88,7 +88,8 @@ class Default_Model_Mapper_EntryRestMapper
             $c->setClass_id($class->class_id)
                 ->setTitle($class->title)
                 ->setMail($class->mail)
-                ->setClassType($class->classType);
+                ->setClassType($class->classType)
+                ->setParent_id($class->parent_id);
             $classes[] = $c;
         }
         //convert classes from stdClass to Default_Model_Owner
@@ -146,7 +147,8 @@ class Default_Model_Mapper_EntryRestMapper
                 $c->setClass_id($class->class_id)
                     ->setTitle($class->title)
                     ->setMail($class->mail)
-                    ->setClassType($class->classType);
+                    ->setClassType($class->classType)
+                    ->setParent_id($class->parent_id);
                 $classes[] = $c;
             }
             
