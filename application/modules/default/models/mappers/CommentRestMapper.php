@@ -85,7 +85,7 @@ class Default_Model_Mapper_CommentRestMapper
     {
         $data = array("newsComment" => array(
         	'content' => $comment->getContent(),
-            'creationDate' => date('Y-m-d H:i:s'),
+            //'creationDate' => date('Y-m-d H:i:s'), // will be set by the REST-service
             'news' => array ('news_id' => (int)$comment->getNews_id()),
             'owner' => array ( "fhs_id" => $comment->getOwner()->getFhs_id()) // this fhs_id musst be in the DB! or no comment will saved
         ));
