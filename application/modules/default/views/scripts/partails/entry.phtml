@@ -21,13 +21,15 @@
     	<a href="<?=$this->url(array(
     		'controller' => 'entry',
     	    'action' => 'index',
-    	    'owner' =>$this->escape($this->entry->getOwner()->getFhs_id())),null,true)?>"><?=$this->escape($this->entry->getOwner()->getDisplayedName())?></a>
+    	    'owner' =>$this->escape($this->entry->getOwner()->getFhs_id())),null,true)?>">
+    	    <?=$this->escape($this->entry->getOwner()->getDisplayedName())?></a>
     </div>
 	<div class="clear"></div>
 </div>
 <div class="newsBody">
 	<div class="newsSubject"><h1><?=$this->escape($this->entry->getTitle())?></h1></div>
-	<div class="newsDate"><time datetime="<?=$this->toHtml5Datetime($this->entry->getLastModified())?>"><?=$this->DateFormat($this->entry->getLastModified())?></time></div>
+	<div class="newsDate<?=($this->entry->getLastModified() !== $this->entry->getCreationDate())?' modified':'';?>"><time datetime="<?=$this->toHtml5Datetime($this->entry->getLastModified())?>">
+	<?=$this->DateFormat($this->entry->getLastModified())?></time></div>
 	<div class=clear></div>
 
 	<div class="newsContent"><?php $textile = new Application_Textile();
@@ -35,7 +37,8 @@
 </div>
 <div class="newsFooter">
 	<div class="newsMoreLink">
-		<a href="<?=$this->url(array('controller' => 'entry', 'action' => 'show', 'news_id' => $this->escape($this->entry->getNews_id())),null,true)?>"
+		<a href="<?=$this->url(array('controller' => 'entry', 'action' => 'show', 'news_id' => 
+		                    $this->escape($this->entry->getNews_id())),null,true)?>"
 		>...einzeln lesen!</a>
 	</div>
 	<div class="newsComments">Kommentare: <?=count($this->entry->getComments())?></div>
