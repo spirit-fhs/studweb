@@ -69,8 +69,13 @@ class Default_Model_Mapper_ClassRestMapper
             $class->setClass_id($row->class_id)
                 ->setTitle($row->title)
                 ->setMail($row->mail)
-                ->setClassType($row->classType)
-                ->setParent_id($row->parent_id);
+                ->setClassType($row->classType);
+            if(null !== $row->parent){
+                $parent = new Default_Model_Class();
+                $parent->setClass_id($row->parent->class_id)
+                        ->setTitle($row->parent->title);
+                $class->setParent($parent);
+            }
                 // TODO add subClasses
             $classes[] = $class;
         }
@@ -98,8 +103,13 @@ class Default_Model_Mapper_ClassRestMapper
             $class->setClass_id($row[0]->class_id)
                 ->setTitle($row[0]->title)
                 ->setMail($row[0]->mail)
-                ->setClassType($row[0]->classType)
-                ->setParent_id($row[0]->parent_id);
+                ->setClassType($row[0]->classType);
+            if(null !== $row->parent){
+                $parent = new Default_Model_Class();
+                $parent->setClass_id($row->parent->class_id)
+                        ->setTitle($row->parent->title);
+                $class->setParent($parent);
+            }
                 // TODO add subClasses
     }
 }

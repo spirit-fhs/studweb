@@ -113,8 +113,13 @@ class Default_Model_Mapper_AppointmentRestMapper
                 $c->setClass_id($class->class_id)
                     ->setTitle($class->title)
                     ->setMail($class->mail)
-                    ->setClassType($class->classType)
-                    ->setParent_id($class->parent_id);
+                    ->setClassType($class->classType);
+                if(null !== $class->parent){
+                    $parent = new Default_Model_Class();
+                    $parent->setClass_id($class->parent->class_id)
+                            ->setTitle($class->parent->title);
+                    $c->setParent($parent);
+                }
                 $classes[] = $c;
             }
 
@@ -189,8 +194,13 @@ class Default_Model_Mapper_AppointmentRestMapper
                 $c->setClass_id($class->class_id)
                     ->setTitle($class->title)
                     ->setMail($class->mail)
-                    ->setClassType($class->classType)
-                    ->setParent_id($class->parent_id);
+                    ->setClassType($class->classType);
+                if(null !== $class->parent){
+                    $parent = new Default_Model_Class();
+                    $parent->setClass_id($class->parent->class_id)
+                            ->setTitle($class->parent->title);
+                    $c->setParent($parent);
+                }
                 $classes[] = $c;
             }
 

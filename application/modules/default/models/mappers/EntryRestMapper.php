@@ -88,8 +88,14 @@ class Default_Model_Mapper_EntryRestMapper
             $c->setClass_id($class->class_id)
                 ->setTitle($class->title)
                 ->setMail($class->mail)
-                ->setClassType($class->classType)
-                ->setParent_id($class->parent_id);
+                ->setClassType($class->classType);
+
+            if(null !== $class->parent){
+                $parent = new Default_Model_Class();
+                $parent->setClass_id($class->parent->class_id)
+                        ->setTitle($class->parent->title);
+                $c->setParent($parent);
+            }
             $classes[] = $c;
         }
         //convert classes from stdClass to Default_Model_Owner
@@ -148,8 +154,14 @@ class Default_Model_Mapper_EntryRestMapper
                 $c->setClass_id($class->class_id)
                     ->setTitle($class->title)
                     ->setMail($class->mail)
-                    ->setClassType($class->classType)
-                    ->setParent_id($class->parent_id);
+                    ->setClassType($class->classType);
+
+                if(null !== $class->parent){
+                    $parent = new Default_Model_Class();
+                    $parent->setClass_id($class->parent->class_id)
+                            ->setTitle($class->parent->title);
+                    $c->setParent($parent);
+                }
                 $classes[] = $c;
             }
             

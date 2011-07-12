@@ -29,10 +29,9 @@ class Default_Model_Class
      */
     protected $_subClasses;
     /**
-     * 
-     * @var int
+     * @var Default_Model_Class
      */
-    protected $_parent_id;
+    protected $_parent;
     /**
      * @var Default_Model_Mapper_ClassRestMapper
      */
@@ -232,19 +231,19 @@ class Default_Model_Class
         return $this;
     }
 	/**
-     * @return int
+     * @return Default_Model_Class
      */
-    public function getParent_id ()
+    public function getParent ()
     {
-        return $this->_parent_id;
+        return $this->_parent;
     }
 
 	/**
-     * @param int $_parent_id
+     * @param Default_Model_Class $_parent
      */
-    public function setParent_id ($_parent_id)
+    public function setParent ($_parent)
     {
-        $this->_parent_id = $_parent_id;
+        $this->_parent = $_parent;
         return $this; 
     }
 
