@@ -31,10 +31,10 @@
 		</logout>
 	</nav>
 	<sidebar>
-		<geo>
-			<label>Geolocation API</label>
-			<controller>html5</controller>
-			<action>geo</action>
-		</geo>
+		<privateTimetable>
+			<label>eigener Stundenplan</label>
+			<controller>timetable</controller>
+			<action>index</action>
+		</privateTimetable>
 	</sidebar>
 </config>

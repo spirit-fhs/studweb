@@ -27,14 +27,12 @@ class Application_Plugin_Auth_Acl extends Zend_Acl
         $this->add(new Zend_Acl_Resource('entry'));
         $this->add(new Zend_Acl_Resource('error'));
         $this->add(new Zend_Acl_Resource('timetable'));
-        $this->add(new Zend_Acl_Resource('html5'));
         // guest 
         $this->allow(Application_Plugin_Auth_Roles::GUEST, null, 'index');
         $this->allow(Application_Plugin_Auth_Roles::GUEST, 'entry', 'show');
         $this->allow(Application_Plugin_Auth_Roles::GUEST, 'error');
         $this->allow(Application_Plugin_Auth_Roles::GUEST, 'timetable');
         $this->allow(Application_Plugin_Auth_Roles::GUEST, 'login', 'login');
-        $this->allow(Application_Plugin_Auth_Roles::GUEST, 'html5');
         // students
         $this->allow(Application_Plugin_Auth_Roles::STUDENT, 'login');
         $this->deny(Application_Plugin_Auth_Roles::STUDENT, 'login', 'login');
