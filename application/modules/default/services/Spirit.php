@@ -63,10 +63,10 @@ class Default_Service_Spirit extends Application_Rest_Client
 
         foreach ($params as $key => $value) {
             switch (strtolower($key)) {
-                case 'responseType':
+                case 'responsetype':
                     $this->setResponseType($value);
                     break;
-                case 'encryptType':
+                case 'encrypttype':
                     $this->setEncryptType($value);
                     break;
                 case 'data':
@@ -187,7 +187,9 @@ class Default_Service_Spirit extends Application_Rest_Client
      */
     public function formatResponse(Zend_Http_Response $response)
     {
+        // Debug with:
         //die(var_dump($response));
+        //die(var_dump($this->getHttpClient()->getLastRequest()));
         if ($this->getResponseType() === 'json')
             return Zend_Json_Decoder::decode($response->getBody(), Zend_Json::TYPE_OBJECT);
         else 
@@ -302,8 +304,6 @@ class Default_Service_Spirit extends Application_Rest_Client
         $path = $this->_suffix . '/news/comment';
 
         return $this->sendRequest('PUT', $path);        
-        // Debug with:
-        //die(var_dump($this->getHttpClient()->getLastRequest()));
     }
     
     /**
